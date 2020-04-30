@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Xinsheng Wang, Shanmin Pang, Jihua Zhu | Xinsheng</title>
+    <link>/author/xinsheng-wang-shanmin-pang-jihua-zhu/</link>
+      <atom:link href="/author/xinsheng-wang-shanmin-pang-jihua-zhu/index.xml" rel="self" type="application/rss+xml" />
+    <description>Xinsheng Wang, Shanmin Pang, Jihua Zhu</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 01 Jan 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
+      <title>Xinsheng Wang, Shanmin Pang, Jihua Zhu</title>
+      <link>/author/xinsheng-wang-shanmin-pang-jihua-zhu/</link>
+    </image>
+    
+    <item>
+      <title>Domain segmentation and adjustment for generalized zero-shot learning</title>
+      <link>/publication/wang-2020-domain/</link>
+      <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
+      <guid>/publication/wang-2020-domain/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

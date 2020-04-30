@@ -1,0 +1,530 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Xinsheng Wang, Tingting Qiao, Jihua Zhu, Alan Hanjalic, Odette Scharenborg | Xinsheng</title>
+    <link>/author/xinsheng-wang-tingting-qiao-jihua-zhu-alan-hanjalic-odette-scharenborg/</link>
+      <atom:link href="/author/xinsheng-wang-tingting-qiao-jihua-zhu-alan-hanjalic-odette-scharenborg/index.xml" rel="self" type="application/rss+xml" />
+    <description>Xinsheng Wang, Tingting Qiao, Jihua Zhu, Alan Hanjalic, Odette Scharenborg</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Tue, 28 Apr 2020 22:58:36 +0200</lastBuildDate>
+    <image>
+      <url>/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
+      <title>Xinsheng Wang, Tingting Qiao, Jihua Zhu, Alan Hanjalic, Odette Scharenborg</title>
+      <link>/author/xinsheng-wang-tingting-qiao-jihua-zhu-alan-hanjalic-odette-scharenborg/</link>
+    </image>
+    
+    <item>
+      <title>S2IGAN</title>
+      <link>/project/s2igan/</link>
+      <pubDate>Tue, 28 Apr 2020 22:58:36 +0200</pubDate>
+      <guid>/project/s2igan/</guid>
+      <description>&lt;!-- &lt;table&gt;&lt;tr&gt;
+&lt;td&gt;&lt;img src=&#34;XJTU_full.jpg&#34; width=&#34;120&#34;&gt;&lt;/td&gt;
+&lt;td&gt;&lt;img src=&#34;TUDelft.png&#34; width=&#34;70&#34;&gt;&lt;/td&gt;
+&lt;td&gt;&lt;img src=&#34;ZJU_full.png&#34; width=&#34;120&#34;&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt; --&gt;
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure id=&#34;figure-speech-to-image-generation&#34;&gt;
+
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;/project/s2igan/Illustration_hud31cf35305a265e990d2713767061642_201730_2000x2000_fit_lanczos_2.png&#34; data-caption=&#34;Speech-to-image Generation&#34;&gt;
+
+
+  &lt;img data-src=&#34;/project/s2igan/Illustration_hud31cf35305a265e990d2713767061642_201730_2000x2000_fit_lanczos_2.png&#34; class=&#34;lazyload&#34; alt=&#34;&#34; width=&#34;450&#34; height=&#34;407&#34;&gt;
+&lt;/a&gt;
+
+
+  
+  
+  &lt;figcaption&gt;
+    Speech-to-image Generation
+  &lt;/figcaption&gt;
+
+
+&lt;/figure&gt;
+
+&lt;h3 id=&#34;introduction&#34;&gt;Introduction&lt;/h3&gt;
+&lt;small&gt;
+An estimated half of the world’s languages do
+not have a written form, making it impossible
+for these languages to benefit from any existing
+text-based technologies. In this project, a speech-to-image generation (S2IG)
+framework is proposed which translates speech descriptions
+to photo-realistic images without using
+any text information, thus allowing unwritten languages
+to potentially benefit from this technology.
+The proposed S2IG framework, named S2IGAN,
+consists of a speech embedding network (SEN)
+and a relation-supervised densely-stacked generative
+model (RDG). SEN learns the speech embedding
+with the supervision of the corresponding
+visual information. Conditioned on the speech
+embedding produced by SEN, the proposed RDG
+synthesizes images that are semantically consistent
+with the corresponding speech descriptions.
+&lt;/small&gt;
+&lt;h3 id=&#34;model-structure&#34;&gt;Model structure&lt;/h3&gt;
+&lt;h4 id=&#34;speech-embedding-network-sen&#34;&gt;Speech Embedding Network (SEN)&lt;/h4&gt;
+&lt;!-- 
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure id=&#34;figure-framework-of-sen&#34;&gt;
+
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;/project/s2igan/Network_pre_hu796be0870baa1b682cb3e3946c323524_301704_2000x2000_fit_lanczos_2.png&#34; data-caption=&#34;Framework of SEN&#34;&gt;
+
+
+  &lt;img data-src=&#34;/project/s2igan/Network_pre_hu796be0870baa1b682cb3e3946c323524_301704_2000x2000_fit_lanczos_2.png&#34; class=&#34;lazyload&#34; alt=&#34;&#34; width=&#34;500&#34; height=&#34;891&#34;&gt;
+&lt;/a&gt;
+
+
+  
+  
+  &lt;figcaption&gt;
+    Framework of SEN
+  &lt;/figcaption&gt;
+
+
+&lt;/figure&gt;
+ --&gt;
+&lt;div&gt;
+        &lt;div style=&#34;float:left;&#34; align=&#34;center&#34;&gt;
+        &lt;img src=&#34;Network_pre.png&#34; width=&#34;400&#34; alt=&#34;&#34; vspace=&#34;0&#34; vspace=&#39;0&#39; title=&#34;Framework of SEN&#34; &gt;&lt;br /&gt; 
+        &lt;/div&gt;
+&lt;small&gt;
+&lt;p&gt;Given an image-speech pair, SEN tries to find a common
+space for both modalities, so that we can minimize the modality
+gap and obtain visually-grounded speech embeddings. As
+shown in the Figure, SEN is a dual encoder framework, including
+an image encoder and a speech encoder.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;The image encoder (IED)&lt;/strong&gt; adopts the Inception-v3 pre-trained on ImageNet to extract visual features. On top of it, a single-layer linear layer is employed to convert the visual feature to a common space of visual and speech embeddings.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;The speech encoder (SED)&lt;/strong&gt; consists of a two-layer 1-D convolution block, two bi-directional gated recurrent units (GRU) and a self-attention layer. The 1-D convolutional block consisted of two 1-D convolutional layers with 40 input, 64 hidden and 128 output channels. The size of the hidden layer
+of the bi-directional GRU was 512 and the size of the output was 1024 by concatenating the bidirectional representations.
+&lt;/small&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;h4 id=&#34;relation-supervised-densely-stacked-generative-model-rdg&#34;&gt;Relation-supervised Densely-stacked Generative Model (RDG)&lt;/h4&gt;
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure id=&#34;figure-framework-of-the-relation-supervised-densely-stacked-generative-model-rdg&#34;&gt;
+
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;/project/s2igan/Network_GAN_hu06ea134ba3db35495988d76c8522b84c_124878_2000x2000_fit_lanczos_2.png&#34; data-caption=&#34;Framework of the relation-supervised densely-stacked generative model (RDG).&#34;&gt;
+
+
+  &lt;img data-src=&#34;/project/s2igan/Network_GAN_hu06ea134ba3db35495988d76c8522b84c_124878_2000x2000_fit_lanczos_2.png&#34; class=&#34;lazyload&#34; alt=&#34;&#34; width=&#34;800&#34; height=&#34;378&#34;&gt;
+&lt;/a&gt;
+
+
+  
+  
+  &lt;figcaption&gt;
+    Framework of the relation-supervised densely-stacked generative model (RDG).
+  &lt;/figcaption&gt;
+
+
+&lt;/figure&gt;
+
+&lt;small&gt;
+After learning the visually-grounded and class-discriminative speech embedding, we employ RDG to generate images conditioned on this speech embedding. RDG consists of two sub-modules, which are a Densely-stacked Generator (DG) and a Relation Supervisor (RS). 
+&lt;/small&gt;
+&lt;h4 id=&#34;results&#34;&gt;Results&lt;/h4&gt;
+&lt;h5 id=&#34;comparison&#34;&gt;Comparison&lt;/h5&gt;
+&lt;table&gt;&lt;tr&gt;
+&lt;td&gt;
+&lt;div style=&#34;height:40px&#34;&gt; &lt;/div&gt;
+&lt;div style=&#34;height:110px&#34;&gt;Ground Truth &lt;/div&gt;
+&lt;div style=&#34;height:120px&#34;&gt;StackGAN-v2 (T2IG) &lt;/div&gt;
+&lt;div style=&#34;height:120px&#34;&gt;StackGAN-v2 (S2IG) &lt;/div&gt;
+&lt;div style=&#34;height:140px&#34;&gt;S2IGAN (S2IG) &lt;/div&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;img src=&#34;01_Groundtruth/birds/01.jpg&#34; width=&#34;120&#34;&gt;
+&lt;img src=&#34;02_StackGAN_TEXT/birds/01.png&#34; width=&#34;120&#34;&gt;
+&lt;img src=&#34;03_StackGAN/birds/01.png&#34; width=&#34;120&#34;&gt;
+&lt;img src=&#34;04_SpeechGAN/birds/01.png&#34; width=&#34;120&#34;&gt;
+&lt;audio controls style=&#34;width:120px;height:32px&#34;&gt;
+&lt;source src=&#34;01_Groundtruth/audio/birds/01.wav&#34; type=&#34;audio/mpeg&#34;&gt;
+Your browser does not support the audio element.
+&lt;/audio&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;img src=&#34;01_Groundtruth/birds/02.jpg&#34; width=&#34;120&#34;&gt;
+&lt;img src=&#34;02_StackGAN_TEXT/birds/02.png&#34; width=&#34;120&#34;&gt;
+&lt;img src=&#34;03_StackGAN/birds/02.png&#34; width=&#34;120&#34;&gt;
+&lt;img src=&#34;04_SpeechGAN/birds/02.png&#34; width=&#34;120&#34;&gt;
+&lt;audio controls style=&#34;width:120px;height:32px&#34;&gt;
+&lt;source src=&#34;01_Groundtruth/audio/birds/02.wav&#34; type=&#34;audio/mpeg&#34;&gt;
+Your browser does not support the audio element.
+&lt;/audio&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;img src=&#34;01_Groundtruth/birds/03.jpg&#34;  width=&#34;120&#34;&gt;
+&lt;img src=&#34;02_StackGAN_TEXT/birds/03.png&#34; width=&#34;120&#34;&gt;
+&lt;img src=&#34;03_StackGAN/birds/03.png&#34; width=&#34;120&#34;&gt;
+&lt;img src=&#34;04_SpeechGAN/birds/03.png&#34; width=&#34;120&#34;&gt;
+&lt;audio controls style=&#34;width:120px;height:32px&#34;&gt;
+&lt;source src=&#34;01_Groundtruth/audio/birds/03.wav&#34; type=&#34;audio/mpeg&#34;&gt;
+Your browser does not support the audio element.
+&lt;/audio&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;img src=&#34;01_Groundtruth/birds/04.jpg&#34;  width=&#34;120&#34;&gt;
+&lt;img src=&#34;02_StackGAN_TEXT/birds/04.png&#34; width=&#34;120&#34;&gt;
+&lt;img src=&#34;03_StackGAN/birds/04.png&#34; width=&#34;120&#34;&gt;
+&lt;img src=&#34;04_SpeechGAN/birds/04.png&#34; width=&#34;120&#34;&gt;
+&lt;audio controls style=&#34;width:120px;height:32px&#34;&gt;
+&lt;source src=&#34;01_Groundtruth/audio/birds/04.wav&#34; type=&#34;audio/mpeg&#34;&gt;
+Your browser does not support the audio element.
+&lt;/audio&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;img src=&#34;01_Groundtruth/birds/05.jpg&#34;  width=&#34;120&#34;&gt;
+&lt;img src=&#34;02_StackGAN_TEXT/birds/05.png&#34; width=&#34;120&#34;&gt;
+&lt;img src=&#34;03_StackGAN/birds/05.png&#34; width=&#34;120&#34;&gt;
+&lt;img src=&#34;04_SpeechGAN/birds/05.png&#34; width=&#34;120&#34;&gt;
+&lt;audio controls style=&#34;width:120px;height:32px&#34;&gt;
+&lt;source src=&#34;01_Groundtruth/audio/birds/05.wav&#34; type=&#34;audio/mpeg&#34;&gt;
+Your browser does not support the audio element.
+&lt;/audio&gt;
+&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;
+&lt;table&gt;&lt;tr&gt;
+&lt;td&gt;
+&lt;div style=&#34;height:40px&#34;&gt; &lt;/div&gt;
+&lt;div style=&#34;height:110px&#34;&gt;Ground Truth &lt;/div&gt;
+&lt;div style=&#34;height:120px&#34;&gt;StackGAN-v2 (T2IG) &lt;/div&gt;
+&lt;div style=&#34;height:120px&#34;&gt;StackGAN-v2 (S2IG) &lt;/div&gt;
+&lt;div style=&#34;height:140px&#34;&gt;S2IGAN (S2IG) &lt;/div&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;img src=&#34;01_Groundtruth/flowers/01.jpg&#34; width=&#34;120&#34; &gt;
+&lt;img src=&#34;02_StackGAN_TEXT/flowers/01.png&#34; width=&#34;120&#34;&gt;
+&lt;img src=&#34;03_StackGAN/flowers/01.png&#34; width=&#34;120&#34;&gt;
+&lt;img src=&#34;04_SpeechGAN/flowers/01.png&#34; width=&#34;120&#34;&gt;
+&lt;audio controls style=&#34;width:120px;height:32px&#34;&gt;
+&lt;source src=&#34;01_Groundtruth/audio/flowers/01.wav&#34; type=&#34;audio/mpeg&#34;&gt;
+Your browser does not support the audio element.
+&lt;/audio&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;img src=&#34;01_Groundtruth/flowers/02.jpg&#34; width=&#34;120&#34; &gt;
+&lt;img src=&#34;02_StackGAN_TEXT/flowers/02.png&#34; width=&#34;120&#34;&gt;
+&lt;img src=&#34;03_StackGAN/flowers/02.png&#34; width=&#34;120&#34;&gt;
+&lt;img src=&#34;04_SpeechGAN/flowers/02.png&#34; width=&#34;120&#34;&gt;
+&lt;audio controls style=&#34;width:120px;height:32px&#34;&gt;
+&lt;source src=&#34;01_Groundtruth/audio/flowers/02.wav&#34; type=&#34;audio/mpeg&#34;&gt;
+Your browser does not support the audio element.
+&lt;/td&gt;
+&lt;td&gt;&lt;img src=&#34;01_Groundtruth/flowers/03.jpg&#34; width=&#34;120&#34; &gt;
+&lt;img src=&#34;02_StackGAN_TEXT/flowers/03.png&#34; width=&#34;120&#34;&gt;
+&lt;img src=&#34;03_StackGAN/flowers/03.png&#34; width=&#34;120&#34;&gt;
+&lt;img src=&#34;04_SpeechGAN/flowers/03.png&#34; width=&#34;120&#34;&gt;
+&lt;audio controls style=&#34;width:120px;height:32px&#34;&gt;
+&lt;source src=&#34;01_Groundtruth/audio/flowers/03.wav&#34; type=&#34;audio/mpeg&#34;&gt;
+Your browser does not support the audio element.
+&lt;/td&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;img src=&#34;01_Groundtruth/flowers/04.jpg&#34; width=&#34;120&#34; &gt;
+&lt;img src=&#34;02_StackGAN_TEXT/flowers/04.png&#34; width=&#34;120&#34;&gt;
+&lt;img src=&#34;03_StackGAN/flowers/04.png&#34; width=&#34;120&#34;&gt;
+&lt;img src=&#34;04_SpeechGAN/flowers/04.png&#34; width=&#34;120&#34;&gt;
+&lt;audio controls style=&#34;width:120px;height:32px&#34;&gt;
+&lt;source src=&#34;01_Groundtruth/audio/flowers/04.wav&#34; type=&#34;audio/mpeg&#34;&gt;
+Your browser does not support the audio element.
+&lt;/td&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;img src=&#34;01_Groundtruth/flowers/05.jpg&#34; width=&#34;120&#34; &gt;
+&lt;img src=&#34;02_StackGAN_TEXT/flowers/05.png&#34; width=&#34;120&#34;&gt;
+&lt;img src=&#34;03_StackGAN/flowers/05.png&#34; width=&#34;120&#34;&gt;
+&lt;img src=&#34;04_SpeechGAN/flowers/05.png&#34; width=&#34;120&#34;&gt;
+&lt;audio controls style=&#34;width:120px;height:32px&#34;&gt;
+&lt;source src=&#34;01_Groundtruth/audio/flowers/05.wav&#34; type=&#34;audio/mpeg&#34;&gt;
+Your browser does not support the audio element.
+&lt;/td&gt;
+&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;
+&lt;h5 id=&#34;ability-to-catch-subtle-semantic-differences&#34;&gt;Ability to catch subtle semantic differences&lt;/h5&gt;
+&lt;small&gt;
+The following images were generated by S2IGAN conditioned on speech descriptions that have subtle differences.
+&lt;/small&gt;
+&lt;table&gt;&lt;tr&gt;
+&lt;td&gt;
+&lt;img src=&#34;yellow_brown.png&#34; width=&#34;200&#34;&gt;
+&lt;audio controls style=&#34;width:200px;height:32px&#34;&gt;
+&lt;source src=&#34;yellow_brown.wav&#34; type=&#34;audio/mpeg&#34;&gt;
+Your browser does not support the audio element.
+&lt;/audio&gt;&lt;/td&gt;
+&lt;td&gt;
+&lt;img src=&#34;yellow_black.png&#34; width=&#34;200&#34;&gt;
+&lt;audio controls style=&#34;width:200px;height:32px&#34;&gt;
+&lt;source src=&#34;yellow_black.wav&#34; type=&#34;audio/mpeg&#34;&gt;
+Your browser does not support the audio element.
+&lt;/audio&gt;&lt;/td&gt;
+&lt;td&gt;
+&lt;img src=&#34;yellow_blue.png&#34; width=&#34;200&#34;&gt;
+&lt;audio controls style=&#34;width:200px;height:32px&#34;&gt;
+&lt;source src=&#34;yellow_black.wav&#34; type=&#34;audio/mpeg&#34; &gt;
+Your browser does not support the audio element.
+&lt;/audio&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;
+&lt;table&gt;&lt;tr&gt;
+&lt;td&gt;
+&lt;img src=&#34;red_brown.png&#34; width=&#34;200&#34;&gt;
+&lt;audio controls style=&#34;width:200px;height:32px&#34;&gt;
+&lt;source src=&#34;red_brown.wav&#34; type=&#34;audio/mpeg&#34;&gt;
+Your browser does not support the audio element.
+&lt;/audio&gt;&lt;/td&gt;
+&lt;td&gt;
+&lt;img src=&#34;red_black.png&#34; width=&#34;200&#34;&gt;
+&lt;audio controls style=&#34;width:200px;height:32px&#34;&gt;
+&lt;source src=&#34;red_black.wav&#34; type=&#34;audio/mpeg&#34;&gt;
+Your browser does not support the audio element.
+&lt;/audio&gt;&lt;/td&gt;
+&lt;td&gt;
+&lt;img src=&#34;red_blue.png&#34; width=&#34;200&#34;&gt;
+&lt;audio controls style=&#34;width:200px;height:32px&#34;&gt;
+&lt;source src=&#34;red_blue.wav&#34; type=&#34;audio/mpeg&#34; &gt;
+Your browser does not support the audio element.
+&lt;/audio&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;
+&lt;table&gt;&lt;tr&gt;
+&lt;td&gt;
+&lt;img src=&#34;grey_brown.png&#34; width=&#34;200&#34;&gt;
+&lt;audio controls style=&#34;width:200px;height:32px&#34;&gt;
+&lt;source src=&#34;grey_brown.wav&#34; type=&#34;audio/mpeg&#34;&gt;
+Your browser does not support the audio element.
+&lt;/audio&gt;&lt;/td&gt;
+&lt;td&gt;
+&lt;img src=&#34;grey_black.png&#34; width=&#34;200&#34;&gt;
+&lt;audio controls style=&#34;width:200px;height:32px&#34;&gt;
+&lt;source src=&#34;grey_black.wav&#34; type=&#34;audio/mpeg&#34;&gt;
+Your browser does not support the audio element.
+&lt;/audio&gt;&lt;/td&gt;
+&lt;td&gt;
+&lt;img src=&#34;grey_blue.png&#34; width=&#34;200&#34;&gt;
+&lt;audio controls style=&#34;width:200px;height:32px&#34;&gt;
+&lt;source src=&#34;grey_blue.wav&#34; type=&#34;audio/mpeg&#34; &gt;
+Your browser does not support the audio element.
+&lt;/audio&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;
+&lt;h5 id=&#34;component-analysis&#34;&gt;Component analysis&lt;/h5&gt;
+&lt;small&gt;
+&lt;p&gt;&lt;strong&gt;Effect of densely-stacked structure of DG&lt;/strong&gt; We evaluated the effect of the densely-stacked structures by changing it with the traditional stacked structures as in StackGAN-v2 (see S2IGAN w/o Dense in Table 1). Comparing the results to S2IGAN, S2IGAN w/o Dense shows a performance drop for most evaluation metrics, see $e.g.,$ the decrease in mAP for both the CUB and the Oxford-102 datasets. These results confirm the effectiveness of the proposed densely-stacked structure for image generation.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Effect of RS&lt;/strong&gt; The effect of the relation supervisor on training the generators can be observed by comparing the performances of S2IGAN and S2IGAN w/o RS. The results show that the RS module leads to improvements in both mAP and FID for both datasets, $e.g.$, RS increases the mAP from 12.86 to 13.40 and decreases the FID from 53.24 to 48.64 on the Oxford-102 dataset. These results indicate the effectiveness of RS on ensuring the semantic consistency of the synthesized images with the corresponding speech descriptions.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Effect of SEN&lt;/strong&gt; The effect of SEN on our S2IGAN is investigated by comparing S2IGAN with S2IGAN w/o SEN. When the speech encoder (SED) was not pre-trained in SEN, the generation model (S2IGAN w/o SEN) shows a much worse performance, $e.g.,$ without SEN, mAP drops from 9.04 to 2.91 on the CUB dataset. Finally, we conducted an experiment to train S2IGAN in an end-to-end manner, however, the performance did not show an improvement (S2IGAN end-to-end). These results show the importance of the pre-learned speech embedding provided by SEN.&lt;/p&gt;
+&lt;/small&gt;
+&lt;style type=&#34;text/css&#34;&gt;
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-c3ow{border-color:inherit;text-align:center;vertical-align:top}
+.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+table{margin:0px auto}
+&lt;/style&gt;
+&lt;table class=&#34;tg&#34;&gt;
+&lt;caption&gt;Table 1: Component analysis of S2IGAN; w/o means without. The best results are shown in bold.&lt;/caption&gt;
+  &lt;tr&gt;
+    &lt;th class=&#34;tg-0pky&#34;&gt;Dataset&lt;/th&gt;
+    &lt;th class=&#34;tg-c3ow&#34; colspan=&#34;3&#34;&gt;CUB (Bird)&lt;/th&gt;
+    &lt;th class=&#34;tg-c3ow&#34; colspan=&#34;3&#34;&gt;Oxford-102 (Flower)&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class=&#34;tg-0pky&#34; width=&#34;20%&#34;&gt;Evaluation Metric&lt;br&gt;&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34; width=&#34;12%&#34;&gt;mAP&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34; width=&#34;12%&#34;&gt;FID&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34; width=&#34;12%&#34;&gt;IS&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34; width=&#34;12%&#34;&gt;mAP&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34; width=&#34;12%&#34;&gt;FID&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34; width=&#34;20%&#34;&gt;IS&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class=&#34;tg-0pky&#34;&gt;S2IGAN w/o Dense&lt;br&gt;&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34;&gt;8.66&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34;&gt;17.58&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34;&gt;4.19&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34;&gt;13.13&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34;&gt;64.37&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34;&gt;3.68 &amp;#177  0.05&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class=&#34;tg-0pky&#34;&gt;S2IGAN w/o RS&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34;&gt;8.54&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34;&gt;15.59&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34;&gt;4.14&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34;&gt;12.86&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34;&gt;53.24&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34;&gt;&lt;b&gt;3.70 &amp;#177 0.08&lt;/b&gt;&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class=&#34;tg-0pky&#34;&gt;S2IGAN w/o SEN&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34;&gt;2.91&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34;&gt;19.56&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34;&gt;3.49&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34;&gt;7.38&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34;&gt;67.60&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34;&gt;2.77 &amp;#177 0.04&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class=&#34;tg-0pky&#34;&gt;S2IGAN end-to-end&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34;&gt;7.38&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34;&gt;21.54&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34;&gt;4.29&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34;&gt;12.47&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34;&gt;51.88&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34;&gt;3.55 &amp;#177 0.08&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class=&#34;tg-0pky&#34;&gt;S2IGAN&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34;&gt;&lt;b&gt;9.04&lt;/b&gt;&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34;&gt;&lt;b&gt;14.50&lt;/b&gt;&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34;&gt;&lt;b&gt;4.29&lt;/b&gt;&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34;&gt;&lt;b&gt;13.40&lt;/b&gt;&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34;&gt;&lt;b&gt;48.64&lt;/b&gt;&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34;&gt;3.55 &amp;#177 0.04&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+&lt;small&gt;
+&lt;p&gt;&lt;strong&gt;Effect of the distinctive loss in SEN&lt;/strong&gt; We investigated the effect of the distinctive loss $\mathcal{L}_d$ for training SEN. The results are shown in Table 2. As can be seen, SEN without using $\mathcal{L}_d$ for training shows a performance drop in terms of mAP on both datasets. Importantly, a better performance of SEN always led to an increase in the performance of S2IGAN, showing the importance of learning a good speech embedding for the task of image generation.
+&lt;/small&gt;&lt;/p&gt;
+&lt;style type=&#34;text/css&#34;&gt;
+.tg  {border-collapse:collapse;border-color:#ccc;border-spacing:0;}
+.tg td{background-color:#fff;border-color:#ccc;border-style:solid;border-width:1px;color:#333;
+  font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{background-color:#f0f0f0;border-color:#ccc;border-style:solid;border-width:1px;color:#333;
+  font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-c3ow{border-color:inherit;text-align:center;vertical-align:top}
+.tg .tg-7btt{border-color:inherit;font-weight:bold;text-align:center;vertical-align:top}
+&lt;/style&gt;
+&lt;table class=&#34;tg&#34;&gt;
+&lt;caption&gt;Table 2: Effect of the distinctive loss &lt;i&gt;L&lt;sub&gt;d&lt;/sub&gt;&lt;/i&gt; in SEN. mAP of SEN is
+calculated on the real test images.&lt;/caption&gt;
+  &lt;tr&gt;
+    &lt;th class=&#34;tg-c3ow&#34; rowspan=&#34;2&#34; width=&#34;20%&#34;&gt;Dataset&lt;/th&gt;
+    &lt;th class=&#34;tg-c3ow&#34; rowspan=&#34;2&#34;width=&#34;10%&#34;&gt;&lt;i&gt;L&lt;sub&gt;d&lt;/sub&gt;&lt;/i&gt;&lt;/th&gt;
+    &lt;th class=&#34;tg-c3ow&#34;&gt;SEN&lt;/th&gt;
+    &lt;th class=&#34;tg-c3ow&#34; colspan=&#34;3&#34;&gt;S2IGAN&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class=&#34;tg-c3ow&#34; width=&#34;12%&#34;&gt;mAP&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34; width=&#34;12%&#34;&gt;mAP&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34; width=&#34;12%&#34;&gt;FID&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34; width=&#34;12%&#34;&gt;IS&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class=&#34;tg-c3ow&#34; rowspan=&#34;2&#34;&gt;CUB (Bird)&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34;&gt;w/o&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34;&gt;23.68&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34;&gt;6.80&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34;&gt;16.66&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34;&gt;4.19 &amp;#177 0.05&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class=&#34;tg-c3ow&#34;&gt;w/&lt;/td&gt;
+    &lt;td class=&#34;tg-7btt&#34;&gt;24.24&lt;/td&gt;
+    &lt;td class=&#34;tg-7btt&#34;&gt;9.04&lt;/td&gt;
+    &lt;td class=&#34;tg-7btt&#34;&gt;14.50&lt;/td&gt;
+    &lt;td class=&#34;tg-7btt&#34;&gt;4.29 &amp;#177 0.04&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class=&#34;tg-c3ow&#34; rowspan=&#34;2&#34;&gt;Oxford-102 (Flower)&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34;&gt;w/o&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34;&gt;41.85&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34;&gt;10.03&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34;&gt;69.47&lt;/td&gt;
+    &lt;td class=&#34;tg-c3ow&#34;&gt;3.35 &amp;#177 0.08&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class=&#34;tg-c3ow&#34;&gt;w/&lt;/td&gt;
+    &lt;td class=&#34;tg-7btt&#34;&gt;&lt;span style=&#34;font-weight:bold&#34;&gt;41.86&lt;/span&gt;&lt;/td&gt;
+    &lt;td class=&#34;tg-7btt&#34;&gt;13.40&lt;/td&gt;
+    &lt;td class=&#34;tg-7btt&#34;&gt;48.64&lt;/td&gt;
+    &lt;td class=&#34;tg-7btt&#34;&gt;3.55 &amp;#177 0.08&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+&lt;small&gt;
+&lt;p&gt;To better understand the role of the loss function, we visualized the speech feature distributions produced by SEN trained with and without $\mathcal{L}_d$ using t-SNE. It shows that the use of $\mathcal{L}_d$ increases the distance between different classes, which is important to create semantic-discriminative speech embeddings, $e.g.,$ after training SEN using $\mathcal{L}_d$, class 112 was no longer mixed with other classes. So, both the objective results and the visualization show that $\mathcal{L}_d$ is critical for learning better speech embeddings, which further helps S2IGAN to generate better semantically-consistent images.&lt;/p&gt;
+&lt;/small&gt;
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure id=&#34;figure-visualization-of-the-distribution-of-the-speech-embeddings-created-by-sen-without-a-and-with-b-distinctive-loss-for-ease-of-inspection-the-presented-data-are-from-10-randomly-selected-classes-from-the-cub-test-dataset&#34;&gt;
+
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;/project/s2igan/SNE_hu288ac95a6ed69c68f739689c2a681352_243815_2000x2000_fit_lanczos_2.png&#34; data-caption=&#34;Visualization of the distribution of the speech embeddings created by SEN without (a) and with (b) distinctive loss. For ease of inspection, the presented data are from 10 randomly selected classes from the CUB test dataset.&#34;&gt;
+
+
+  &lt;img data-src=&#34;/project/s2igan/SNE_hu288ac95a6ed69c68f739689c2a681352_243815_2000x2000_fit_lanczos_2.png&#34; class=&#34;lazyload&#34; alt=&#34;&#34; width=&#34;450&#34; height=&#34;798&#34;&gt;
+&lt;/a&gt;
+
+
+  
+  
+  &lt;figcaption&gt;
+    Visualization of the distribution of the speech embeddings created by SEN without (a) and with (b) distinctive loss. For ease of inspection, the presented data are from 10 randomly selected classes from the CUB test dataset.
+  &lt;/figcaption&gt;
+
+
+&lt;/figure&gt;
+
+</description>
+    </item>
+    
+  </channel>
+</rss>

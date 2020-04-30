@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Publications | Xinsheng</title>
+    <link>/publication/</link>
+      <atom:link href="/publication/index.xml" rel="self" type="application/rss+xml" />
+    <description>Publications</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 01 Jan 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
+      <title>Publications</title>
+      <link>/publication/</link>
+    </image>
+    
+    <item>
+      <title>Domain segmentation and adjustment for generalized zero-shot learning</title>
+      <link>/publication/wang-2020-domain/</link>
+      <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
+      <guid>/publication/wang-2020-domain/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Combining Self-Aggregation Vector and Indicator Matrix for Improved Object Retrieval</title>
+      <link>/publication/zhang-2019-combining/</link>
+      <pubDate>Tue, 01 Jan 2019 00:00:00 +0000</pubDate>
+      <guid>/publication/zhang-2019-combining/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Visual space optimization for zero-shot learning</title>
+      <link>/publication/wang-2019-visual/</link>
+      <pubDate>Tue, 01 Jan 2019 00:00:00 +0000</pubDate>
+      <guid>/publication/wang-2019-visual/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Atomization and surface heat transfer characteristics of cryogen spray cooling with expansion-chambered nozzles</title>
+      <link>/publication/wang-2018-atomization/</link>
+      <pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate>
+      <guid>/publication/wang-2018-atomization/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Unsupervised semantic-based convolutional features aggregation for image retrieval</title>
+      <link>/publication/wang-2018-unsupervised/</link>
+      <pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate>
+      <guid>/publication/wang-2018-unsupervised/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Experimental study on the relation between internal flow and flashing spray characteristics of R134a using straight tube nozzles</title>
+      <link>/publication/wang-2017-experimental/</link>
+      <pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate>
+      <guid>/publication/wang-2017-experimental/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Numerical simulation of cryogen spray cooling by a three-dimensional hybrid vortex method</title>
+      <link>/publication/wang-2017-numerical/</link>
+      <pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate>
+      <guid>/publication/wang-2017-numerical/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Effect of flow pattern inside nozzle on spray characteristics of R134a flashing spray</title>
+      <link>/publication/wang-2016-effect/</link>
+      <pubDate>Fri, 01 Jan 2016 00:00:00 +0000</pubDate>
+      <guid>/publication/wang-2016-effect/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
