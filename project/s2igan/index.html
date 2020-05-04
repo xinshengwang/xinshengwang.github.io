@@ -1045,7 +1045,7 @@ table{margin:0px auto}
   </tr>
 </table>
 <small>
-<p><strong>Effect of the distinctive loss in SEN</strong> We investigated the effect of the distinctive loss $\mathcal{L}_d$ for training SEN. The results are shown in Table 2. As can be seen, SEN without using $\mathcal{L}_d$ for training shows a performance drop in terms of mAP on both datasets. Importantly, a better performance of SEN always led to an increase in the performance of S2IGAN, showing the importance of learning a good speech embedding for the task of image generation.
+<p><strong>Effect of the distinctive loss in SEN</strong> We investigated the effect of the distinctive loss $\mathcal{L}_d$ for training SEN. The SEN module was evaluated using a cross-modal image retrieval task. Specifically, we used speech descriptions to retrieve the corresponding images with the same class. Retrieval performance was evaluated with the mean Average Precision (mAP). Higher mAP means a better retrieval result, indicating better performance on embedding speech information. The results are shown in Table 2. As can be seen, SEN without using $\mathcal{L}_d$ for training shows a performance drop in terms of mAP on both datasets. Importantly, a better performance of SEN always led to an increase in the performance of S2IGAN, showing the importance of learning a good speech embedding for the task of image generation .<br>
 </small></p>
 <style type="text/css">
 .tg  {border-collapse:collapse;border-color:#ccc;border-spacing:0;}
