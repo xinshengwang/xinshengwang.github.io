@@ -303,7 +303,7 @@ Your browser does not support the audio element.
 &lt;td&gt;
 &lt;img src=&#34;yellow_blue.png&#34; width=&#34;200&#34;&gt;
 &lt;audio controls style=&#34;width:200px;height:32px&#34;&gt;
-&lt;source src=&#34;yellow_black.wav&#34; type=&#34;audio/mpeg&#34; &gt;
+&lt;source src=&#34;yellow_blue.wav&#34; type=&#34;audio/mpeg&#34; &gt;
 Your browser does not support the audio element.
 &lt;/audio&gt;&lt;/td&gt;
 &lt;/tr&gt;&lt;/table&gt;
