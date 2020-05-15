@@ -5,12 +5,20 @@
     <link>/author/xinsheng-wang-tingting-qiao-jihua-zhu-alan-hanjalic-odette-scharenborg/</link>
       <atom:link href="/author/xinsheng-wang-tingting-qiao-jihua-zhu-alan-hanjalic-odette-scharenborg/index.xml" rel="self" type="application/rss+xml" />
     <description>Xinsheng Wang, Tingting Qiao, Jihua Zhu, Alan Hanjalic, Odette Scharenborg</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Tue, 28 Apr 2020 22:58:36 +0200</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Thu, 14 May 2020 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
       <title>Xinsheng Wang, Tingting Qiao, Jihua Zhu, Alan Hanjalic, Odette Scharenborg</title>
       <link>/author/xinsheng-wang-tingting-qiao-jihua-zhu-alan-hanjalic-odette-scharenborg/</link>
     </image>
+    
+    <item>
+      <title>S2IGAN: Speech-to-Image Generation via Adversarial Learning</title>
+      <link>/publication/wang-2020-s2igan/</link>
+      <pubDate>Thu, 14 May 2020 00:00:00 +0000</pubDate>
+      <guid>/publication/wang-2020-s2igan/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>S2IGAN</title>
@@ -426,7 +434,7 @@ table{margin:0px auto}
   &lt;/tr&gt;
 &lt;/table&gt;
 &lt;small&gt;
-&lt;p&gt;&lt;strong&gt;Effect of the distinctive loss in SEN&lt;/strong&gt; We investigated the effect of the distinctive loss $\mathcal{L}_d$ for training SEN. The SEN module was evaluated using a cross-modal image retrieval task. Specifically, we used speech descriptions to retrieve the corresponding images with the same class. Retrieval performance was evaluated with the mean Average Precision (mAP). Higher mAP means a better retrieval result, indicating better performance on embedding speech information. The results are shown in Table 2. As can be seen, SEN without using $\mathcal{L}_d$ for training shows a performance drop in terms of mAP on both datasets. Importantly, a better performance of SEN always led to an increase in the performance of S2IGAN, showing the importance of learning a good speech embedding for the task of image generation .&lt;br&gt;
+&lt;p&gt;&lt;strong&gt;Effect of the distinctive loss in SEN&lt;/strong&gt; We investigated the effect of the distinctive loss $\mathcal{L}_d$ for training SEN. The SEN module was evaluated using a cross-modal image retrieval task. Specifically, we used speech descriptions to retrieve the corresponding images with the same class. Retrieval performance was evaluated with the mean Average Precision (mAP). Higher mAP means a better retrieval result, indicating better performance on embedding speech information. The results are shown in Table 2. As can be seen, SEN without using $\mathcal{L}_d$ for training shows a performance drop in terms of mAP on both datasets. Importantly, a better performance of SEN always led to an increase in the performance of S2IGAN, showing the importance of learning a good speech embedding for the task of image generation.&lt;br&gt;
 &lt;/small&gt;&lt;/p&gt;
 &lt;style type=&#34;text/css&#34;&gt;
 .tg  {border-collapse:collapse;border-color:#ccc;border-spacing:0;}
@@ -523,6 +531,10 @@ calculated on the real test images.&lt;/caption&gt;
 
 &lt;/figure&gt;
 
+&lt;h3 id=&#34;paper&#34;&gt;Paper&lt;/h3&gt;
+&lt;p&gt;The paper was released on arXiv: &lt;a href=&#34;https://arxiv.org/abs/2005.06968&#34;&gt;https://arxiv.org/abs/2005.06968&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;code&#34;&gt;Code&lt;/h3&gt;
+&lt;p&gt;The source code will be released soon.&lt;/p&gt;
 </description>
     </item>
     
