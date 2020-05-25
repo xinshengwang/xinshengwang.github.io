@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>语音识别 | Xinsheng Wang</title>
+    <link>/category/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/</link>
+      <atom:link href="/category/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/index.xml" rel="self" type="application/rss+xml" />
+    <description>语音识别</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sun, 24 May 2020 17:46:37 +0200</lastBuildDate>
+    <image>
+      <url>/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
+      <title>语音识别</title>
+      <link>/category/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/</link>
+    </image>
+    
+    <item>
+      <title>LAS</title>
+      <link>/post/las/</link>
+      <pubDate>Sun, 24 May 2020 17:46:37 +0200</pubDate>
+      <guid>/post/las/</guid>
+      <description>&lt;small&gt;
+&lt;pre&gt;&lt;code&gt;@inproceedings{chan2016listen,
+  title={Listen, attend and spell: A neural network for large vocabulary conversational speech recognition},
+  author={Chan, William and Jaitly, Navdeep and Le, Quoc and Vinyals, Oriol},
+  booktitle={2016 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)},
+  pages={4960--4964},
+  year={2016},
+  organization={IEEE}
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://github.com/AzizCode92/Listen-Attend-and-Spell-Pytorch&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;本文代码: https://github.com/AzizCode92/Listen-Attend-and-Spell-Pytorch&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Listen, Attend and Spell (LAS)主要由两个部分组成，一个是接收语音信息的listener, 另一个是以字符作为输出的speller。其中listener将语音信号$\mathbf{x}=\left(x_{1}, \ldots, x_{T}\right)$表达为高级特征$\mathbf{h}=(h_1,..,h_U)$:
+$$\mathbf{h}=\text { Listen }(\mathbf{x})$$&lt;/p&gt;
+&lt;h2 id=&#34;listener&#34;&gt;Listener&lt;/h2&gt;
+&lt;p&gt;相比于文本序列特征，即便语音转为频谱图特征，其序列长度也是非常长的。为了提高训练速度，本文提出了pyramidal Bi-LSTM (pBLSTM)的结构。在通常的LSTM中，在第$j$层，第$i$时刻的输出由下式获得：
+$$h_{i}^{j}=\operatorname{BLSTM}\left(h_{i-1}^{j}, h_{i}^{j-1}\right)$$
+而在pBLSTM中，来自上层的输入不再是$i$时刻的输出，而是前后两个连续时刻输出的拼合：
+$$h_{i}^{j}=\operatorname{pBLSTM}\left(h_{i-1}^{j},\left[h_{2 i}^{j-1}, h_{2 i+1}^{j-1}\right]\right)$$&lt;/p&gt;
+&lt;p&gt;pBLSTM的结构示意图如下所示：&lt;/p&gt;
+&lt;div align=center&gt;&lt;img src=&#34;https://pic4.zhimg.com/80/v2-61a430a51cb7c381469919d67cbbe11f.png&#34; style=&#34;zoom:40%&#34; /&gt; &lt;/div&gt;
+&lt;p&gt;本文中采用了3层pBLSTM，在上边的示意图中，只有第一层传到第二层，以及第二层传到第三层的时候序列长度发生了减半，实际上，在频谱信息输入到pBLSTM第一层的时候也进行了同样的操作。因此，listener最终输出的序列长度是原输入序列长度的。$1/8$&lt;/p&gt;
+&lt;p&gt;pytorch中实现pBLSTM的listener代码如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;class pBLSTMLayer(nn.Module):
+    def __init__(self,input_feature_dim,hidden_dim,rnn_unit=&#39;LSTM&#39;,dropout_rate=0.0):
+        super(pBLSTMLayer, self).__init__()
+        self.rnn_unit = getattr(nn,rnn_unit.upper())
+        # feature dimension will be doubled since time resolution reduction
+        self.BLSTM = self.rnn_unit(input_feature_dim*2,hidden_dim,1, bidirectional=True, 
+                                   dropout=dropout_rate,batch_first=True)
+    def forward(self,input_x):
+        batch_size = input_x.size(0)
+        timestep = input_x.size(1)
+        feature_dim = input_x.size(2)
+        # 对输入的特征进行reshape是pBLSTM与BLSTM唯一的不同
+        #在这里对输入的特征时间序列长度减半，维度增倍
+        input_x = input_x.contiguous().view(batch_size,int(timestep/2),feature_dim*2)
+        # Bidirectional RNN
+        output,hidden = self.BLSTM(input_x)
+        return output,hidden
+
+class Listener(nn.Module):
+    def __init__(self, input_feature_dim, listener_hidden_dim, listener_layer, rnn_unit, dropout_rate=0.0, **kwargs):
+        super(Listener, self).__init__()
+        # Listener RNN layer
+        self.listener_layer = listener_layer
+        assert self.listener_layer&amp;gt;=1,&#39;Listener should have at least 1 layer&#39;
+    
+        self.pLSTM_layer0 = pBLSTMLayer(input_feature_dim,listener_hidden_dim, rnn_unit=rnn_unit, dropout_rate=dropout_rate)
+
+        for i in range(1,self.listener_layer):
+            setattr(self, &#39;pLSTM_layer&#39;+str(i), pBLSTMLayer(listener_hidden_dim*2,listener_hidden_dim, rnn_unit=rnn_unit, dropout_rate=dropout_rate))
+
+    def forward(self,input_x):
+        output,_  = self.pLSTM_layer0(input_x)
+        for i in range(1,self.listener_layer):
+            output, _ = getattr(self,&#39;pLSTM_layer&#39;+str(i))(output)
+        return output
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;speller&#34;&gt;Speller&lt;/h2&gt;
+&lt;p&gt;Speller根据时间序列依次预测每个时间步上的字符$y_i$。在时刻$i$,decoder的输入包括上一个时刻的state $s_{i-1}$, 字符$y_{i-1}$和context $c_{i-1}$，据此可得该时刻的state $s_i$:
+$$s_{i}=\mathrm{RNN}\left(s_{i-1}, y_{i-1}, c_{i-1}\right)$$
+利用该时刻的state $s_i$和encoder输出的声音特征$\mathbf{h}$计算加权的context：
+$$c_{i}=\text { AttentionContext }\left(s_{i}, \mathbf{h}\right)$$
+其具体的计算过程包括：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;计算$s_i$与$\mathbf{h}$中每一时刻$h_u$的scalar energy $e_{i,u}$&lt;/li&gt;
+&lt;li&gt;利用softmax对$e_{i,u}$处理后得到$s_i$与$\mathbf{h}$不同时刻相似程度的分布$\alpha_{i, u}$&lt;/li&gt;
+&lt;li&gt;以$\alpha_{i}$为权重对$\mathbf{h}$进行加权求和&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;相关公式表达如下：
+$$\begin{aligned}
+e_{i, u} &amp;amp;=\left\langle\phi\left(s_{i}\right), \psi\left(h_{u}\right)\right\rangle \&lt;br&gt;
+\alpha_{i, u} &amp;amp;=\frac{\exp \left(e_{i, u}\right)}{\sum_{u} \exp \left(e_{i, u}\right)} \&lt;br&gt;
+c_{i} &amp;amp;=\sum_{u} \alpha_{i, u} h_{u}
+\end{aligned}$$
+其中$\phi$和$\psi$均表示MLP。&lt;/p&gt;
+&lt;p&gt;Attention的pytorch代码实现如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;class Attention(nn.Module):  
+
+    def __init__(self,preprocess_mlp_dim, input_feature_dim=512):
+        super(Attention,self).__init__()
+        self.softmax = nn.Softmax(dim=-1)        
+        self.phi = nn.Linear(input_feature_dim,preprocess_mlp_dim)
+        self.psi = nn.Linear(input_feature_dim,preprocess_mlp_dim)
+
+    def forward(self, decoder_state, listener_feature):
+        comp_decoder_state = self.phi(decoder_state)
+        comp_listener_feature = TimeDistributed(self.psi,listener_feature)
+        #利用点积求s_i与h_u的相似度
+        energy = torch.bmm(comp_decoder_state,comp_listener_feature.transpose(1, 2)).squeeze(dim=1)
+        attention_score = [self.softmax(energy)]
+        context = torch.sum(listener_feature*attention_score[0].unsqueeze(2).repeat(1,1,listener_feature.size(2)),dim=1)
+        return attention_score,context
+
+def TimeDistributed(input_module, input_x):
+    batch_size = input_x.size(0)
+    time_steps = input_x.size(1)
+    reshaped_x = input_x.contiguous().view(-1, input_x.size(-1))
+    output_x = input_module(reshaped_x)
+    return output_x.view(batch_size,time_steps,-1)
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;根据$s_i$和$c_i$预测该时刻的字符$y_i$:
+$$P\left(y_{i} | \mathrm{x}, y_{&amp;lt;i}\right)=\text { CharacterDistribution }\left(s_{i}, c_{i}\right)$$
+其中$\text { CharacterDistribution }$由MLP+Softmax构成。&lt;/p&gt;
+&lt;p&gt;Speller的pytorch实现：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;class Speller(nn.Module):
+    def __init__(self, output_class_dim=63,  speller_hidden_dim=512, rnn_unit=&#39;LSTM&#39;, speller_rnn_layer=&#39;1&#39;, max_label_len=77,mlp_dim_in_attention=128, mlp_activate_in_attention=&#39;relu&#39;, listener_hidden_dim=256, decode_mode=1, **kwargs):
+        super(Speller, self).__init__()
+        self.rnn_unit = getattr(nn,rnn_unit.upper())
+        self.max_label_len = max_label_len
+        self.decode_mode = decode_mode
+        self.float_type = torch.torch.cuda.FloatTensor
+        self.label_dim = output_class_dim
+        self.rnn_layer = self.rnn_unit(output_class_dim+speller_hidden_dim,speller_hidden_dim,num_layers=speller_rnn_layer,batch_first=True)
+        self.attention = Attention( mlp_preprocess_input=use_mlp_in_attention, preprocess_mlp_dim=mlp_dim_in_attention,
+                                    activate=mlp_activate_in_attention, input_feature_dim=2*listener_hidden_dim,
+                                    multi_head=multi_head)
+        self.character_distribution = nn.Linear(speller_hidden_dim*2,output_class_dim)
+        self.softmax = nn.LogSoftmax(dim=-1)
+        if self.use_gpu:
+            self = self.cuda()
+
+    # Stepwise operation of each sequence
+    def forward_step(self,input_word, last_hidden_state,listener_feature):
+        rnn_output, hidden_state = self.rnn_layer(input_word,last_hidden_state)
+        attention_score, context = self.attention(rnn_output,listener_feature)
+        concat_feature = torch.cat([rnn_output.squeeze(dim=1),context],dim=-1)
+        raw_pred = self.softmax(self.character_distribution(concat_feature))
+
+        return raw_pred, hidden_state, context, attention_score
+
+    def forward(self, listener_feature, ground_truth=None, teacher_force_rate = 0.9):
+        if ground_truth is None:
+            teacher_force_rate = 0
+        #在训练过过程中上一个字符由ground-truth提供，但是在测试过程中没有ground-truth信息
+        #由此会导致在测试过程中表现不佳
+        #为此，训练过程中随机使用一定比例的预测字符代替ground-truth字符
+        #teach_force为True时，采用ground-truth字符，否则采用预测的上一个字符
+        #通过np.random.random_sample()随机产生0~1的浮点数，通过以下语句实现teacher_force_rate的概率采用ground-truth字符，1-teacher_force_rate的概率采用预测字符
+        teacher_force = True if np.random.random_sample() &amp;lt; teacher_force_rate else False
+
+        batch_size = listener_feature.size()[0]
+        #定义&amp;lt;start&amp;gt;的embedding,‘100000...’
+        output_word = CreateOnehotVariable(self.float_type(np.zeros((batch_size,1))),self.label_dim)
+        rnn_input = torch.cat([output_word,listener_feature[:,0:1,:]],dim=-1)
+
+        hidden_state = None
+        raw_pred_seq = []
+        output_seq = []
+        attention_record = []
+
+        if (ground_truth is None) or (not teacher_force):
+            max_step = self.max_label_len
+        else:
+            max_step = ground_truth.size()[1]
+
+        for step in range(max_step):
+            raw_pred, hidden_state, context, attention_score = self.forward_step(rnn_input, hidden_state, listener_feature)
+            raw_pred_seq.append(raw_pred)
+            attention_record.append(attention_score)
+            # Teacher force - use ground truth as next step&#39;s input
+            if teacher_force:
+                output_word = ground_truth[:,step:step+1,:].type(self.float_type)
+            else:
+                # Case 0. raw output as input
+                if self.decode_mode == 0:
+                    output_word = raw_pred.unsqueeze(1)
+                # Case 1. Pick character with max probability
+                elif self.decode_mode == 1:
+                    output_word = torch.zeros_like(raw_pred)
+                    for idx,i in enumerate(raw_pred.topk(1)[1]):
+                        output_word[idx,int(i)] = 1
+                    output_word = output_word.unsqueeze(1)             
+                # Case 2. Sample categotical label from raw prediction
+                else:
+                    sampled_word = Categorical(raw_pred).sample()
+                    output_word = torch.zeros_like(raw_pred)
+                    for idx,i in enumerate(sampled_word):
+                        output_word[idx,int(i)] = 1
+                    output_word = output_word.unsqueeze(1)
+                
+            rnn_input = torch.cat([output_word,context.unsqueeze(1)],dim=-1)
+
+        return raw_pred_seq,attention_record
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def CreateOnehotVariable( input_x, encoding_dim=63):
+    batch_size = input_x.size(0)
+    time_steps = input_x.size(1)
+    input_x = input_x.unsqueeze(2).type(torch.LongTensor)
+    onehot_x = Variable(torch.LongTensor(batch_size, time_steps, encoding_dim).zero_().scatter_(-1,input_x,1))
+    
+    return onehot_x
+
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/small&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

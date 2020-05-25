@@ -1,16 +1,484 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts | Xinsheng</title>
+    <title>Posts | Xinsheng Wang</title>
     <link>/post/</link>
       <atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     <description>Posts</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sun, 24 May 2020 17:46:37 +0200</lastBuildDate>
     <image>
       <url>/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
       <title>Posts</title>
       <link>/post/</link>
     </image>
+    
+    <item>
+      <title>LAS</title>
+      <link>/post/las/</link>
+      <pubDate>Sun, 24 May 2020 17:46:37 +0200</pubDate>
+      <guid>/post/las/</guid>
+      <description>&lt;small&gt;
+&lt;pre&gt;&lt;code&gt;@inproceedings{chan2016listen,
+  title={Listen, attend and spell: A neural network for large vocabulary conversational speech recognition},
+  author={Chan, William and Jaitly, Navdeep and Le, Quoc and Vinyals, Oriol},
+  booktitle={2016 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)},
+  pages={4960--4964},
+  year={2016},
+  organization={IEEE}
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://github.com/AzizCode92/Listen-Attend-and-Spell-Pytorch&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;本文代码: https://github.com/AzizCode92/Listen-Attend-and-Spell-Pytorch&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Listen, Attend and Spell (LAS)主要由两个部分组成，一个是接收语音信息的listener, 另一个是以字符作为输出的speller。其中listener将语音信号$\mathbf{x}=\left(x_{1}, \ldots, x_{T}\right)$表达为高级特征$\mathbf{h}=(h_1,..,h_U)$:
+$$\mathbf{h}=\text { Listen }(\mathbf{x})$$&lt;/p&gt;
+&lt;h2 id=&#34;listener&#34;&gt;Listener&lt;/h2&gt;
+&lt;p&gt;相比于文本序列特征，即便语音转为频谱图特征，其序列长度也是非常长的。为了提高训练速度，本文提出了pyramidal Bi-LSTM (pBLSTM)的结构。在通常的LSTM中，在第$j$层，第$i$时刻的输出由下式获得：
+$$h_{i}^{j}=\operatorname{BLSTM}\left(h_{i-1}^{j}, h_{i}^{j-1}\right)$$
+而在pBLSTM中，来自上层的输入不再是$i$时刻的输出，而是前后两个连续时刻输出的拼合：
+$$h_{i}^{j}=\operatorname{pBLSTM}\left(h_{i-1}^{j},\left[h_{2 i}^{j-1}, h_{2 i+1}^{j-1}\right]\right)$$&lt;/p&gt;
+&lt;p&gt;pBLSTM的结构示意图如下所示：&lt;/p&gt;
+&lt;div align=center&gt;&lt;img src=&#34;https://pic4.zhimg.com/80/v2-61a430a51cb7c381469919d67cbbe11f.png&#34; style=&#34;zoom:40%&#34; /&gt; &lt;/div&gt;
+&lt;p&gt;本文中采用了3层pBLSTM，在上边的示意图中，只有第一层传到第二层，以及第二层传到第三层的时候序列长度发生了减半，实际上，在频谱信息输入到pBLSTM第一层的时候也进行了同样的操作。因此，listener最终输出的序列长度是原输入序列长度的。$1/8$&lt;/p&gt;
+&lt;p&gt;pytorch中实现pBLSTM的listener代码如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;class pBLSTMLayer(nn.Module):
+    def __init__(self,input_feature_dim,hidden_dim,rnn_unit=&#39;LSTM&#39;,dropout_rate=0.0):
+        super(pBLSTMLayer, self).__init__()
+        self.rnn_unit = getattr(nn,rnn_unit.upper())
+        # feature dimension will be doubled since time resolution reduction
+        self.BLSTM = self.rnn_unit(input_feature_dim*2,hidden_dim,1, bidirectional=True, 
+                                   dropout=dropout_rate,batch_first=True)
+    def forward(self,input_x):
+        batch_size = input_x.size(0)
+        timestep = input_x.size(1)
+        feature_dim = input_x.size(2)
+        # 对输入的特征进行reshape是pBLSTM与BLSTM唯一的不同
+        #在这里对输入的特征时间序列长度减半，维度增倍
+        input_x = input_x.contiguous().view(batch_size,int(timestep/2),feature_dim*2)
+        # Bidirectional RNN
+        output,hidden = self.BLSTM(input_x)
+        return output,hidden
+
+class Listener(nn.Module):
+    def __init__(self, input_feature_dim, listener_hidden_dim, listener_layer, rnn_unit, dropout_rate=0.0, **kwargs):
+        super(Listener, self).__init__()
+        # Listener RNN layer
+        self.listener_layer = listener_layer
+        assert self.listener_layer&amp;gt;=1,&#39;Listener should have at least 1 layer&#39;
+    
+        self.pLSTM_layer0 = pBLSTMLayer(input_feature_dim,listener_hidden_dim, rnn_unit=rnn_unit, dropout_rate=dropout_rate)
+
+        for i in range(1,self.listener_layer):
+            setattr(self, &#39;pLSTM_layer&#39;+str(i), pBLSTMLayer(listener_hidden_dim*2,listener_hidden_dim, rnn_unit=rnn_unit, dropout_rate=dropout_rate))
+
+    def forward(self,input_x):
+        output,_  = self.pLSTM_layer0(input_x)
+        for i in range(1,self.listener_layer):
+            output, _ = getattr(self,&#39;pLSTM_layer&#39;+str(i))(output)
+        return output
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;speller&#34;&gt;Speller&lt;/h2&gt;
+&lt;p&gt;Speller根据时间序列依次预测每个时间步上的字符$y_i$。在时刻$i$,decoder的输入包括上一个时刻的state $s_{i-1}$, 字符$y_{i-1}$和context $c_{i-1}$，据此可得该时刻的state $s_i$:
+$$s_{i}=\mathrm{RNN}\left(s_{i-1}, y_{i-1}, c_{i-1}\right)$$
+利用该时刻的state $s_i$和encoder输出的声音特征$\mathbf{h}$计算加权的context：
+$$c_{i}=\text { AttentionContext }\left(s_{i}, \mathbf{h}\right)$$
+其具体的计算过程包括：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;计算$s_i$与$\mathbf{h}$中每一时刻$h_u$的scalar energy $e_{i,u}$&lt;/li&gt;
+&lt;li&gt;利用softmax对$e_{i,u}$处理后得到$s_i$与$\mathbf{h}$不同时刻相似程度的分布$\alpha_{i, u}$&lt;/li&gt;
+&lt;li&gt;以$\alpha_{i}$为权重对$\mathbf{h}$进行加权求和&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;相关公式表达如下：
+$$\begin{aligned}
+e_{i, u} &amp;amp;=\left\langle\phi\left(s_{i}\right), \psi\left(h_{u}\right)\right\rangle \&lt;br&gt;
+\alpha_{i, u} &amp;amp;=\frac{\exp \left(e_{i, u}\right)}{\sum_{u} \exp \left(e_{i, u}\right)} \&lt;br&gt;
+c_{i} &amp;amp;=\sum_{u} \alpha_{i, u} h_{u}
+\end{aligned}$$
+其中$\phi$和$\psi$均表示MLP。&lt;/p&gt;
+&lt;p&gt;Attention的pytorch代码实现如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;class Attention(nn.Module):  
+
+    def __init__(self,preprocess_mlp_dim, input_feature_dim=512):
+        super(Attention,self).__init__()
+        self.softmax = nn.Softmax(dim=-1)        
+        self.phi = nn.Linear(input_feature_dim,preprocess_mlp_dim)
+        self.psi = nn.Linear(input_feature_dim,preprocess_mlp_dim)
+
+    def forward(self, decoder_state, listener_feature):
+        comp_decoder_state = self.phi(decoder_state)
+        comp_listener_feature = TimeDistributed(self.psi,listener_feature)
+        #利用点积求s_i与h_u的相似度
+        energy = torch.bmm(comp_decoder_state,comp_listener_feature.transpose(1, 2)).squeeze(dim=1)
+        attention_score = [self.softmax(energy)]
+        context = torch.sum(listener_feature*attention_score[0].unsqueeze(2).repeat(1,1,listener_feature.size(2)),dim=1)
+        return attention_score,context
+
+def TimeDistributed(input_module, input_x):
+    batch_size = input_x.size(0)
+    time_steps = input_x.size(1)
+    reshaped_x = input_x.contiguous().view(-1, input_x.size(-1))
+    output_x = input_module(reshaped_x)
+    return output_x.view(batch_size,time_steps,-1)
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;根据$s_i$和$c_i$预测该时刻的字符$y_i$:
+$$P\left(y_{i} | \mathrm{x}, y_{&amp;lt;i}\right)=\text { CharacterDistribution }\left(s_{i}, c_{i}\right)$$
+其中$\text { CharacterDistribution }$由MLP+Softmax构成。&lt;/p&gt;
+&lt;p&gt;Speller的pytorch实现：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;class Speller(nn.Module):
+    def __init__(self, output_class_dim=63,  speller_hidden_dim=512, rnn_unit=&#39;LSTM&#39;, speller_rnn_layer=&#39;1&#39;, max_label_len=77,mlp_dim_in_attention=128, mlp_activate_in_attention=&#39;relu&#39;, listener_hidden_dim=256, decode_mode=1, **kwargs):
+        super(Speller, self).__init__()
+        self.rnn_unit = getattr(nn,rnn_unit.upper())
+        self.max_label_len = max_label_len
+        self.decode_mode = decode_mode
+        self.float_type = torch.torch.cuda.FloatTensor
+        self.label_dim = output_class_dim
+        self.rnn_layer = self.rnn_unit(output_class_dim+speller_hidden_dim,speller_hidden_dim,num_layers=speller_rnn_layer,batch_first=True)
+        self.attention = Attention( mlp_preprocess_input=use_mlp_in_attention, preprocess_mlp_dim=mlp_dim_in_attention,
+                                    activate=mlp_activate_in_attention, input_feature_dim=2*listener_hidden_dim,
+                                    multi_head=multi_head)
+        self.character_distribution = nn.Linear(speller_hidden_dim*2,output_class_dim)
+        self.softmax = nn.LogSoftmax(dim=-1)
+        if self.use_gpu:
+            self = self.cuda()
+
+    # Stepwise operation of each sequence
+    def forward_step(self,input_word, last_hidden_state,listener_feature):
+        rnn_output, hidden_state = self.rnn_layer(input_word,last_hidden_state)
+        attention_score, context = self.attention(rnn_output,listener_feature)
+        concat_feature = torch.cat([rnn_output.squeeze(dim=1),context],dim=-1)
+        raw_pred = self.softmax(self.character_distribution(concat_feature))
+
+        return raw_pred, hidden_state, context, attention_score
+
+    def forward(self, listener_feature, ground_truth=None, teacher_force_rate = 0.9):
+        if ground_truth is None:
+            teacher_force_rate = 0
+        #在训练过过程中上一个字符由ground-truth提供，但是在测试过程中没有ground-truth信息
+        #由此会导致在测试过程中表现不佳
+        #为此，训练过程中随机使用一定比例的预测字符代替ground-truth字符
+        #teach_force为True时，采用ground-truth字符，否则采用预测的上一个字符
+        #通过np.random.random_sample()随机产生0~1的浮点数，通过以下语句实现teacher_force_rate的概率采用ground-truth字符，1-teacher_force_rate的概率采用预测字符
+        teacher_force = True if np.random.random_sample() &amp;lt; teacher_force_rate else False
+
+        batch_size = listener_feature.size()[0]
+        #定义&amp;lt;start&amp;gt;的embedding,‘100000...’
+        output_word = CreateOnehotVariable(self.float_type(np.zeros((batch_size,1))),self.label_dim)
+        rnn_input = torch.cat([output_word,listener_feature[:,0:1,:]],dim=-1)
+
+        hidden_state = None
+        raw_pred_seq = []
+        output_seq = []
+        attention_record = []
+
+        if (ground_truth is None) or (not teacher_force):
+            max_step = self.max_label_len
+        else:
+            max_step = ground_truth.size()[1]
+
+        for step in range(max_step):
+            raw_pred, hidden_state, context, attention_score = self.forward_step(rnn_input, hidden_state, listener_feature)
+            raw_pred_seq.append(raw_pred)
+            attention_record.append(attention_score)
+            # Teacher force - use ground truth as next step&#39;s input
+            if teacher_force:
+                output_word = ground_truth[:,step:step+1,:].type(self.float_type)
+            else:
+                # Case 0. raw output as input
+                if self.decode_mode == 0:
+                    output_word = raw_pred.unsqueeze(1)
+                # Case 1. Pick character with max probability
+                elif self.decode_mode == 1:
+                    output_word = torch.zeros_like(raw_pred)
+                    for idx,i in enumerate(raw_pred.topk(1)[1]):
+                        output_word[idx,int(i)] = 1
+                    output_word = output_word.unsqueeze(1)             
+                # Case 2. Sample categotical label from raw prediction
+                else:
+                    sampled_word = Categorical(raw_pred).sample()
+                    output_word = torch.zeros_like(raw_pred)
+                    for idx,i in enumerate(sampled_word):
+                        output_word[idx,int(i)] = 1
+                    output_word = output_word.unsqueeze(1)
+                
+            rnn_input = torch.cat([output_word,context.unsqueeze(1)],dim=-1)
+
+        return raw_pred_seq,attention_record
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def CreateOnehotVariable( input_x, encoding_dim=63):
+    batch_size = input_x.size(0)
+    time_steps = input_x.size(1)
+    input_x = input_x.unsqueeze(2).type(torch.LongTensor)
+    onehot_x = Variable(torch.LongTensor(batch_size, time_steps, encoding_dim).zero_().scatter_(-1,input_x,1))
+    
+    return onehot_x
+
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/small&gt;</description>
+    </item>
+    
+    <item>
+      <title>Transformer</title>
+      <link>/post/transformer/</link>
+      <pubDate>Sun, 24 May 2020 14:00:13 +0200</pubDate>
+      <guid>/post/transformer/</guid>
+      <description>&lt;pre&gt;&lt;code&gt;
+@inproceedings{vaswani2017attention,
+  title={Attention is all you need},
+  author={Vaswani, Ashish and Shazeer, Noam and Parmar, Niki and Uszkoreit, Jakob and Jones, Llion and Gomez, Aidan N and Kaiser, {\L}ukasz and Polosukhin, Illia},
+  booktitle={Advances in neural information processing systems},
+  pages={5998--6008},
+  year={2017}
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;small&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href=&#34;http://nlp.seas.harvard.edu/2018/04/03/attention.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Harvard NLP团队推出的注释版Pytroch代码：http://nlp.seas.harvard.edu/2018/04/03/attention.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;http://jalammar.github.io/illustrated-transformer/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;图解Transformer: http://jalammar.github.io/illustrated-transformer/ &lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://mlexplained.com/2017/12/29/attention-is-all-you-need-explained/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;主要参考资料：https://mlexplained.com/2017/12/29/attention-is-all-you-need-explained/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;该论文提出了完全基于attention和全连接的Transformer来替代RNNs,以实现seq-to-seq任务。与基于RNNs的seq-to-seq模型一样，Transformer整体上也是一个encoder-decoder结构。其中encoder以时间序列信息$(x_1,&amp;hellip;,x_n)$为输入，输出相应的序列特征$\mathbf{z}=(z_1,&amp;hellip;,z_n)$. Decoder将$\mathbf{z}$作为输入，以自回归的形式依次给出相应的预测输出$(y_1,..,y_m)$.&lt;/p&gt;
+&lt;h2 id=&#34;关于attention&#34;&gt;关于Attention&lt;/h2&gt;
+&lt;p&gt;在正式了解Transformer前，先简单回顾下Transformer出现前主宰seq-to-seq任务的基于RNNs的encoder-decoder结构.&lt;/p&gt;
+&lt;div align=center&gt;&lt;img src=&#34;https://pic4.zhimg.com/80/v2-1ce36f17d754c486f5b087fd4f09dcc5.png&#34; style=&#34;zoom:80%&#34; /&gt; &lt;/div&gt;
+&lt;p&gt;早期基于RNNs的seq-to-seq的结构如上图所示，输入的序列信息(I like cats more than dogs)通过Encoder获得该序列信息的embedding特征向量。Decoder以该特征向量为输入生成相应的序列信息(私は犬より猫が好き)。在这个过程中有一个显而易见的问题，即所有输入的序列信息均包含在一个特征向量中。当序列信息比较短时，上述结构的表现还可以，但一旦序列长度很长时，一个单一的特征向量很难准确的表达所有的信息——“You can&amp;rsquo;t cram the meaning of a whole %&amp;amp;!$# sentence into a single $&amp;amp;!#* vector!&amp;rdquo; (KyungHyun Cho&amp;rsquo;s talk at ACL 2014 Workshop on Semantic Parsing)。&lt;/p&gt;
+&lt;p&gt;实际上，decoder在不同时刻需要关注的信息是不同的。例如，在将句子&amp;quot;I like cats more than dogs&amp;quot;翻译成&amp;quot;私は犬より猫が好き&amp;quot;的例子中，输入的第二个词“like”对应输出句子中的最后一个词“好き”,这就需要RNNs携带长时间依赖的信息。而在输出单词“犬”后，decoder只需要知道输出的这个词对应的是“dog”就行，而并不需要继续记住“dog”。受此启发，Attention机制应运而生。直观上，Attention机制的作用就是回顾整个句子，并有选择性地提取decode过程需要的信息。&lt;/p&gt;
+&lt;p&gt;为了能够有选择性地从encoder的输出中获得重要的信息，decoder需要访问encoder的所有隐藏层的输出。同时，为了方便encoder预测某一个特定的单词，我们仍然需要对所有encoder出来的信息进行处理，以得到一个单一向量的特征表示。这时,就需要利用Attention机制通过加权的方式来选择隐藏层状态向量，并以加权的形式获得特定的向量表示。原始的attention机制示意图如下所示：&lt;/p&gt;
+&lt;div align=center&gt;&lt;img src=&#34;https://pic4.zhimg.com/80/v2-f6dd63f6ab3119c0722f8350b803fbdc.png&#34; style=&#34;zoom:50%&#34; /&gt; &lt;/div&gt;
+&lt;p&gt;尽管Attention机制的出现在一定程度上解决了RNNs的一些短板，但是由于RNNs的时间序列属性，每个隐藏状态的计算都依赖于上一时刻的隐藏状态，大大限制了RNNs的计算效率。另外，在自然语言的机器翻译过程中，源内容和目标内容之间以及各自内部之间都存在一些依赖关系。而在传统的attention机制中，仅仅考虑了两者之间的依赖，而并没有考虑各自内部之间的依赖关系。Transformer的提出就是为了解决这两个短板：1）序列上前后依赖带来的低效率；2）没有考虑输入内容及输出内容各自内部之间关联的attention机制。&lt;/p&gt;
+&lt;h2 id=&#34;multi-head-attention&#34;&gt;Multi-head attention&lt;/h2&gt;
+&lt;p&gt;在传统seq-to-seq的attention机制中，计算attention的query, keys和values分别来自于：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;query (Q)&lt;/strong&gt;: decoder hidden state&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;keys (K)&lt;/strong&gt;: encoder hidden states&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;values (V)&lt;/strong&gt;: encoder hidden states&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;通过decoder的hidden state (query) 查找encoder hidden states中的有用信息。实际上，query也可以完全可以跟keys和values一样来自inputs或者outputs,这就是self-attention机制。作为Transformer中的关键模块，multi-head attention便是利用了同样的embedding来实现attention的，并通过不同的线性变化得到的不同的V,K,Q,从而获得多个 (multi-head) attention.&lt;/p&gt;
+&lt;div align=center&gt;&lt;img src=&#34;https://pic4.zhimg.com/80/v2-8ea15b6f631c2d075d55813eefc23e5f.png&#34; style=&#34;zoom:30%&#34; /&gt; &lt;/div&gt;
+&lt;p&gt;上图所展示是作者称为“Scaled Dot-Product Attention”的一般attention机制，其计算过程可由下式表示：
+$$\text { Attention }(Q, K, V)=\operatorname{softmax}\left(\frac{Q K^{T}}{\sqrt{d_{k}}}\right) V$$
+其中$d_{k}$是V的向量长度，当其过大时会使得到的点积值过大，从而导致softmax的梯度很小，因此除上$\sqrt{d_{k}}$来改善这种情况。&lt;/p&gt;
+&lt;p&gt;pytorch实现Scaled Dot-Product Attention:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;class ScaledDotProductAttention(nn.Module):
+    def __init__(self, dropout=0.1):
+        super().__init__()
+        self.dropout = nn.Dropout(dropout)
+ 
+    def forward(query, key, value, mask=None, dropout=None):
+        d_k = key.size(-1) # get the size of the key
+        scores = torch.matmul(query, key.transpose(-2,-1))/math.sqrt(d_k)
+        # fill attention weights with 0s where padded
+        if mask is not None: scores = scores.masked_fill(mask, 0)
+        p_attn = F.softmax(scores, dim = -1)
+        if dropout is not None:
+          p_attn = dropout(p_attn)
+        output = torch.matmul(p_attn, value)
+        return output
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;为了得到多样性的特征表示，通过对V,K,Q进行不同的线性变化，即可得到多组变换后的V,K,Q, 进而实现Multi-head attention. Multi-head的示意图如下图所示：&lt;/p&gt;
+&lt;div align=center&gt;&lt;img src=&#34;https://pic4.zhimg.com/80/v2-3c4f90bd723d8442c90e4742389ff52f.png&#34; style=&#34;zoom:40%&#34; /&gt; &lt;/div&gt;
+每一个单独的attention可以表示为：
+&lt;p&gt;$$ \text { head }&lt;em&gt;{\mathrm{i}}=\text { Attention }\left(Q W&lt;/em&gt;{i}^{Q}, K W_{i}^{K}, V W_{i}^{V}\right) $$&lt;/p&gt;
+&lt;p&gt;其中$W_{i}^{Q}$，$W_{i}^{K}$,$W_{i}^{V}$,分别时计算第$i$个head的attention时对Q,K,V进行线性变换的参数。在获得$h$个head的attention后，Multi-head attention的最终输出由下式表示：
+$$\text { MultiHead }\left.(Q, K, V)=\text { Concat(head }_{1}, \ldots, \text { head }_{\mathrm{h}}\right) W^{O}$$&lt;/p&gt;
+&lt;p&gt;pytorch实现Multi-head Attention的代码如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;class AttentionHead(nn.Module):
+    &amp;quot;&amp;quot;&amp;quot;A single attention head&amp;quot;&amp;quot;&amp;quot;
+    def __init__(self, d_model, d_feature, dropout=0.1):
+        super().__init__()
+        # We will assume the queries, keys, and values all have the same feature size
+        self.attn = ScaledDotProductAttention(dropout)
+        self.query_tfm = nn.Linear(d_model, d_feature)
+        self.key_tfm = nn.Linear(d_model, d_feature)
+        self.value_tfm = nn.Linear(d_model, d_feature)
+ 
+    def forward(self, queries, keys, values, mask=None):
+        Q = self.query_tfm(queries) # (Batch, Seq, Feature)
+        K = self.key_tfm(keys) # (Batch, Seq, Feature)
+        V = self.value_tfm(values) # (Batch, Seq, Feature)
+        # compute multiple attention weighted sums
+        x = self.attn(Q, K, V)
+        return x
+ 
+class MultiHeadAttention(nn.Module):
+    &amp;quot;&amp;quot;&amp;quot;The full multihead attention block&amp;quot;&amp;quot;&amp;quot;
+    def __init__(self, d_model, d_feature, n_heads, dropout=0.1):
+        super().__init__()
+        self.d_model = d_model
+        self.d_feature = d_feature
+        self.n_heads = n_heads
+        # in practice, d_model == d_feature * n_heads
+        assert d_model == d_feature * n_heads
+ 
+        # Note that this is very inefficient:
+        # I am merely implementing the heads separately because it is 
+        # easier to understand this way
+        self.attn_heads = nn.ModuleList([
+            AttentionHead(d_model, d_feature, dropout) for _ in range(n_heads)
+        ])
+        self.projection = nn.Linear(d_feature * n_heads, d_model) 
+     
+    def forward(self, queries, keys, values, mask=None):
+        x = [attn(queries, keys, values, mask=mask) # (Batch, Seq, Feature)
+             for i, attn in enumerate(self.attn_heads)]
+         
+        # reconcatenate
+        x = torch.cat(x, dim=Dim.feature) # (Batch, Seq, D_Feature * n_heads)
+        x = self.projection(x) # (Batch, Seq, D_Model)
+        return x
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;整体结构&#34;&gt;整体结构&lt;/h2&gt;
+&lt;p&gt;如下图所示，Transformer也是一个典型的encoder-decoder结构。下图的左侧和右侧分别是encoder和decoder. Encoder的输入是输入序列的embeddings, 而Decoder的输入则是已经预测到的输出的embeddings. 途中的$N\times$表示共有N个相关的block (对于encdoer和Decoder均采用了N=6)。&lt;/p&gt;
+ &lt;div align=center&gt;&lt;img src=&#34;https://pic4.zhimg.com/80/v2-6a871d311d43bb1b13775da6d5f63724.png&#34; style=&#34;zoom:50%&#34; /&gt; &lt;/div&gt;
+从图中可以看到，在embeddings输入到encoder或者decoder时均有一个“Positional Encoding” ,关于该Positional Encoding我们稍后介绍,下面先介绍Encoder和Decoder的构成及实现。
+&lt;h2 id=&#34;encoder&#34;&gt;Encoder&lt;/h2&gt;
+&lt;div align=center&gt;&lt;img src=&#34;https://pic4.zhimg.com/80/v2-7c450fcfb40df0add85b385500eb14e9.png&#34; style=&#34;zoom:50%&#34; /&gt; &lt;/div&gt;
+&lt;p&gt;如上图所示，Encoder由两个子模块组成，一个是Multi-head attention (MHA), 另外一个是Feed Forward (FFN)。两个sub-layer均与相关输入构成了残差连接并进行了layer normalization, 相关过程可表达为：
+$$x=\text {LayerNorm} (x+\text { MHA }(x))$$
+$$y=\text {LayerNorm} (x+\text { FFN }(x))$$&lt;/p&gt;
+&lt;p&gt;Feed Forward Net (FFN) 由两层全连接层和激活函数ReLU构成：
+$$\operatorname{FFN}(x)=\max \left(0, x W_{1}+b_{1}\right) W_{2}+b_{2}$$&lt;/p&gt;
+&lt;p&gt;pytorch实现单个Encoder block:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;class EncoderBlock(nn.Module):
+    def __init__(self, d_model=512, d_feature=64,
+                 d_ff=2048, n_heads=8, dropout=0.1):
+        super().__init__()
+        self.attn_head = MultiHeadAttention(d_model, d_feature, n_heads, dropout)
+        self.layer_norm1 = LayerNorm(d_model)
+        self.dropout = nn.Dropout(dropout)
+        self.position_wise_feed_forward = nn.Sequential(
+            nn.Linear(d_model, d_ff),
+            nn.ReLU(),
+            nn.Linear(d_ff, d_model),
+        )
+        self.layer_norm2 = LayerNorm(d_model)
+         
+    def forward(self, x, mask=None):
+        att = self.attn_head(x, x, x, mask=mask)
+        # Apply normalization and residual connection
+        x = x + self.dropout(self.layer_norm1(att))
+        # Apply position-wise feedforward network
+        pos = self.position_wise_feed_forward(x)
+        # Apply normalization and residual connection
+        x = x + self.dropout(self.layer_norm2(pos))
+        return x
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;基于此搭建整个Encoder:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;class TransformerEncoder(nn.Module):
+    def __init__(self, n_blocks=6, d_model=512,
+                 n_heads=8, d_ff=2048, dropout=0.1):
+        super().__init__()
+        self.encoders = nn.ModuleList([
+            EncoderBlock(d_model=d_model, d_feature=d_model // n_heads,
+                         d_ff=d_ff, dropout=dropout)
+            for _ in range(n_blocks)
+        ])
+     
+    def forward(self, x: torch.FloatTensor, mask=None):
+        for encoder in self.encoders:
+            x = encoder(x)
+        return x
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;decoder&#34;&gt;Decoder&lt;/h2&gt;
+&lt;div align=center&gt;&lt;img src=&#34;https://pic4.zhimg.com/80/v2-115a75482c5bffa6eef73b786aba04f8.png&#34; style=&#34;zoom:50%&#34; /&gt; &lt;/div&gt;
+相比于Encoder, Decoder中多了一个叫做“masked multi-head attention”的sub-layer。在Decoder预测下一个单词的时候，可以利用的只能是已经预测出的句子。因此，在训练过程中，Decoder在预测某个单词时，需要遮挡掉该单词及以后的ground-truth,只利用该单词以前的embeddings进行训练。如下图所示，在我们训练模型将“I like cats more than dogs”翻译成“私は犬よりも猫が好き”的过程中，当模型预测“犬”时，其可利用的信息是&#34;私は&#34;,而之后的信息是不可用的。
+&lt;div align=center&gt;&lt;img src=&#34;https://pic4.zhimg.com/80/v2-d9a3525e71524c3db7605150e20d21a4.png&#34; style=&#34;zoom:50%&#34; /&gt; &lt;/div&gt;
+&lt;p&gt;pytorch实现单个Encoder block:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;class DecoderBlock(nn.Module):
+    def __init__(self, d_model=512, d_feature=64,
+                 d_ff=2048, n_heads=8, dropout=0.1):
+        super().__init__()
+        self.masked_attn_head = MultiHeadAttention(d_model, d_feature, n_heads, dropout)
+        self.attn_head = MultiHeadAttention(d_model, d_feature, n_heads, dropout)
+        self.position_wise_feed_forward = nn.Sequential(
+            nn.Linear(d_model, d_ff),
+            nn.ReLU(),
+            nn.Linear(d_ff, d_model),
+        )
+ 
+        self.layer_norm1 = LayerNorm(d_model)
+        self.layer_norm2 = LayerNorm(d_model)
+        self.layer_norm3 = LayerNorm(d_model)
+        self.dropout = nn.Dropout(dropout)
+         
+    def forward(self, x, enc_out, 
+                src_mask=None, tgt_mask=None):
+        # Apply attention to inputs
+        att = self.masked_attn_head(x, x, x, mask=src_mask)
+        x = x + self.dropout(self.layer_norm1(att))
+        # Apply attention to the encoder outputs and outputs of the previous layer
+        att = self.attn_head(queries=att, keys=x, values=x, mask=tgt_mask)
+        x = x + self.dropout(self.layer_norm2(att))
+        # Apply position-wise feedforward network
+        pos = self.position_wise_feed_forward(x)
+        x = x + self.dropout(self.layer_norm2(pos))
+        return x
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;基于此，Decoder的实现：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;class TransformerDecoder(nn.Module):
+    def __init__(self, n_blocks=6, d_model=512, d_feature=64,
+                 d_ff=2048, n_heads=8, dropout=0.1):
+        super().__init__()
+        self.position_embedding = PositionalEmbedding(d_model)
+        self.decoders = nn.ModuleList([
+            DecoderBlock(d_model=d_model, d_feature=d_model // n_heads,
+                         d_ff=d_ff, dropout=dropout)
+            for _ in range(n_blocks)
+        ])
+         
+    def forward(self, x: torch.FloatTensor, 
+                enc_out: torch.FloatTensor, 
+                src_mask=None, tgt_mask=None):
+        for decoder in self.decoders:
+            x = decoder(x, enc_out, src_mask=src_mask, tgt_mask=tgt_mask)
+        return x
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;positional-encodings&#34;&gt;Positional Encodings&lt;/h2&gt;
+&lt;p&gt;在无任何循环网络和卷积网络的情况下，基于Multi-head attention的结构是无法利用单词的位置信息。换言之，对于multi-head attention而言“I like cats more than dogs” 与 &amp;ldquo;I like dogs more than cats&amp;rdquo; 并无差别。因此，有必要在序列中任务加入一些包含位置属性的信息，而Positional encodings的作用就在此。文章中采用了如下公式计算positional encodings:
+$$\begin{aligned}
+P E_{(p o s, 2 i)} &amp;amp;=\sin \left(\text {pos} / 10000^{2 i / d_{\text {model }}}\right) \&lt;br&gt;
+P E_{(p o s, 2 i+1)} &amp;amp;=\cos \left(\text {pos} / 10000^{2 i / d_{\text {model }}}\right)
+\end{aligned}$$
+其中$pos$表示位置，$i$表示维度。位置编码的维度于embeddings的维度相同，因此可采用直接加合的方式。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;class PositionalEmbedding(nn.Module):
+    def __init__(self, d_model, max_len=512):
+        super().__init__()        
+        # Compute the positional encodings once in log space.
+        pe = torch.zeros(max_len, d_model)
+        position = torch.arange(0, max_len).unsqueeze(1).float()
+        div_term = torch.exp(torch.arange(0, d_model, 2).float() *
+                             -(math.log(10000.0) / d_model))
+        pe[:, 0::2] = torch.sin(position * div_term)
+        pe[:, 1::2] = torch.cos(position * div_term)
+        pe = pe.unsqueeze(0)
+        self.weight = nn.Parameter(pe, requires_grad=False)
+         
+    def forward(self, x):
+        return self.weight[:, :x.size(1), :] # (1, Seq, Feature)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;可视化添加的位置信息&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;plt.figure(figsize=(15, 5))
+pe = PositionalEmbedding(20)
+y = pe.forward(Variable(torch.zeros(1, 100, 20)))
+plt.plot(np.arange(100), y[0, :, 4:8].data.numpy())
+plt.legend([&amp;quot;dim %d&amp;quot;%p for p in [4,5,6,7]])
+None
+&lt;/code&gt;&lt;/pre&gt;
+&lt;div align=center&gt;&lt;img src=&#34;https://pic4.zhimg.com/80/v2-077ce14ed89a04b1a9fe5ffb65ec44a1.png&#34; style=&#34;zoom:50%&#34; /&gt; &lt;/div&gt;
+&lt;h2 id=&#34;pytorch中的transformer模块&#34;&gt;Pytorch中的Transformer模块&lt;/h2&gt;
+&lt;p&gt;Pytorch 1.2后的版本包含了标准的nn.Transformer模块，模块的各组件可单独使用，相关的API包括：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;nn.Transformer&lt;/li&gt;
+&lt;li&gt;nn.TransformerEncoder 和 nn.TransformerEncoderLayer&lt;/li&gt;
+&lt;li&gt;nn.TransformerDecoder 和 nn.TransformerDecoderLayer&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/small&gt;</description>
+    </item>
     
   </channel>
 </rss>

@@ -1,0 +1,1263 @@
+<!DOCTYPE html><html lang="en-us" >
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.8.0">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Xinsheng Wang">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="Attention Is All You Need | 源码解析(pytorch)">
+
+  
+  <link rel="alternate" hreflang="en-us" href="/post/transformer/">
+
+  
+
+
+  
+  
+  
+  <meta name="theme-color" content="#2962ff">
+  
+
+  
+  
+  
+  <script src="/js/mathjax-config.js"></script>
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-1/css/all.min.css" integrity="sha256-4w9DunooKSr3MFXHXWyFER38WmPdm361bQS/2KUWZbU=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.css" integrity="sha256-SHMGCYmST46SoyGgo4YR/9AlK1vf3ff84Aq9yK4hdqM=" crossorigin="anonymous">
+    
+
+    
+
+    
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js" integrity="sha256-Md1qLToewPeKjfAHU1zyPwOutccPAm5tahnaw7Osw0A=" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CRoboto:400,400italic,700%7CRoboto+Mono&display=swap">
+  
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.css">
+
+  
+
+
+
+
+  
+
+
+  
+  
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
+  <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
+
+  <link rel="canonical" href="/post/transformer/">
+
+  
+  
+  
+  
+  
+  
+  
+    
+  
+  
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@XinshengWang1">
+  <meta property="twitter:creator" content="@XinshengWang1">
+  
+  <meta property="og:site_name" content="Xinsheng Wang">
+  <meta property="og:url" content="/post/transformer/">
+  <meta property="og:title" content="Transformer | Xinsheng Wang">
+  <meta property="og:description" content="Attention Is All You Need | 源码解析(pytorch)"><meta property="og:image" content="/post/transformer/featured.png">
+  <meta property="twitter:image" content="/post/transformer/featured.png"><meta property="og:locale" content="en-us">
+  
+    
+      <meta property="article:published_time" content="2020-05-24T14:00:13&#43;02:00">
+    
+    <meta property="article:modified_time" content="2020-05-24T14:00:13&#43;02:00">
+  
+
+  
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "/post/transformer/"
+  },
+  "headline": "Transformer",
+  
+  "image": [
+    "/post/transformer/featured.png"
+  ],
+  
+  "datePublished": "2020-05-24T14:00:13+02:00",
+  "dateModified": "2020-05-24T14:00:13+02:00",
+  
+  "author": {
+    "@type": "Person",
+    "name": "王新升"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Xinsheng Wang",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "Attention Is All You Need | 源码解析(pytorch)"
+}
+</script>
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  <title>Transformer | Xinsheng Wang</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/">Xinsheng Wang</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/">Xinsheng Wang</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#about"><span>Home</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#projects"><span>Projects</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#publications"><span>Publications</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#posts"><span>中文博客</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#contact"><span>Contact</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+      
+      <li class="nav-item">
+        <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+      <li class="nav-item dropdown theme-dropdown">
+        <a href="#" class="nav-link js-theme-selector" data-toggle="dropdown" aria-haspopup="true">
+          <i class="fas fa-palette" aria-hidden="true"></i>
+        </a>
+        <div class="dropdown-menu">
+          <a href="#" class="dropdown-item js-set-theme-light">
+            <span>Light</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-dark">
+            <span>Dark</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-auto">
+            <span>Automatic</span>
+          </a>
+        </div>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+
+<div class="article-container pt-3">
+  <h1>Transformer</h1>
+
+  
+  <p class="page-subtitle">Attention Is All You Need | 源码解析(pytorch)</p>
+  
+
+  
+
+
+<div class="article-metadata">
+
+  
+  
+  
+  
+  <div>
+    
+
+  
+  
+    
+    <span>王新升</span>
+  </div>
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    May 24, 2020
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    8 min read
+  </span>
+  
+
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/category/%E5%85%B6%E5%AE%83/">其它</a></span>
+  
+
+</div>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+<div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 495px;">
+  <div style="position: relative">
+    <img src="/post/transformer/featured_hub70bdbfd788ef4b367b637c1b81c5971_90304_720x0_resize_lanczos_2.png" alt="" class="featured-image">
+    
+  </div>
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      <pre><code>
+@inproceedings{vaswani2017attention,
+  title={Attention is all you need},
+  author={Vaswani, Ashish and Shazeer, Noam and Parmar, Niki and Uszkoreit, Jakob and Jones, Llion and Gomez, Aidan N and Kaiser, {\L}ukasz and Polosukhin, Illia},
+  booktitle={Advances in neural information processing systems},
+  pages={5998--6008},
+  year={2017}
+}
+</code></pre>
+<small>
+<ul>
+<li>
+<a href="http://nlp.seas.harvard.edu/2018/04/03/attention.html" target="_blank" rel="noopener">Harvard NLP团队推出的注释版Pytroch代码：http://nlp.seas.harvard.edu/2018/04/03/attention.html</a></li>
+<li>
+<a href="http://jalammar.github.io/illustrated-transformer/" target="_blank" rel="noopener">图解Transformer: http://jalammar.github.io/illustrated-transformer/ </a></li>
+<li>
+<a href="https://mlexplained.com/2017/12/29/attention-is-all-you-need-explained/" target="_blank" rel="noopener">主要参考资料：https://mlexplained.com/2017/12/29/attention-is-all-you-need-explained/</a></li>
+</ul>
+<p>该论文提出了完全基于attention和全连接的Transformer来替代RNNs,以实现seq-to-seq任务。与基于RNNs的seq-to-seq模型一样，Transformer整体上也是一个encoder-decoder结构。其中encoder以时间序列信息$(x_1,&hellip;,x_n)$为输入，输出相应的序列特征$\mathbf{z}=(z_1,&hellip;,z_n)$. Decoder将$\mathbf{z}$作为输入，以自回归的形式依次给出相应的预测输出$(y_1,..,y_m)$.</p>
+<h2 id="关于attention">关于Attention</h2>
+<p>在正式了解Transformer前，先简单回顾下Transformer出现前主宰seq-to-seq任务的基于RNNs的encoder-decoder结构.</p>
+<div align=center><img src="https://pic4.zhimg.com/80/v2-1ce36f17d754c486f5b087fd4f09dcc5.png" style="zoom:80%" /> </div>
+<p>早期基于RNNs的seq-to-seq的结构如上图所示，输入的序列信息(I like cats more than dogs)通过Encoder获得该序列信息的embedding特征向量。Decoder以该特征向量为输入生成相应的序列信息(私は犬より猫が好き)。在这个过程中有一个显而易见的问题，即所有输入的序列信息均包含在一个特征向量中。当序列信息比较短时，上述结构的表现还可以，但一旦序列长度很长时，一个单一的特征向量很难准确的表达所有的信息——“You can&rsquo;t cram the meaning of a whole %&amp;!$# sentence into a single $&amp;!#* vector!&rdquo; (KyungHyun Cho&rsquo;s talk at ACL 2014 Workshop on Semantic Parsing)。</p>
+<p>实际上，decoder在不同时刻需要关注的信息是不同的。例如，在将句子&quot;I like cats more than dogs&quot;翻译成&quot;私は犬より猫が好き&quot;的例子中，输入的第二个词“like”对应输出句子中的最后一个词“好き”,这就需要RNNs携带长时间依赖的信息。而在输出单词“犬”后，decoder只需要知道输出的这个词对应的是“dog”就行，而并不需要继续记住“dog”。受此启发，Attention机制应运而生。直观上，Attention机制的作用就是回顾整个句子，并有选择性地提取decode过程需要的信息。</p>
+<p>为了能够有选择性地从encoder的输出中获得重要的信息，decoder需要访问encoder的所有隐藏层的输出。同时，为了方便encoder预测某一个特定的单词，我们仍然需要对所有encoder出来的信息进行处理，以得到一个单一向量的特征表示。这时,就需要利用Attention机制通过加权的方式来选择隐藏层状态向量，并以加权的形式获得特定的向量表示。原始的attention机制示意图如下所示：</p>
+<div align=center><img src="https://pic4.zhimg.com/80/v2-f6dd63f6ab3119c0722f8350b803fbdc.png" style="zoom:50%" /> </div>
+<p>尽管Attention机制的出现在一定程度上解决了RNNs的一些短板，但是由于RNNs的时间序列属性，每个隐藏状态的计算都依赖于上一时刻的隐藏状态，大大限制了RNNs的计算效率。另外，在自然语言的机器翻译过程中，源内容和目标内容之间以及各自内部之间都存在一些依赖关系。而在传统的attention机制中，仅仅考虑了两者之间的依赖，而并没有考虑各自内部之间的依赖关系。Transformer的提出就是为了解决这两个短板：1）序列上前后依赖带来的低效率；2）没有考虑输入内容及输出内容各自内部之间关联的attention机制。</p>
+<h2 id="multi-head-attention">Multi-head attention</h2>
+<p>在传统seq-to-seq的attention机制中，计算attention的query, keys和values分别来自于：</p>
+<ul>
+<li><strong>query (Q)</strong>: decoder hidden state</li>
+<li><strong>keys (K)</strong>: encoder hidden states</li>
+<li><strong>values (V)</strong>: encoder hidden states</li>
+</ul>
+<p>通过decoder的hidden state (query) 查找encoder hidden states中的有用信息。实际上，query也可以完全可以跟keys和values一样来自inputs或者outputs,这就是self-attention机制。作为Transformer中的关键模块，multi-head attention便是利用了同样的embedding来实现attention的，并通过不同的线性变化得到的不同的V,K,Q,从而获得多个 (multi-head) attention.</p>
+<div align=center><img src="https://pic4.zhimg.com/80/v2-8ea15b6f631c2d075d55813eefc23e5f.png" style="zoom:30%" /> </div>
+<p>上图所展示是作者称为“Scaled Dot-Product Attention”的一般attention机制，其计算过程可由下式表示：
+$$\text { Attention }(Q, K, V)=\operatorname{softmax}\left(\frac{Q K^{T}}{\sqrt{d_{k}}}\right) V$$
+其中$d_{k}$是V的向量长度，当其过大时会使得到的点积值过大，从而导致softmax的梯度很小，因此除上$\sqrt{d_{k}}$来改善这种情况。</p>
+<p>pytorch实现Scaled Dot-Product Attention:</p>
+<pre><code class="language-python">class ScaledDotProductAttention(nn.Module):
+    def __init__(self, dropout=0.1):
+        super().__init__()
+        self.dropout = nn.Dropout(dropout)
+ 
+    def forward(query, key, value, mask=None, dropout=None):
+        d_k = key.size(-1) # get the size of the key
+        scores = torch.matmul(query, key.transpose(-2,-1))/math.sqrt(d_k)
+        # fill attention weights with 0s where padded
+        if mask is not None: scores = scores.masked_fill(mask, 0)
+        p_attn = F.softmax(scores, dim = -1)
+        if dropout is not None:
+          p_attn = dropout(p_attn)
+        output = torch.matmul(p_attn, value)
+        return output
+</code></pre>
+<p>为了得到多样性的特征表示，通过对V,K,Q进行不同的线性变化，即可得到多组变换后的V,K,Q, 进而实现Multi-head attention. Multi-head的示意图如下图所示：</p>
+<div align=center><img src="https://pic4.zhimg.com/80/v2-3c4f90bd723d8442c90e4742389ff52f.png" style="zoom:40%" /> </div>
+每一个单独的attention可以表示为：
+<p>$$ \text { head }<em>{\mathrm{i}}=\text { Attention }\left(Q W</em>{i}^{Q}, K W_{i}^{K}, V W_{i}^{V}\right) $$</p>
+<p>其中$W_{i}^{Q}$，$W_{i}^{K}$,$W_{i}^{V}$,分别时计算第$i$个head的attention时对Q,K,V进行线性变换的参数。在获得$h$个head的attention后，Multi-head attention的最终输出由下式表示：
+$$\text { MultiHead }\left.(Q, K, V)=\text { Concat(head }_{1}, \ldots, \text { head }_{\mathrm{h}}\right) W^{O}$$</p>
+<p>pytorch实现Multi-head Attention的代码如下：</p>
+<pre><code class="language-python">class AttentionHead(nn.Module):
+    &quot;&quot;&quot;A single attention head&quot;&quot;&quot;
+    def __init__(self, d_model, d_feature, dropout=0.1):
+        super().__init__()
+        # We will assume the queries, keys, and values all have the same feature size
+        self.attn = ScaledDotProductAttention(dropout)
+        self.query_tfm = nn.Linear(d_model, d_feature)
+        self.key_tfm = nn.Linear(d_model, d_feature)
+        self.value_tfm = nn.Linear(d_model, d_feature)
+ 
+    def forward(self, queries, keys, values, mask=None):
+        Q = self.query_tfm(queries) # (Batch, Seq, Feature)
+        K = self.key_tfm(keys) # (Batch, Seq, Feature)
+        V = self.value_tfm(values) # (Batch, Seq, Feature)
+        # compute multiple attention weighted sums
+        x = self.attn(Q, K, V)
+        return x
+ 
+class MultiHeadAttention(nn.Module):
+    &quot;&quot;&quot;The full multihead attention block&quot;&quot;&quot;
+    def __init__(self, d_model, d_feature, n_heads, dropout=0.1):
+        super().__init__()
+        self.d_model = d_model
+        self.d_feature = d_feature
+        self.n_heads = n_heads
+        # in practice, d_model == d_feature * n_heads
+        assert d_model == d_feature * n_heads
+ 
+        # Note that this is very inefficient:
+        # I am merely implementing the heads separately because it is 
+        # easier to understand this way
+        self.attn_heads = nn.ModuleList([
+            AttentionHead(d_model, d_feature, dropout) for _ in range(n_heads)
+        ])
+        self.projection = nn.Linear(d_feature * n_heads, d_model) 
+     
+    def forward(self, queries, keys, values, mask=None):
+        x = [attn(queries, keys, values, mask=mask) # (Batch, Seq, Feature)
+             for i, attn in enumerate(self.attn_heads)]
+         
+        # reconcatenate
+        x = torch.cat(x, dim=Dim.feature) # (Batch, Seq, D_Feature * n_heads)
+        x = self.projection(x) # (Batch, Seq, D_Model)
+        return x
+</code></pre>
+<h2 id="整体结构">整体结构</h2>
+<p>如下图所示，Transformer也是一个典型的encoder-decoder结构。下图的左侧和右侧分别是encoder和decoder. Encoder的输入是输入序列的embeddings, 而Decoder的输入则是已经预测到的输出的embeddings. 途中的$N\times$表示共有N个相关的block (对于encdoer和Decoder均采用了N=6)。</p>
+ <div align=center><img src="https://pic4.zhimg.com/80/v2-6a871d311d43bb1b13775da6d5f63724.png" style="zoom:50%" /> </div>
+从图中可以看到，在embeddings输入到encoder或者decoder时均有一个“Positional Encoding” ,关于该Positional Encoding我们稍后介绍,下面先介绍Encoder和Decoder的构成及实现。
+<h2 id="encoder">Encoder</h2>
+<div align=center><img src="https://pic4.zhimg.com/80/v2-7c450fcfb40df0add85b385500eb14e9.png" style="zoom:50%" /> </div>
+<p>如上图所示，Encoder由两个子模块组成，一个是Multi-head attention (MHA), 另外一个是Feed Forward (FFN)。两个sub-layer均与相关输入构成了残差连接并进行了layer normalization, 相关过程可表达为：
+$$x=\text {LayerNorm} (x+\text { MHA }(x))$$
+$$y=\text {LayerNorm} (x+\text { FFN }(x))$$</p>
+<p>Feed Forward Net (FFN) 由两层全连接层和激活函数ReLU构成：
+$$\operatorname{FFN}(x)=\max \left(0, x W_{1}+b_{1}\right) W_{2}+b_{2}$$</p>
+<p>pytorch实现单个Encoder block:</p>
+<pre><code class="language-python">class EncoderBlock(nn.Module):
+    def __init__(self, d_model=512, d_feature=64,
+                 d_ff=2048, n_heads=8, dropout=0.1):
+        super().__init__()
+        self.attn_head = MultiHeadAttention(d_model, d_feature, n_heads, dropout)
+        self.layer_norm1 = LayerNorm(d_model)
+        self.dropout = nn.Dropout(dropout)
+        self.position_wise_feed_forward = nn.Sequential(
+            nn.Linear(d_model, d_ff),
+            nn.ReLU(),
+            nn.Linear(d_ff, d_model),
+        )
+        self.layer_norm2 = LayerNorm(d_model)
+         
+    def forward(self, x, mask=None):
+        att = self.attn_head(x, x, x, mask=mask)
+        # Apply normalization and residual connection
+        x = x + self.dropout(self.layer_norm1(att))
+        # Apply position-wise feedforward network
+        pos = self.position_wise_feed_forward(x)
+        # Apply normalization and residual connection
+        x = x + self.dropout(self.layer_norm2(pos))
+        return x
+</code></pre>
+<p>基于此搭建整个Encoder:</p>
+<pre><code class="language-python">class TransformerEncoder(nn.Module):
+    def __init__(self, n_blocks=6, d_model=512,
+                 n_heads=8, d_ff=2048, dropout=0.1):
+        super().__init__()
+        self.encoders = nn.ModuleList([
+            EncoderBlock(d_model=d_model, d_feature=d_model // n_heads,
+                         d_ff=d_ff, dropout=dropout)
+            for _ in range(n_blocks)
+        ])
+     
+    def forward(self, x: torch.FloatTensor, mask=None):
+        for encoder in self.encoders:
+            x = encoder(x)
+        return x
+</code></pre>
+<h2 id="decoder">Decoder</h2>
+<div align=center><img src="https://pic4.zhimg.com/80/v2-115a75482c5bffa6eef73b786aba04f8.png" style="zoom:50%" /> </div>
+相比于Encoder, Decoder中多了一个叫做“masked multi-head attention”的sub-layer。在Decoder预测下一个单词的时候，可以利用的只能是已经预测出的句子。因此，在训练过程中，Decoder在预测某个单词时，需要遮挡掉该单词及以后的ground-truth,只利用该单词以前的embeddings进行训练。如下图所示，在我们训练模型将“I like cats more than dogs”翻译成“私は犬よりも猫が好き”的过程中，当模型预测“犬”时，其可利用的信息是"私は",而之后的信息是不可用的。
+<div align=center><img src="https://pic4.zhimg.com/80/v2-d9a3525e71524c3db7605150e20d21a4.png" style="zoom:50%" /> </div>
+<p>pytorch实现单个Encoder block:</p>
+<pre><code class="language-python">class DecoderBlock(nn.Module):
+    def __init__(self, d_model=512, d_feature=64,
+                 d_ff=2048, n_heads=8, dropout=0.1):
+        super().__init__()
+        self.masked_attn_head = MultiHeadAttention(d_model, d_feature, n_heads, dropout)
+        self.attn_head = MultiHeadAttention(d_model, d_feature, n_heads, dropout)
+        self.position_wise_feed_forward = nn.Sequential(
+            nn.Linear(d_model, d_ff),
+            nn.ReLU(),
+            nn.Linear(d_ff, d_model),
+        )
+ 
+        self.layer_norm1 = LayerNorm(d_model)
+        self.layer_norm2 = LayerNorm(d_model)
+        self.layer_norm3 = LayerNorm(d_model)
+        self.dropout = nn.Dropout(dropout)
+         
+    def forward(self, x, enc_out, 
+                src_mask=None, tgt_mask=None):
+        # Apply attention to inputs
+        att = self.masked_attn_head(x, x, x, mask=src_mask)
+        x = x + self.dropout(self.layer_norm1(att))
+        # Apply attention to the encoder outputs and outputs of the previous layer
+        att = self.attn_head(queries=att, keys=x, values=x, mask=tgt_mask)
+        x = x + self.dropout(self.layer_norm2(att))
+        # Apply position-wise feedforward network
+        pos = self.position_wise_feed_forward(x)
+        x = x + self.dropout(self.layer_norm2(pos))
+        return x
+</code></pre>
+<p>基于此，Decoder的实现：</p>
+<pre><code class="language-python">class TransformerDecoder(nn.Module):
+    def __init__(self, n_blocks=6, d_model=512, d_feature=64,
+                 d_ff=2048, n_heads=8, dropout=0.1):
+        super().__init__()
+        self.position_embedding = PositionalEmbedding(d_model)
+        self.decoders = nn.ModuleList([
+            DecoderBlock(d_model=d_model, d_feature=d_model // n_heads,
+                         d_ff=d_ff, dropout=dropout)
+            for _ in range(n_blocks)
+        ])
+         
+    def forward(self, x: torch.FloatTensor, 
+                enc_out: torch.FloatTensor, 
+                src_mask=None, tgt_mask=None):
+        for decoder in self.decoders:
+            x = decoder(x, enc_out, src_mask=src_mask, tgt_mask=tgt_mask)
+        return x
+</code></pre>
+<h2 id="positional-encodings">Positional Encodings</h2>
+<p>在无任何循环网络和卷积网络的情况下，基于Multi-head attention的结构是无法利用单词的位置信息。换言之，对于multi-head attention而言“I like cats more than dogs” 与 &ldquo;I like dogs more than cats&rdquo; 并无差别。因此，有必要在序列中任务加入一些包含位置属性的信息，而Positional encodings的作用就在此。文章中采用了如下公式计算positional encodings:
+$$\begin{aligned}
+P E_{(p o s, 2 i)} &amp;=\sin \left(\text {pos} / 10000^{2 i / d_{\text {model }}}\right) \<br>
+P E_{(p o s, 2 i+1)} &amp;=\cos \left(\text {pos} / 10000^{2 i / d_{\text {model }}}\right)
+\end{aligned}$$
+其中$pos$表示位置，$i$表示维度。位置编码的维度于embeddings的维度相同，因此可采用直接加合的方式。</p>
+<pre><code class="language-python">class PositionalEmbedding(nn.Module):
+    def __init__(self, d_model, max_len=512):
+        super().__init__()        
+        # Compute the positional encodings once in log space.
+        pe = torch.zeros(max_len, d_model)
+        position = torch.arange(0, max_len).unsqueeze(1).float()
+        div_term = torch.exp(torch.arange(0, d_model, 2).float() *
+                             -(math.log(10000.0) / d_model))
+        pe[:, 0::2] = torch.sin(position * div_term)
+        pe[:, 1::2] = torch.cos(position * div_term)
+        pe = pe.unsqueeze(0)
+        self.weight = nn.Parameter(pe, requires_grad=False)
+         
+    def forward(self, x):
+        return self.weight[:, :x.size(1), :] # (1, Seq, Feature)
+</code></pre>
+<p>可视化添加的位置信息</p>
+<pre><code class="language-python">plt.figure(figsize=(15, 5))
+pe = PositionalEmbedding(20)
+y = pe.forward(Variable(torch.zeros(1, 100, 20)))
+plt.plot(np.arange(100), y[0, :, 4:8].data.numpy())
+plt.legend([&quot;dim %d&quot;%p for p in [4,5,6,7]])
+None
+</code></pre>
+<div align=center><img src="https://pic4.zhimg.com/80/v2-077ce14ed89a04b1a9fe5ffb65ec44a1.png" style="zoom:50%" /> </div>
+<h2 id="pytorch中的transformer模块">Pytorch中的Transformer模块</h2>
+<p>Pytorch 1.2后的版本包含了标准的nn.Transformer模块，模块的各组件可单独使用，相关的API包括：</p>
+<ul>
+<li>nn.Transformer</li>
+<li>nn.TransformerEncoder 和 nn.TransformerEncoderLayer</li>
+<li>nn.TransformerDecoder 和 nn.TransformerDecoderLayer</li>
+</ul>
+</small>
+    </div>
+
+    
+
+
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tag/attention/">attention</a>
+  
+  <a class="badge badge-light" href="/tag/nlp/">NLP</a>
+  
+  <a class="badge badge-light" href="/tag/self-attention/">self-attention</a>
+  
+  <a class="badge badge-light" href="/tag/transformer/">Transformer</a>
+  
+  <a class="badge badge-light" href="/tag/%E5%85%B6%E5%AE%83/">其它</a>
+  
+</div>
+
+
+
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=/post/transformer/&amp;text=Transformer" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=/post/transformer/&amp;t=Transformer" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=Transformer&amp;body=/post/transformer/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=/post/transformer/&amp;title=Transformer" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://web.whatsapp.com/send?text=Transformer%20/post/transformer/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=/post/transformer/&amp;title=Transformer" target="_blank" rel="noopener" class="share-btn-weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+   
+    
+    
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.4.8/mermaid.min.js" integrity="sha256-lyWCDMnMeZiXRi7Zl54sZGKYmgQs4izcT7+tKc+KUBk=" crossorigin="anonymous" title="mermaid"></script>
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js" integrity="sha256-eOgo0OtLL4cdq7RdwRUiGKLX9XsIJ7nGhWEKbohmVAQ=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/languages/r.min.js"></script>
+        
+      
+
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.js" integrity="sha256-EErZamuLefUnbMBQbsEqu1USa+btR2oIlCpBJbyD4/g=" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+    
+    <script>const isSiteThemeDark = false;</script>
+    
+
+    
+    
+    
+    
+    
+    
+    <script>
+      const search_config = {"indexURI":"/index.json","minLength":1,"threshold":0.3};
+      const i18n = {"no_results":"No results found","placeholder":"Search...","results":"results found"};
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.37431be2d92d7fb0160054761ab79602.js"></script>
+
+    
+
+
+
+
+
+
+  
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    
+
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" class="back-to-top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
