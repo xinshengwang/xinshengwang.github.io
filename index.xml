@@ -961,7 +961,6 @@ calculated on the real test images.&lt;/caption&gt;
 &lt;/table&gt;
 &lt;small&gt;
 &lt;p&gt;To better understand the role of the loss function, we visualized the speech feature distributions produced by SEN trained with and without $\mathcal{L}_d$ using t-SNE. It shows that the use of $\mathcal{L}_d$ increases the distance between different classes, which is important to create semantic-discriminative speech embeddings, $e.g.,$ after training SEN using $\mathcal{L}_d$, class 112 was no longer mixed with other classes. So, both the objective results and the visualization show that $\mathcal{L}_d$ is critical for learning better speech embeddings, which further helps S2IGAN to generate better semantically-consistent images.&lt;/p&gt;
-&lt;/small&gt;
 
 
 
@@ -1002,8 +1001,8 @@ calculated on the real test images.&lt;/caption&gt;
 &lt;h3 id=&#34;paper&#34;&gt;Paper&lt;/h3&gt;
 &lt;p&gt;The paper was released on arXiv: &lt;a href=&#34;https://arxiv.org/abs/2005.06968&#34;&gt;https://arxiv.org/abs/2005.06968&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;code&#34;&gt;Code&lt;/h3&gt;
-&lt;p&gt;The source code will be released soon: &lt;a href=&#34;https://github.com/xinshengwang/S2IGAN&#34;&gt;https://github.com/xinshengwang/S2IGAN&lt;/a&gt;.&lt;/p&gt;
-</description>
+&lt;p&gt;&lt;a href=&#34;https://github.com/xinshengwang/S2IGAN&#34;&gt;https://github.com/xinshengwang/S2IGAN&lt;/a&gt;.&lt;/p&gt;
+&lt;/small&gt;</description>
     </item>
     
     <item>
