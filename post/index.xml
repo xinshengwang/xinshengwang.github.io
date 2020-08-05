@@ -5,12 +5,167 @@
     <link>/post/</link>
       <atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     <description>Posts</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sun, 24 May 2020 17:46:37 +0200</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Mon, 29 Jun 2020 21:29:34 +0200</lastBuildDate>
     <image>
       <url>/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
       <title>Posts</title>
       <link>/post/</link>
     </image>
+    
+    <item>
+      <title>Tacotron2</title>
+      <link>/post/tacotron2/</link>
+      <pubDate>Mon, 29 Jun 2020 21:29:34 +0200</pubDate>
+      <guid>/post/tacotron2/</guid>
+      <description>&lt;p&gt;关于 filterbank 特征： 短时傅里叶变换采用的参数为 50 ms frame size 和 12.5 ms frame hop. 作者发现，在利用小的frame hop (5 ms) 提高频谱图时间分辨率的情况会带来更多的发音问题。 在将 STFT 得到的 filterbank 进行 log 计算前，将最小值截取到 0.01 以限制 log 计算后过大的动态变化范围。&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>HMM</title>
+      <link>/post/hmm/</link>
+      <pubDate>Fri, 26 Jun 2020 12:15:28 +0200</pubDate>
+      <guid>/post/hmm/</guid>
+      <description>&lt;small&gt;
+# HMM的三个基本问题求解
+HMM的构成:
+| Component | Description |
+|----|----|
+|$Q=q_{1} q_{2} \ldots q_{N}$| $N$ 个隐藏状态 hidden states |
+|$A=a_{11} \ldots a_{i j} \ldots a_{N N}$| 转移概率矩阵,$a_{ij}$表示从状态$i$转移到状态$j$的概率 |
+|$O=o_{1} o_{2} \ldots o_{T}$| 观察序列(可见状态)|
+|$B=b_{i}\left(o_{t}\right)$|观察概率(observation likelihoods / emission probability),指由隐藏状态$i$得到观察状态$t$的概率|
+|$\pi=\pi_{1}, \pi_{2}, \ldots, \pi_{N}$| 初始概率分布|
+&lt;h3 id=&#34;关于hmm的三个基础问题&#34;&gt;关于HMM的三个基础问题:&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;评估观察序列概率(Likelihood)&lt;/strong&gt;。即给定模型 $\lambda=(A,B,\pi)$ 和观察序列 $O=\left{ o_{1},o_{2},&amp;hellip;,o_{T} \right}$ ，计算在模型 $\lambda$ 下观测序列 $O$ 出现的概率 $P(O|\lambda)$&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;模型参数学习问题&lt;/strong&gt;。即给定观测序列 $O=\left{ o_{1},o_{2},&amp;hellip;,o_{T} \right}$ ，估计模型 $\lambda=(A,B,\pi)$ 的参数，使该模型下观测序列的条件概率 $P(O|\lambda)$ 最大。这个问题的求解需要用到基于EM算法的鲍姆-韦尔奇算法， 这个问题是HMM模型三个问题中最复杂的。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;预测问题&lt;/strong&gt;，也称为解码问题。即给定模型 $\lambda=(A,B,\pi)$ 和观测序列 $O=\left{ o_{1},o_{2},&amp;hellip;,o_{T} \right}$ ，求给定观测序列条件下，最可能出现的对应的状态序列，这个问题的求解需要用到基于动态规划的维特比算法，这个问题是HMM模型三个问题中复杂度居中的算法。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;hmm基础问题之评估观察序列概率问题求解前向算法forward-algorithm&#34;&gt;HMM基础问题之评估观察序列概率问题求解:前向算法(Forward Algorithm)&lt;/h3&gt;
+&lt;p&gt;前向算法利用当前时间点算得的概率推导下一个时间步的概率.&lt;/p&gt;
+&lt;div&gt;
+        &lt;div align=&#34;center&#34;&gt;
+        &lt;img src=&#34;img/forward_trellis.png&#34; width=&#34;400&#34; alt=&#34;&#34; vspace=&#34;0&#34; vspace=&#39;0&#39; title=&#34;Framework of SEN&#34; &gt;&lt;br /&gt; 
+        &lt;/div&gt;
+&lt;p&gt;如上图所示,圆圈内表示隐藏状态,方块内表示观察状态. 前一时刻经由隐藏状态 $i$ 获得观察状态 $o_1, o_2, &amp;hellip;, o_{t-1}$ 的概率表示为 $\alpha_{t-1}(i)$. 那么下一时刻隐藏状态为 $j$ 的概率就可以表示为上一时刻所有路线的概率乘上转移到 $j$ 的概率并求和得到:&lt;/p&gt;
+&lt;p&gt;$P(q_t=j) = \sum_{i=1}^{N} \alpha_{t-1}(i) a_{i j}$&lt;/p&gt;
+&lt;p&gt;经由 $q_t=j$ 得到观察状态 $o_1, o_2, &amp;hellip;, o_t$ 的概率在 $P(q_t=j)$ 的基础上乘上观察概率 $b_j(o_t)$ 便可得到:&lt;/p&gt;
+&lt;p&gt;$\alpha_{t}(j)=\sum_{i=1}^{N} \alpha_{t-1}(i) a_{i j} b_{j}\left(o_{t}\right)$&lt;/p&gt;
+&lt;p&gt;至此我们便得到了由上一时刻所有路线概率求取一下时刻路线概率的&amp;quot;前向&amp;quot;方法,我们只需要知道初始时刻的概率便可求解整个问题. 在初始时刻,隐藏状态属于 $i$ 的概率表示为 $\pi_i$. 由隐藏状态 $i$ 获得观察状态 $o_1$ 的概率为:&lt;/p&gt;
+&lt;p&gt;$\alpha_{1}(j)=\pi_{j} b_{j}\left(o_{1}\right) 1 \leq j \leq N$&lt;/p&gt;
+&lt;p&gt;在隐藏状态总数为 $N$,观察序列长度为 $T$ 的情况下,前向算法可以整体表示为:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;初始步: $\alpha_{1}(j)=\pi_{j} b_{j}\left(o_{1}\right) 1 \leq j \leq N$&lt;/li&gt;
+&lt;li&gt;前向递推过程: $\alpha_{t}(j)=\sum_{i=1}^{N} \alpha_{t-1}(i) a_{i j} b_{j}\left(o_{t}\right) ; \quad 1 \leq j \leq N, 1&amp;lt;t \leq T$&lt;/li&gt;
+&lt;li&gt;终止: $P(O \mid \lambda)=\sum_{i=1}^{N} \alpha_{T}(i)$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;hmm基础问题之解码问题求解-viterbi-算法&#34;&gt;HMM基础问题之解码问题求解: Viterbi 算法&lt;/h3&gt;
+&lt;p&gt;解码问题是在已知HMM参数 $\lambda=(A, B)$ 和观察序列 $O=o_{1}, o_{2}, \dots, o_{T}$ 的条件下,寻找概率最大的隐藏状态序列 $Q=q_{1} q_{2} q_{3} \ldots q_{T}$.&lt;/p&gt;
+&lt;p&gt;与前向算法(Forward Algorithm)一样, Viterbi 算法也是一种基于树的动态规划算法. 在此, 我们利用根据吃冰淇凌个数推断天气的例子来说明 Viterbi 算法. 下图展示了本例中的 HMM 参数. 其中, 实线箭头表示转移概率, $\pi$ 表示初始时刻天气为Hot 和 Cold 的概率分别为 0.8 和 0.2. $B$ 是观察概率.&lt;/p&gt;
+&lt;div&gt;
+        &lt;div align=&#34;center&#34;&gt;
+        &lt;img src=&#34;img/ice_cream.png&#34; width=&#34;400&#34; alt=&#34;&#34; vspace=&#34;0&#34; vspace=&#39;0&#39; title=&#34;Framework of SEN&#34; &gt;&lt;br /&gt; 
+        &lt;/div&gt;
+&lt;p&gt;问题:已知连续三天吃的冰淇凌个数分别为 3, 1, 3, 求这三天最有可能的天气情况. 下图展示了 Viterbi 的算法过程:&lt;/p&gt;
+&lt;div&gt;
+        &lt;div align=&#34;center&#34;&gt;
+        &lt;img src=&#34;img/viterbi_trellis.png&#34; width=&#34;400&#34; alt=&#34;&#34; vspace=&#34;0&#34; vspace=&#39;0&#39; title=&#34;Framework of SEN&#34; &gt;&lt;br /&gt; 
+        &lt;/div&gt;
+&lt;p&gt;如上图所示,  每一个 $v_t(j)$ 表示在 $t$ 时刻, 在已知观察序列 $o_1, o_2,&amp;hellip;, o_t$ 的情况下, 经历 $q_1, q_2,&amp;hellip;, q_t$ 所有路径中, 最大的概率:&lt;/p&gt;
+&lt;p&gt;$v_{t}(j)=\max _{q_{1}, \ldots, q_{t-1}} P\left(q_{1} \ldots q_{t-1}, o_{1}, o_{2} \ldots o_{t}, q_{t}=j \mid \lambda\right)$&lt;/p&gt;
+&lt;p&gt;如果在 $t$ 时刻, v_{t}(j) 即最大概率路径是 ${q_1,q_2,&amp;hellip;,q_{t-1},q_t}$, 那么在 $t-1$ 时刻, 隐藏状态为 $q_{t-1}$ 的最大概率路径一定是跟 ${q_1,q_2,&amp;hellip;,q_{t-1},q_t}$ 重合的, 即${q_1,q_2,&amp;hellip;,q_{t-1}}$. 因此, $v_t(j)$ 可以写成递推的形式:&lt;/p&gt;
+&lt;p&gt;$v_{t}(j)=\max _{i=1}^{N} v_{t-1}(i) a_{i j} b_{j}\left(o_{t}\right)$&lt;/p&gt;
+&lt;p&gt;我们可以发现, Viterbi 算法的递推公式和前向算法的递推公式的形式几乎是一致的, 唯一的不同点在于 Viterbi 算法是求所有路径概率中的最大概率, 而前向算法则是求所有路径概率的和. 前向算法的目的是求得最终的概率, 而 Viterbi 算法的最终目的是给出最有可能的隐藏状态序列, 因此在 Viterbi 的计算过程中, 需要跟踪最大概率路线中每个节点的状态. 因此, Viterbi 算法可以总结为:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;初始状态
+$v_{1}(j)=\pi_{j} b_{j}\left(o_{1}\right) \quad 1 \leq j \leq N$
+$b t_{1}(j)=0 \quad 1 \leq j \leq N$&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;递推过程
+$v_{t}(j)=\max _{i=1}^{N} v_{t-1}(i) a_{i j} b_{j}\left(o_{t}\right) ; \quad 1 \leq j \leq N, 1&amp;lt;t \leq T$&lt;/p&gt;
+&lt;p&gt;$b t_{t}(j)=\underset{i=1}{\operatorname{argmax}} v_{t-1}(i) a_{i j} b_{j}\left(o_{t}\right) ; \quad 1 \leq j \leq N, 1&amp;lt;t \leq T$&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;终止
+The best score: $P *=\max &lt;em&gt;{i=1}^{N} v&lt;/em&gt;{T}(i)$
+The start of backtrace: $\quad q_{T} *=\underset{i=1}{\operatorname{argmax}} v_{T}(i)$&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;hmm基础问题之模型参数评估求解-前向-后向算法forward-backward-algorithm--baum-welch-algorithm&#34;&gt;HMM基础问题之模型参数评估求解: 前向-后向算法(Forward-Backward Algorithm / Baum Welch Algorithm)&lt;/h3&gt;
+&lt;p&gt;模型参数评估是在给定一个观察序列 $O$ 和一系列隐藏状态的条件下, 学习HMM的参数 $A$ 和 $B$.&lt;/p&gt;
+&lt;p&gt;Forward-backward 算法是训练 HMM 的一个标准算法, 是期望最大算法(Expectation-Maximizaiton, EM)一种特殊情况. EM 算法通过计算一个初始的概率分布, 然后利用初始概率分布计算一个更好的评估结果, 并通过迭代的方式获得更优的学习结果. 同样的, Forword-backward 算法也通过迭代的方式学习 HMM 的转移概率矩阵 $A$ 和观察概率 $B$.&lt;/p&gt;
+&lt;p&gt;在介绍利用 Forward-backward 算法求解该问题前, 我们仿照前向算法定义一下后向算法. 我们用后向概率 $\beta_{t}(i)$ 表示在 $t$ 时刻, 隐藏状态为 $i$, HMM 参数为 $\lambda$ 的情况下, 观察序列 {o_{t+1},o_{t+2},&amp;hellip;,o_T}的概率:&lt;/p&gt;
+&lt;p&gt;$\beta_{t}(i)=P\left(o_{t+1}, o_{t+2} \ldots o_{T} \mid q_{t}=i, \lambda\right)$&lt;/p&gt;
+&lt;div&gt;
+        &lt;div align=&#34;center&#34;&gt;
+        &lt;img src=&#34;img/backward_trellis.png&#34; width=&#34;400&#34; alt=&#34;&#34; vspace=&#34;0&#34; vspace=&#39;0&#39; title=&#34;Framework of SEN&#34; &gt;&lt;br /&gt; 
+        &lt;/div&gt;
+&lt;p&gt;如上图所示, 后向算法的递推方式跟前向算法是一致的, 所以后向算法可以表示为:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;初始状态: $\beta_{T}(i)=1, \quad 1 \leq i \leq N$&lt;/li&gt;
+&lt;li&gt;递推过程: $\beta_{t}(i)=\sum_{j=1}^{N} a_{i j} b_{j}\left(o_{t+1}\right) \beta_{t+1}(j), \quad 1 \leq i \leq N, 1 \leq t&amp;lt;T$&lt;/li&gt;
+&lt;li&gt;终止: $P(O \mid \lambda)=\sum_{j=1}^{N} \pi_{j} b_{j}\left(o_{1}\right) \beta_{1}(j)$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;接下来, 我们利用前向和后向概率来学习 HMM 的参数. 通过 EM 算法求得的转移概率, 我们用 $\hat{a}_{i j}$ 表示, 其由下式得出:&lt;/p&gt;
+&lt;p&gt;$\hat{a}_{i j}=\frac{\text { expected number of transitions from state } i \text { to state } j}{\text { expected number of transitions from state } i}$&lt;/p&gt;
+&lt;p&gt;假定我们知道在特定时刻 $t$ 发生的 $i \rightarrow j$ 的概率, 那么对所有 $t$ 上的 $i \rightarrow j$ 概率相加便可得到总的 $i \rightarrow j$ 转移概率. 在此, 我们令 $\xi_{t}$ 表示在给定观察序列 $O$ 和模型参数下 $q_t=i, q_{t+1}=j$ 的概率:&lt;/p&gt;
+&lt;p&gt;$\xi_{t}(i, j)=P\left(q_{t}=i, q_{t+1}=j \mid O, \lambda\right)$&lt;/p&gt;
+&lt;p&gt;在上式中, 观察状态序列 $O$ 和 HMM 参数 $\lambda$ 都属于已知条件, 而在我们上述讲到的前向算法和后向算法中,已知条件只有 $\lambda$, 因此在求解 $\xi_{t}(i, j)$, 我们不妨先对下式进行求解:&lt;/p&gt;
+&lt;p&gt;not-quite- $\xi_{t}(i, j)=P\left(q_{t}=i, q_{t+1}=j, O \mid \lambda\right)$&lt;/p&gt;
+&lt;p&gt;从 not-quite- $\xi_{t}$ 中, 我们不难发现其包含三层概率: 1) 在 $t$ 时刻处于状态 $i$ 的概率 2) 在 $t+1$ 时刻处于状态 $j$ 的概率, 和 3) 从状态 $i$ 转移到 $j$ 的概率.&lt;/p&gt;
+&lt;div&gt;
+        &lt;div align=&#34;center&#34;&gt;
+        &lt;img src=&#34;img/forward_backward.png&#34; width=&#34;400&#34; alt=&#34;&#34; vspace=&#34;0&#34; vspace=&#39;0&#39; title=&#34;Framework of SEN&#34; &gt;&lt;br /&gt; 
+        &lt;/div&gt;
+&lt;p&gt;如上图所示, 根据 forward 算法, 我们可以得到在 $t$ 时刻处于 $i$ 的概率为 $\alpha_{t}(i)$, 在 $t+1$ 时刻处于 $j$ 的概率为 $\beta_{t+1}(j)$, 从 $i$ 转移到 $j$ 并要保证 $t+1$ 时刻的观察状态是 $o_{t+1}$ 的概率为 $a_{ij}b_j(o_{t+1})$. 将上述三种概率相乘便可得到:&lt;/p&gt;
+&lt;p&gt;not-quite- $\xi_{t}(i, j)=\alpha_{t}(i) a_{i j} b_{j}\left(o_{t+1}\right) \beta_{t+1}(j)$&lt;/p&gt;
+&lt;p&gt;我们可以依据下式, 由 not-quite- $\xi_{t}(i, j)$ 计算 $\xi_{t}(i, j)$&lt;/p&gt;
+&lt;p&gt;$P(X \mid Y, Z)=\frac{P(X, Y \mid Z)}{P(Y \mid Z)}$&lt;/p&gt;
+&lt;p&gt;即:&lt;/p&gt;
+&lt;p&gt;$\xi_{t}(i, j)=P\left(q_{t}=i, q_{t+1}=j \mid O, \lambda\right) = \frac{P\left(q_{t}=i, q_{t+1}=j, O \mid \lambda\right)}{P(O \mid \lambda)} = \frac{not-quite- \xi_{t}(i, j)}{P(O \mid \lambda)}$&lt;/p&gt;
+&lt;p&gt;分母 $P(O \mid \lambda)$ 的表示: 在 $t$ 时刻经过状态 $j$ 并满足完整的观察状态序列 $O$ 的概率为 $\alpha_{t}(j) \beta_{t}(j)$. 那么在参数 $\lambda$ 下, 获得 $O$ 的概率 $P(O \mid \lambda)$ 可由 $t$ 时刻所有可能的隐藏概率的求和得到, 即:&lt;/p&gt;
+&lt;p&gt;$P(O \mid \lambda)=\sum_{j=1}^{N} \alpha_{t}(j) \beta_{t}(j)$&lt;/p&gt;
+&lt;p&gt;由此可得:&lt;/p&gt;
+&lt;p&gt;$\xi_{t}(i, j)=\frac{\alpha_{t}(i) a_{i j} b_{j}\left(o_{t+1}\right) \beta_{t+1}(j)}{\sum_{j=1}^{N} \alpha_{t}(j) \beta_{t}(j)}$&lt;/p&gt;
+&lt;p&gt;进一步可得:&lt;/p&gt;
+&lt;p&gt;$\hat{a}&lt;em&gt;{i j}=\frac{\sum&lt;/em&gt;{t=1}^{T-1} \xi_{t}(i, j)}{\sum_{t=1}^{T-1} \sum_{k=1}^{N} \xi_{t}(i, k)}$&lt;/p&gt;
+&lt;p&gt;通过 EM 计算的观察概率可由下式表示&lt;/p&gt;
+&lt;p&gt;$\hat{b}&lt;em&gt;{j}\left(v&lt;/em&gt;{k}\right)=\frac{\text { expected number of times in state } j \text { and observing symbol } v_{k}}{\text { expected number of times in state } j}$&lt;/p&gt;
+&lt;p&gt;定义 $t$ 时刻处于状态 $j$ 的概率:&lt;/p&gt;
+&lt;p&gt;$\gamma_{t}(j)=P\left(q_{t}=j \mid O, \lambda\right)$&lt;/p&gt;
+&lt;p&gt;同样地,我们利用下式计算 $\gamma_{t}(j)$ :&lt;/p&gt;
+&lt;p&gt;$\gamma_{t}(j)=\frac{P\left(q_{t}=j, O \mid \lambda\right)}{P(O \mid \lambda)}$&lt;/p&gt;
+&lt;div&gt;
+        &lt;div align=&#34;center&#34;&gt;
+        &lt;img src=&#34;img/forward_backward2.png&#34; width=&#34;300&#34; alt=&#34;&#34; vspace=&#34;0&#34; vspace=&#39;0&#39; title=&#34;Framework of SEN&#34; &gt;&lt;br /&gt; 
+        &lt;/div&gt;
+&lt;p&gt;如上图所示(跟计算$a_{ij}$ 过程一样), $P\left(q_{t}=j, O \mid \lambda\right)$ 可由前向概率与后向概率的乘积得到, 因此上式变为:&lt;/p&gt;
+&lt;p&gt;$\gamma_{t}(j)=\frac{\alpha_{t}(j) \beta_{t}(j)}{P(O \mid \lambda)}$&lt;/p&gt;
+&lt;p&gt;利用在 $a_{ij}$ 的过程中用到的 $P(O \mid \lambda)$, 我们便求得了 $t$ 时刻处于 $j$ 的概率 $\gamma_{t}(j)$. 由此, 我们可以得到观察概率:&lt;/p&gt;
+&lt;p&gt;$\hat{b}&lt;em&gt;{j}\left(v&lt;/em&gt;{k}\right)=\frac{\sum_{t=1}^{T} s_{. t . O_{t}=v_{k}} \gamma_{t}(j)}{\sum_{t=1}^{T} \gamma_{t}(j)}$&lt;/p&gt;
+&lt;p&gt;在求得 A, B 后, 我们对上述过程进行迭代进行下一轮 A, B 的更新. 如同其它的 EM 迭代算法一样, forward-backward 算法中同样分为两步: Expectation step (E-step) 和 Maximization step (M-step). 在 E-step 中, 我们上一步的 A, B 求 $\xi$ 和 $\gamma$. 在 M-step 中, 我们利用 $\xi$ 和 $\gamma$ 重新计算 A 和 B.&lt;/p&gt;
+&lt;p&gt;整个迭代过程如下:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;function&lt;/strong&gt; FORWARD-BACKWARD(observations of len T, output vocabulary V, hidden state set Q) returns HMM=(A,B)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;initialize&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;iterate&lt;/strong&gt; until convergence&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;E-step&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;$\gamma_{t}(j)=\frac{\alpha_{t}(j) \beta_{t}(j)}{\alpha_{T}\left(q_{F}\right)} \forall t$ and&lt;/p&gt;
+&lt;p&gt;$\xi_{t}(i, j)=\frac{\alpha_{t}(i) a_{i j} b_{j}\left(o_{t+1}\right) \beta_{t+1}(j)}{\alpha_{T}\left(q_{F}\right)} \forall t, i, \text{and}~j $&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;M-step&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;$\hat{a}&lt;em&gt;{i j}=\frac{\sum&lt;/em&gt;{t=1}^{T-1} \xi_{t}(i, j)}{\sum_{t=1}^{T-1} \sum_{k=1}^{N} \xi_{t}(i, k)}$&lt;/p&gt;
+&lt;p&gt;$\hat{b}&lt;em&gt;{j}\left(v&lt;/em&gt;{k}\right)=\frac{\sum_{t=1 s . t . O_{t}=v_{k}}^{T} \gamma_{t}(j)}{\sum_{t=1}^{T} \gamma_{t}(j)}$&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;return A, B&lt;/strong&gt;&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>LAS</title>

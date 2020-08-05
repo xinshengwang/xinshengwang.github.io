@@ -1,0 +1,1169 @@
+<!DOCTYPE html><html lang="en-us" >
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.8.0">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Xinsheng Wang">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="# HMM的三个基本问题求解 HMM的构成: | Component | Description | |----|----| |$Q=q_{1} q_{2} \ldots q_{N}$|">
+
+  
+  <link rel="alternate" hreflang="en-us" href="/post/hmm/">
+
+  
+
+
+  
+  
+  
+  <meta name="theme-color" content="#2962ff">
+  
+
+  
+  
+  
+  <script src="/js/mathjax-config.js"></script>
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-1/css/all.min.css" integrity="sha256-4w9DunooKSr3MFXHXWyFER38WmPdm361bQS/2KUWZbU=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.css" integrity="sha256-SHMGCYmST46SoyGgo4YR/9AlK1vf3ff84Aq9yK4hdqM=" crossorigin="anonymous">
+    
+
+    
+
+    
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js" integrity="sha256-Md1qLToewPeKjfAHU1zyPwOutccPAm5tahnaw7Osw0A=" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CRoboto:400,400italic,700%7CRoboto+Mono&display=swap">
+  
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.css">
+
+  
+
+
+
+
+  
+
+
+  
+  
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
+  <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
+
+  <link rel="canonical" href="/post/hmm/">
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+  
+  
+  <meta property="twitter:card" content="summary">
+  
+  <meta property="twitter:site" content="@XinshengWang1">
+  <meta property="twitter:creator" content="@XinshengWang1">
+  
+  <meta property="og:site_name" content="Xinsheng Wang">
+  <meta property="og:url" content="/post/hmm/">
+  <meta property="og:title" content="HMM | Xinsheng Wang">
+  <meta property="og:description" content="# HMM的三个基本问题求解 HMM的构成: | Component | Description | |----|----| |$Q=q_{1} q_{2} \ldots q_{N}$|"><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
+  
+    
+      <meta property="article:published_time" content="2020-06-26T12:15:28&#43;02:00">
+    
+    <meta property="article:modified_time" content="2020-06-26T12:15:28&#43;02:00">
+  
+
+  
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "/post/hmm/"
+  },
+  "headline": "HMM",
+  
+  "datePublished": "2020-06-26T12:15:28+02:00",
+  "dateModified": "2020-06-26T12:15:28+02:00",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Xinsheng Wang"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Xinsheng Wang",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "# HMM的三个基本问题求解 HMM的构成: | Component | Description | |----|----| |$Q=q_{1} q_{2} \\ldots q_{N}$|"
+}
+</script>
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  <title>HMM | Xinsheng Wang</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/">Xinsheng Wang</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/">Xinsheng Wang</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#about"><span>Home</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#projects"><span>Projects</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#publications"><span>Publications</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#contact"><span>Contact</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+      
+      <li class="nav-item">
+        <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+      <li class="nav-item dropdown theme-dropdown">
+        <a href="#" class="nav-link js-theme-selector" data-toggle="dropdown" aria-haspopup="true">
+          <i class="fas fa-palette" aria-hidden="true"></i>
+        </a>
+        <div class="dropdown-menu">
+          <a href="#" class="dropdown-item js-set-theme-light">
+            <span>Light</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-dark">
+            <span>Dark</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-auto">
+            <span>Automatic</span>
+          </a>
+        </div>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>HMM</h1>
+
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Jun 26, 2020
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    6 min read
+  </span>
+  
+
+  
+  
+  
+
+  
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      <small>
+# HMM的三个基本问题求解
+HMM的构成:
+| Component | Description |
+|----|----|
+|$Q=q_{1} q_{2} \ldots q_{N}$| $N$ 个隐藏状态 hidden states |
+|$A=a_{11} \ldots a_{i j} \ldots a_{N N}$| 转移概率矩阵,$a_{ij}$表示从状态$i$转移到状态$j$的概率 |
+|$O=o_{1} o_{2} \ldots o_{T}$| 观察序列(可见状态)|
+|$B=b_{i}\left(o_{t}\right)$|观察概率(observation likelihoods / emission probability),指由隐藏状态$i$得到观察状态$t$的概率|
+|$\pi=\pi_{1}, \pi_{2}, \ldots, \pi_{N}$| 初始概率分布|
+<h3 id="关于hmm的三个基础问题">关于HMM的三个基础问题:</h3>
+<ul>
+<li>
+<p><strong>评估观察序列概率(Likelihood)</strong>。即给定模型 $\lambda=(A,B,\pi)$ 和观察序列 $O=\left{ o_{1},o_{2},&hellip;,o_{T} \right}$ ，计算在模型 $\lambda$ 下观测序列 $O$ 出现的概率 $P(O|\lambda)$</p>
+</li>
+<li>
+<p><strong>模型参数学习问题</strong>。即给定观测序列 $O=\left{ o_{1},o_{2},&hellip;,o_{T} \right}$ ，估计模型 $\lambda=(A,B,\pi)$ 的参数，使该模型下观测序列的条件概率 $P(O|\lambda)$ 最大。这个问题的求解需要用到基于EM算法的鲍姆-韦尔奇算法， 这个问题是HMM模型三个问题中最复杂的。</p>
+</li>
+<li>
+<p><strong>预测问题</strong>，也称为解码问题。即给定模型 $\lambda=(A,B,\pi)$ 和观测序列 $O=\left{ o_{1},o_{2},&hellip;,o_{T} \right}$ ，求给定观测序列条件下，最可能出现的对应的状态序列，这个问题的求解需要用到基于动态规划的维特比算法，这个问题是HMM模型三个问题中复杂度居中的算法。</p>
+</li>
+</ul>
+<h3 id="hmm基础问题之评估观察序列概率问题求解前向算法forward-algorithm">HMM基础问题之评估观察序列概率问题求解:前向算法(Forward Algorithm)</h3>
+<p>前向算法利用当前时间点算得的概率推导下一个时间步的概率.</p>
+<div>
+        <div align="center">
+        <img src="img/forward_trellis.png" width="400" alt="" vspace="0" vspace='0' title="Framework of SEN" ><br /> 
+        </div>
+<p>如上图所示,圆圈内表示隐藏状态,方块内表示观察状态. 前一时刻经由隐藏状态 $i$ 获得观察状态 $o_1, o_2, &hellip;, o_{t-1}$ 的概率表示为 $\alpha_{t-1}(i)$. 那么下一时刻隐藏状态为 $j$ 的概率就可以表示为上一时刻所有路线的概率乘上转移到 $j$ 的概率并求和得到:</p>
+<p>$P(q_t=j) = \sum_{i=1}^{N} \alpha_{t-1}(i) a_{i j}$</p>
+<p>经由 $q_t=j$ 得到观察状态 $o_1, o_2, &hellip;, o_t$ 的概率在 $P(q_t=j)$ 的基础上乘上观察概率 $b_j(o_t)$ 便可得到:</p>
+<p>$\alpha_{t}(j)=\sum_{i=1}^{N} \alpha_{t-1}(i) a_{i j} b_{j}\left(o_{t}\right)$</p>
+<p>至此我们便得到了由上一时刻所有路线概率求取一下时刻路线概率的&quot;前向&quot;方法,我们只需要知道初始时刻的概率便可求解整个问题. 在初始时刻,隐藏状态属于 $i$ 的概率表示为 $\pi_i$. 由隐藏状态 $i$ 获得观察状态 $o_1$ 的概率为:</p>
+<p>$\alpha_{1}(j)=\pi_{j} b_{j}\left(o_{1}\right) 1 \leq j \leq N$</p>
+<p>在隐藏状态总数为 $N$,观察序列长度为 $T$ 的情况下,前向算法可以整体表示为:</p>
+<ul>
+<li>初始步: $\alpha_{1}(j)=\pi_{j} b_{j}\left(o_{1}\right) 1 \leq j \leq N$</li>
+<li>前向递推过程: $\alpha_{t}(j)=\sum_{i=1}^{N} \alpha_{t-1}(i) a_{i j} b_{j}\left(o_{t}\right) ; \quad 1 \leq j \leq N, 1&lt;t \leq T$</li>
+<li>终止: $P(O \mid \lambda)=\sum_{i=1}^{N} \alpha_{T}(i)$</li>
+</ul>
+<h3 id="hmm基础问题之解码问题求解-viterbi-算法">HMM基础问题之解码问题求解: Viterbi 算法</h3>
+<p>解码问题是在已知HMM参数 $\lambda=(A, B)$ 和观察序列 $O=o_{1}, o_{2}, \dots, o_{T}$ 的条件下,寻找概率最大的隐藏状态序列 $Q=q_{1} q_{2} q_{3} \ldots q_{T}$.</p>
+<p>与前向算法(Forward Algorithm)一样, Viterbi 算法也是一种基于树的动态规划算法. 在此, 我们利用根据吃冰淇凌个数推断天气的例子来说明 Viterbi 算法. 下图展示了本例中的 HMM 参数. 其中, 实线箭头表示转移概率, $\pi$ 表示初始时刻天气为Hot 和 Cold 的概率分别为 0.8 和 0.2. $B$ 是观察概率.</p>
+<div>
+        <div align="center">
+        <img src="img/ice_cream.png" width="400" alt="" vspace="0" vspace='0' title="Framework of SEN" ><br /> 
+        </div>
+<p>问题:已知连续三天吃的冰淇凌个数分别为 3, 1, 3, 求这三天最有可能的天气情况. 下图展示了 Viterbi 的算法过程:</p>
+<div>
+        <div align="center">
+        <img src="img/viterbi_trellis.png" width="400" alt="" vspace="0" vspace='0' title="Framework of SEN" ><br /> 
+        </div>
+<p>如上图所示,  每一个 $v_t(j)$ 表示在 $t$ 时刻, 在已知观察序列 $o_1, o_2,&hellip;, o_t$ 的情况下, 经历 $q_1, q_2,&hellip;, q_t$ 所有路径中, 最大的概率:</p>
+<p>$v_{t}(j)=\max _{q_{1}, \ldots, q_{t-1}} P\left(q_{1} \ldots q_{t-1}, o_{1}, o_{2} \ldots o_{t}, q_{t}=j \mid \lambda\right)$</p>
+<p>如果在 $t$ 时刻, v_{t}(j) 即最大概率路径是 ${q_1,q_2,&hellip;,q_{t-1},q_t}$, 那么在 $t-1$ 时刻, 隐藏状态为 $q_{t-1}$ 的最大概率路径一定是跟 ${q_1,q_2,&hellip;,q_{t-1},q_t}$ 重合的, 即${q_1,q_2,&hellip;,q_{t-1}}$. 因此, $v_t(j)$ 可以写成递推的形式:</p>
+<p>$v_{t}(j)=\max _{i=1}^{N} v_{t-1}(i) a_{i j} b_{j}\left(o_{t}\right)$</p>
+<p>我们可以发现, Viterbi 算法的递推公式和前向算法的递推公式的形式几乎是一致的, 唯一的不同点在于 Viterbi 算法是求所有路径概率中的最大概率, 而前向算法则是求所有路径概率的和. 前向算法的目的是求得最终的概率, 而 Viterbi 算法的最终目的是给出最有可能的隐藏状态序列, 因此在 Viterbi 的计算过程中, 需要跟踪最大概率路线中每个节点的状态. 因此, Viterbi 算法可以总结为:</p>
+<ul>
+<li>
+<p>初始状态
+$v_{1}(j)=\pi_{j} b_{j}\left(o_{1}\right) \quad 1 \leq j \leq N$
+$b t_{1}(j)=0 \quad 1 \leq j \leq N$</p>
+</li>
+<li>
+<p>递推过程
+$v_{t}(j)=\max _{i=1}^{N} v_{t-1}(i) a_{i j} b_{j}\left(o_{t}\right) ; \quad 1 \leq j \leq N, 1&lt;t \leq T$</p>
+<p>$b t_{t}(j)=\underset{i=1}{\operatorname{argmax}} v_{t-1}(i) a_{i j} b_{j}\left(o_{t}\right) ; \quad 1 \leq j \leq N, 1&lt;t \leq T$</p>
+</li>
+<li>
+<p>终止
+The best score: $P *=\max <em>{i=1}^{N} v</em>{T}(i)$
+The start of backtrace: $\quad q_{T} *=\underset{i=1}{\operatorname{argmax}} v_{T}(i)$</p>
+</li>
+</ul>
+<h3 id="hmm基础问题之模型参数评估求解-前向-后向算法forward-backward-algorithm--baum-welch-algorithm">HMM基础问题之模型参数评估求解: 前向-后向算法(Forward-Backward Algorithm / Baum Welch Algorithm)</h3>
+<p>模型参数评估是在给定一个观察序列 $O$ 和一系列隐藏状态的条件下, 学习HMM的参数 $A$ 和 $B$.</p>
+<p>Forward-backward 算法是训练 HMM 的一个标准算法, 是期望最大算法(Expectation-Maximizaiton, EM)一种特殊情况. EM 算法通过计算一个初始的概率分布, 然后利用初始概率分布计算一个更好的评估结果, 并通过迭代的方式获得更优的学习结果. 同样的, Forword-backward 算法也通过迭代的方式学习 HMM 的转移概率矩阵 $A$ 和观察概率 $B$.</p>
+<p>在介绍利用 Forward-backward 算法求解该问题前, 我们仿照前向算法定义一下后向算法. 我们用后向概率 $\beta_{t}(i)$ 表示在 $t$ 时刻, 隐藏状态为 $i$, HMM 参数为 $\lambda$ 的情况下, 观察序列 {o_{t+1},o_{t+2},&hellip;,o_T}的概率:</p>
+<p>$\beta_{t}(i)=P\left(o_{t+1}, o_{t+2} \ldots o_{T} \mid q_{t}=i, \lambda\right)$</p>
+<div>
+        <div align="center">
+        <img src="img/backward_trellis.png" width="400" alt="" vspace="0" vspace='0' title="Framework of SEN" ><br /> 
+        </div>
+<p>如上图所示, 后向算法的递推方式跟前向算法是一致的, 所以后向算法可以表示为:</p>
+<ul>
+<li>初始状态: $\beta_{T}(i)=1, \quad 1 \leq i \leq N$</li>
+<li>递推过程: $\beta_{t}(i)=\sum_{j=1}^{N} a_{i j} b_{j}\left(o_{t+1}\right) \beta_{t+1}(j), \quad 1 \leq i \leq N, 1 \leq t&lt;T$</li>
+<li>终止: $P(O \mid \lambda)=\sum_{j=1}^{N} \pi_{j} b_{j}\left(o_{1}\right) \beta_{1}(j)$</li>
+</ul>
+<p>接下来, 我们利用前向和后向概率来学习 HMM 的参数. 通过 EM 算法求得的转移概率, 我们用 $\hat{a}_{i j}$ 表示, 其由下式得出:</p>
+<p>$\hat{a}_{i j}=\frac{\text { expected number of transitions from state } i \text { to state } j}{\text { expected number of transitions from state } i}$</p>
+<p>假定我们知道在特定时刻 $t$ 发生的 $i \rightarrow j$ 的概率, 那么对所有 $t$ 上的 $i \rightarrow j$ 概率相加便可得到总的 $i \rightarrow j$ 转移概率. 在此, 我们令 $\xi_{t}$ 表示在给定观察序列 $O$ 和模型参数下 $q_t=i, q_{t+1}=j$ 的概率:</p>
+<p>$\xi_{t}(i, j)=P\left(q_{t}=i, q_{t+1}=j \mid O, \lambda\right)$</p>
+<p>在上式中, 观察状态序列 $O$ 和 HMM 参数 $\lambda$ 都属于已知条件, 而在我们上述讲到的前向算法和后向算法中,已知条件只有 $\lambda$, 因此在求解 $\xi_{t}(i, j)$, 我们不妨先对下式进行求解:</p>
+<p>not-quite- $\xi_{t}(i, j)=P\left(q_{t}=i, q_{t+1}=j, O \mid \lambda\right)$</p>
+<p>从 not-quite- $\xi_{t}$ 中, 我们不难发现其包含三层概率: 1) 在 $t$ 时刻处于状态 $i$ 的概率 2) 在 $t+1$ 时刻处于状态 $j$ 的概率, 和 3) 从状态 $i$ 转移到 $j$ 的概率.</p>
+<div>
+        <div align="center">
+        <img src="img/forward_backward.png" width="400" alt="" vspace="0" vspace='0' title="Framework of SEN" ><br /> 
+        </div>
+<p>如上图所示, 根据 forward 算法, 我们可以得到在 $t$ 时刻处于 $i$ 的概率为 $\alpha_{t}(i)$, 在 $t+1$ 时刻处于 $j$ 的概率为 $\beta_{t+1}(j)$, 从 $i$ 转移到 $j$ 并要保证 $t+1$ 时刻的观察状态是 $o_{t+1}$ 的概率为 $a_{ij}b_j(o_{t+1})$. 将上述三种概率相乘便可得到:</p>
+<p>not-quite- $\xi_{t}(i, j)=\alpha_{t}(i) a_{i j} b_{j}\left(o_{t+1}\right) \beta_{t+1}(j)$</p>
+<p>我们可以依据下式, 由 not-quite- $\xi_{t}(i, j)$ 计算 $\xi_{t}(i, j)$</p>
+<p>$P(X \mid Y, Z)=\frac{P(X, Y \mid Z)}{P(Y \mid Z)}$</p>
+<p>即:</p>
+<p>$\xi_{t}(i, j)=P\left(q_{t}=i, q_{t+1}=j \mid O, \lambda\right) = \frac{P\left(q_{t}=i, q_{t+1}=j, O \mid \lambda\right)}{P(O \mid \lambda)} = \frac{not-quite- \xi_{t}(i, j)}{P(O \mid \lambda)}$</p>
+<p>分母 $P(O \mid \lambda)$ 的表示: 在 $t$ 时刻经过状态 $j$ 并满足完整的观察状态序列 $O$ 的概率为 $\alpha_{t}(j) \beta_{t}(j)$. 那么在参数 $\lambda$ 下, 获得 $O$ 的概率 $P(O \mid \lambda)$ 可由 $t$ 时刻所有可能的隐藏概率的求和得到, 即:</p>
+<p>$P(O \mid \lambda)=\sum_{j=1}^{N} \alpha_{t}(j) \beta_{t}(j)$</p>
+<p>由此可得:</p>
+<p>$\xi_{t}(i, j)=\frac{\alpha_{t}(i) a_{i j} b_{j}\left(o_{t+1}\right) \beta_{t+1}(j)}{\sum_{j=1}^{N} \alpha_{t}(j) \beta_{t}(j)}$</p>
+<p>进一步可得:</p>
+<p>$\hat{a}<em>{i j}=\frac{\sum</em>{t=1}^{T-1} \xi_{t}(i, j)}{\sum_{t=1}^{T-1} \sum_{k=1}^{N} \xi_{t}(i, k)}$</p>
+<p>通过 EM 计算的观察概率可由下式表示</p>
+<p>$\hat{b}<em>{j}\left(v</em>{k}\right)=\frac{\text { expected number of times in state } j \text { and observing symbol } v_{k}}{\text { expected number of times in state } j}$</p>
+<p>定义 $t$ 时刻处于状态 $j$ 的概率:</p>
+<p>$\gamma_{t}(j)=P\left(q_{t}=j \mid O, \lambda\right)$</p>
+<p>同样地,我们利用下式计算 $\gamma_{t}(j)$ :</p>
+<p>$\gamma_{t}(j)=\frac{P\left(q_{t}=j, O \mid \lambda\right)}{P(O \mid \lambda)}$</p>
+<div>
+        <div align="center">
+        <img src="img/forward_backward2.png" width="300" alt="" vspace="0" vspace='0' title="Framework of SEN" ><br /> 
+        </div>
+<p>如上图所示(跟计算$a_{ij}$ 过程一样), $P\left(q_{t}=j, O \mid \lambda\right)$ 可由前向概率与后向概率的乘积得到, 因此上式变为:</p>
+<p>$\gamma_{t}(j)=\frac{\alpha_{t}(j) \beta_{t}(j)}{P(O \mid \lambda)}$</p>
+<p>利用在 $a_{ij}$ 的过程中用到的 $P(O \mid \lambda)$, 我们便求得了 $t$ 时刻处于 $j$ 的概率 $\gamma_{t}(j)$. 由此, 我们可以得到观察概率:</p>
+<p>$\hat{b}<em>{j}\left(v</em>{k}\right)=\frac{\sum_{t=1}^{T} s_{. t . O_{t}=v_{k}} \gamma_{t}(j)}{\sum_{t=1}^{T} \gamma_{t}(j)}$</p>
+<p>在求得 A, B 后, 我们对上述过程进行迭代进行下一轮 A, B 的更新. 如同其它的 EM 迭代算法一样, forward-backward 算法中同样分为两步: Expectation step (E-step) 和 Maximization step (M-step). 在 E-step 中, 我们上一步的 A, B 求 $\xi$ 和 $\gamma$. 在 M-step 中, 我们利用 $\xi$ 和 $\gamma$ 重新计算 A 和 B.</p>
+<p>整个迭代过程如下:</p>
+<p><strong>function</strong> FORWARD-BACKWARD(observations of len T, output vocabulary V, hidden state set Q) returns HMM=(A,B)</p>
+<p><strong>initialize</strong></p>
+<p><strong>iterate</strong> until convergence</p>
+<p><strong>E-step</strong></p>
+<p>$\gamma_{t}(j)=\frac{\alpha_{t}(j) \beta_{t}(j)}{\alpha_{T}\left(q_{F}\right)} \forall t$ and</p>
+<p>$\xi_{t}(i, j)=\frac{\alpha_{t}(i) a_{i j} b_{j}\left(o_{t+1}\right) \beta_{t+1}(j)}{\alpha_{T}\left(q_{F}\right)} \forall t, i, \text{and}~j $</p>
+<p><strong>M-step</strong></p>
+<p>$\hat{a}<em>{i j}=\frac{\sum</em>{t=1}^{T-1} \xi_{t}(i, j)}{\sum_{t=1}^{T-1} \sum_{k=1}^{N} \xi_{t}(i, k)}$</p>
+<p>$\hat{b}<em>{j}\left(v</em>{k}\right)=\frac{\sum_{t=1 s . t . O_{t}=v_{k}}^{T} \gamma_{t}(j)}{\sum_{t=1}^{T} \gamma_{t}(j)}$</p>
+<p><strong>return A, B</strong></p>
+
+    </div>
+
+    
+
+
+
+
+
+
+
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=/post/hmm/&amp;text=HMM" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=/post/hmm/&amp;t=HMM" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=HMM&amp;body=/post/hmm/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=/post/hmm/&amp;title=HMM" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://web.whatsapp.com/send?text=HMM%20/post/hmm/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=/post/hmm/&amp;title=HMM" target="_blank" rel="noopener" class="share-btn-weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+  
+    
+    
+    
+      
+    
+    
+    
+    <div class="media author-card content-widget-hr">
+      
+        
+        <img class="avatar mr-3 avatar-circle" src="/author/xinsheng-wang/avatar_hu4f226d7cc646d96dcdaba5ac8195a715_1269579_270x270_fill_lanczos_center_2.png" alt="Xinsheng Wang">
+      
+
+      <div class="media-body">
+        <h5 class="card-title"><a href="/">Xinsheng Wang</a></h5>
+        <h6 class="card-subtitle">PhD candidate</h6>
+        <p class="card-text">My research interests include visually grounded speech learning, speech synthesis and computer vision.</p>
+        <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/#contact" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://twitter.com/XinshengWang1" target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://scholar.google.com/" target="_blank" rel="noopener">
+        <i class="ai ai-google-scholar"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/xinshengwang" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+</ul>
+
+      </div>
+    </div>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.4.8/mermaid.min.js" integrity="sha256-lyWCDMnMeZiXRi7Zl54sZGKYmgQs4izcT7+tKc+KUBk=" crossorigin="anonymous" title="mermaid"></script>
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js" integrity="sha256-eOgo0OtLL4cdq7RdwRUiGKLX9XsIJ7nGhWEKbohmVAQ=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/languages/r.min.js"></script>
+        
+      
+
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.js" integrity="sha256-EErZamuLefUnbMBQbsEqu1USa+btR2oIlCpBJbyD4/g=" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+    
+    <script>const isSiteThemeDark = false;</script>
+    
+
+    
+    
+    
+    
+    
+    
+    <script>
+      const search_config = {"indexURI":"/index.json","minLength":1,"threshold":0.3};
+      const i18n = {"no_results":"No results found","placeholder":"Search...","results":"results found"};
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.37431be2d92d7fb0160054761ab79602.js"></script>
+
+    
+
+
+
+
+
+
+  
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+  <p class="powered-by">
+    
+      <a href="/privacy/">Privacy Policy</a>
+    
+    
+       &middot; 
+      <a href="/terms/">Terms</a>
+    
+  </p>
+  
+
+  <p class="powered-by">
+    
+
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" class="back-to-top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

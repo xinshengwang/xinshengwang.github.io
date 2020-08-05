@@ -530,8 +530,16 @@ calculated on the real test images.&lt;/caption&gt;
 
 &lt;/figure&gt;
 
-&lt;h3 id=&#34;paper&#34;&gt;Paper&lt;/h3&gt;
-&lt;p&gt;The paper was released on arXiv: &lt;a href=&#34;https://arxiv.org/abs/2005.06968&#34;&gt;https://arxiv.org/abs/2005.06968&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;database&#34;&gt;Database&lt;/h3&gt;
+&lt;p&gt;Synthesized spoken captions for CUB-200 and Oxford-102 can be downloaded from:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://zenodo.org/record/3972349/files/oxford_audio.tar.gz?download=1&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Oxford-102 Spoken captions&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://zenodo.org/record/3972388/files/CUB200_audio_001-100.tar.gz?download=1&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CUB-200 Spoken captions - Part I&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://zenodo.org/record/3972388/files/CUB200_audio_001-100.tar.gz?download=1&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CUB-200 Spoken captions - Part II&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h3 id=&#34;code&#34;&gt;Code&lt;/h3&gt;
 &lt;p&gt;&lt;a href=&#34;https://github.com/xinshengwang/S2IGAN&#34;&gt;https://github.com/xinshengwang/S2IGAN&lt;/a&gt;.&lt;/p&gt;
 &lt;/small&gt;</description>
