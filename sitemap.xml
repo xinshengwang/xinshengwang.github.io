@@ -3,31 +3,6 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/authors/</loc>
-    <lastmod>2020-09-25T10:05:41+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/project/sas/</loc>
-    <lastmod>2020-09-25T10:05:41+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/project/</loc>
-    <lastmod>2020-09-25T10:05:41+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/</loc>
-    <lastmod>2020-09-25T10:05:41+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/author/xinsheng-wang-siyuan-feng-jihua-zhu-mark-hasegawa-johnson-odette-scharenborg/</loc>
-    <lastmod>2020-09-25T10:05:41+02:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/post/</loc>
     <lastmod>2020-06-29T21:29:34+02:00</lastmod>
   </url>
@@ -38,12 +13,22 @@
   </url>
   
   <url>
+    <loc>/</loc>
+    <lastmod>2020-06-29T21:29:34+02:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/post/hmm/</loc>
     <lastmod>2020-06-26T12:15:28+02:00</lastmod>
   </url>
   
   <url>
     <loc>/tag/attention/</loc>
+    <lastmod>2020-05-24T17:46:37+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/authors/</loc>
     <lastmod>2020-05-24T17:46:37+02:00</lastmod>
   </url>
   
@@ -130,6 +115,11 @@
   <url>
     <loc>/author/xinsheng-wang-tingting-qiao-jihua-zhu-alan-hanjalic-odette-scharenborg/</loc>
     <lastmod>2020-05-14T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/project/</loc>
+    <lastmod>2020-04-28T22:58:36+02:00</lastmod>
   </url>
   
   <url>
