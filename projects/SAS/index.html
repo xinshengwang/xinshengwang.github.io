@@ -557,7 +557,7 @@
 
   <!-- <h3 align="center" >Show and Speak: Spoken Description Synthesis for Images</h3> -->
 <p style = "font-family:georgia,garamond,serif;font-size:26px;text-align:center;">
-  Show and Speak: Spoken Description Synthesis for Images
+  Show and Speak: Directly Synthesize Spoken Description of Images
 </p>  
 
 
@@ -598,10 +598,10 @@
 
 
 
-<h3 id="introduction">Introduction</h3>
+<h3 id="About">Introduction</h3>
 <small>
 <p style = "font-family:georgia,garamond,serif;font-size:16px;text-align:justify; text-justify:inter-ideograph;">
-A novel task that directly synthesizes spoken descriptions for images bypassing any text or phoneme information is proposed. This task, which is referred to as image speaking is to realize the process of image-to-speech generation. To implement this new task, a framework named as show and speak (SAS) is proposed. This SAS model treats the image speaking as a sequence-to-sequence process, which takes a sequence of image local features as input and predicts a sequence of spectrogram of speech. The final speech audio can be obtained from the predicted spectrogram via WaveNet. Extensive experiments on the public benchmark database Flickr8k demonstrate that the proposed SAS is able to synthesize high-quality spoken descriptions for images, indicating that synthesizing spoken descriptions for images while bypassing text and phoneme is feasible. The proposed SAS provides a proof-of-concept and a baseline for the image speaking task.
+  This work proposes a new model, referred to as the show and speak (SAS) model  that, for the first time, is able to directly synthesize spoken descriptions of images, bypassing the need for any text or phonemes. The basic structure of SAS is an encoder-decoder architecture that takes an image as input and predicts a sequence of spectrograms of speech that describes this image. The final speech audio is obtained from the predicted spectrogram via WaveNet. Extensive experiments on the public benchmark database Flickr8k demonstrate that the proposed SAS is able to synthesize natural spoken descriptions for images, indicating that synthesizing spoken descriptions for images while bypassing text and phonemes is feasible.
 
 <h3 id="framework">Framework</h3>
 
@@ -635,7 +635,7 @@ A novel task that directly synthesizes spoken descriptions for images bypassing 
   
   
   <figcaption>
-    The architecture of SAS. This is a sequence-to-sequence framework with a sequence of faster R-CNN image feature vectors as input and output the corresponding spoken description.
+    The architecture of SAS. This is a sequence-to-sequence model with a sequence of faster R-CNN image feature vectors as input and output the corresponding spoken description.
   </figcaption>
 
 
