@@ -27,7 +27,7 @@
   
     
   
-  <meta name="description" content="Shown and speak (SAS) model that directly synthesize spoken descriptions for images">
+  <meta name="description" content="Shown and speak (SAS) model that, for the first time, directly synthesize spoken descriptions for images bypassing any text and phonemes.">
 
   
   <link rel="alternate" hreflang="en-us" href="/project/sas/">
@@ -239,8 +239,8 @@
   
   <meta property="og:site_name" content="Xinsheng Wang">
   <meta property="og:url" content="/project/sas/">
-  <meta property="og:title" content="Image Speaking | Xinsheng Wang">
-  <meta property="og:description" content="Shown and speak (SAS) model that directly synthesize spoken descriptions for images"><meta property="og:image" content="/project/sas/featured.png">
+  <meta property="og:title" content="SAS | Xinsheng Wang">
+  <meta property="og:description" content="Shown and speak (SAS) model that, for the first time, directly synthesize spoken descriptions for images bypassing any text and phonemes."><meta property="og:image" content="/project/sas/featured.png">
   <meta property="twitter:image" content="/project/sas/featured.png"><meta property="og:locale" content="en-us">
   
     
@@ -270,7 +270,7 @@
     "@type": "WebPage",
     "@id": "/project/sas/"
   },
-  "headline": "Image Speaking",
+  "headline": "SAS",
   
   "image": [
     "/project/sas/featured.png"
@@ -292,7 +292,7 @@
       "url": "/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png"
     }
   },
-  "description": "Shown and speak (SAS) model that directly synthesize spoken descriptions for images"
+  "description": "Shown and speak (SAS) model that, for the first time, directly synthesize spoken descriptions for images bypassing any text and phonemes."
 }
 </script>
 
@@ -310,7 +310,7 @@
 
 
 
-  <title>Image Speaking | Xinsheng Wang</title>
+  <title>SAS | Xinsheng Wang</title>
 
 </head>
 
@@ -563,10 +563,10 @@
   
   
 <div class="article-container pt-3">
-  <h1>Image Speaking</h1>
+  <h1>SAS</h1>
 
   
-  <p class="page-subtitle">Show and Speak: Spoken Description Synthesis for Images</p>
+  <p class="page-subtitle">Show and Speak: Directly Synthesize Spoken Description of Images</p>
   
 
   
@@ -657,10 +657,10 @@
 <figure >
 
 
-  <a data-fancybox="" href="/project/sas/featured_hu1b73a7cce4970c02d1f5e04ee32426dd_189616_2000x2000_fit_lanczos_2.png" >
+  <a data-fancybox="" href="/project/sas/featured_hu93e6d95c705196df752f5874c9e68718_163757_2000x2000_fit_lanczos_2.png" >
 
 
-  <img data-src="/project/sas/featured_hu1b73a7cce4970c02d1f5e04ee32426dd_189616_2000x2000_fit_lanczos_2.png" class="lazyload" alt="" width="600" height="395">
+  <img data-src="/project/sas/featured_hu93e6d95c705196df752f5874c9e68718_163757_2000x2000_fit_lanczos_2.png" class="lazyload" alt="" width="600" height="286">
 </a>
 
 
@@ -669,7 +669,7 @@
 
 <h3 id="introduction">Introduction</h3>
 <small>
-A novel task that directly synthesizes spoken descriptions for images bypassing any text or phoneme information is proposed. This task, which is referred to as image speaking is to realize the process of image-to-speech generation. To implement this new task, a framework named as show and speak (SAS) is proposed. This SAS model treats the image speaking as a sequence-to-sequence process, which takes a sequence of image local features as input and predicts a sequence of spectrogram of speech. The final speech audio can be obtained from the predicted spectrogram via WaveNet. Extensive experiments on the public benchmark database Flickr8k demonstrate that the proposed SAS is able to synthesize high-quality spoken descriptions for images, indicating that synthesizing spoken descriptions for images while bypassing text and phoneme is feasible. The proposed SAS provides a proof-of-concept and a baseline for the image speaking task.
+This work proposes a new model, referred to as the show and speak (SAS) model that, for the first time, is able to directly synthesize spoken descriptions of images, bypassing the need for any text or phonemes. The basic structure of SAS is an encoder-decoder architecture that takes an image as input and predicts a sequence of spectrograms of speech that describes this image. The final speech audio is obtained from the predicted spectrogram via WaveNet. Extensive experiments on the public benchmark database Flickr8k demonstrate that the proposed SAS is able to synthesize natural spoken descriptions for images, indicating that synthesizing spoken descriptions for images while bypassing text and phonemes is feasible.
 <h3 id="framework">Framework</h3>
 
 
@@ -692,10 +692,10 @@ A novel task that directly synthesizes spoken descriptions for images bypassing 
 <figure id="figure-the-architecture-of-sas-this-is-a-sequence-to-sequence-framework-with-a-sequence-of-faster-r-cnn-image-feature-vectors-as-input-and-output-the-corresponding-spoken-description">
 
 
-  <a data-fancybox="" href="/project/sas/Framework_huc68ecca53e94e43ed6e2886bcf53fb97_274666_2000x2000_fit_lanczos_2.png" data-caption="The architecture of SAS. This is a sequence-to-sequence framework with a sequence of faster R-CNN image feature vectors as input and output the corresponding spoken description.">
+  <a data-fancybox="" href="/project/sas/Framework_hud7b51108d8865be310f72ebcafcb9515_209861_2000x2000_fit_lanczos_2.png" data-caption="The architecture of SAS. This is a sequence-to-sequence framework with a sequence of faster R-CNN image feature vectors as input and output the corresponding spoken description.">
 
 
-  <img data-src="/project/sas/Framework_huc68ecca53e94e43ed6e2886bcf53fb97_274666_2000x2000_fit_lanczos_2.png" class="lazyload" alt="" width="500" height="1079">
+  <img data-src="/project/sas/Framework_hud7b51108d8865be310f72ebcafcb9515_209861_2000x2000_fit_lanczos_2.png" class="lazyload" alt="" width="500" height="1346">
 </a>
 
 
@@ -776,7 +776,7 @@ Your browser does not support the audio element.
 </audio></td>
 </tr></table>
 <ul>
-<li>Synthesized speech turns to bad from a time step in the middle:</li>
+<li>Synthesized speech gets worse throughout the spoken caption:</li>
 </ul>
 <table><tr>
 <td>
@@ -799,7 +799,7 @@ Your browser does not support the audio element.
 </audio></td>
 </tr></table>
 <ul>
-<li>Synthesized speech does not make sense at all:</li>
+<li>Synthesized speech is unintelligible:</li>
 </ul>
 <table><tr>
 <td>
@@ -855,7 +855,7 @@ Your browser does not support the audio element.
       
       
       <li>
-        <a href="https://twitter.com/intent/tweet?url=/project/sas/&amp;text=Image%20Speaking" target="_blank" rel="noopener" class="share-btn-twitter">
+        <a href="https://twitter.com/intent/tweet?url=/project/sas/&amp;text=SAS" target="_blank" rel="noopener" class="share-btn-twitter">
           <i class="fab fa-twitter"></i>
         </a>
       </li>
@@ -868,7 +868,7 @@ Your browser does not support the audio element.
       
       
       <li>
-        <a href="https://www.facebook.com/sharer.php?u=/project/sas/&amp;t=Image%20Speaking" target="_blank" rel="noopener" class="share-btn-facebook">
+        <a href="https://www.facebook.com/sharer.php?u=/project/sas/&amp;t=SAS" target="_blank" rel="noopener" class="share-btn-facebook">
           <i class="fab fa-facebook"></i>
         </a>
       </li>
@@ -881,7 +881,7 @@ Your browser does not support the audio element.
       
       
       <li>
-        <a href="mailto:?subject=Image%20Speaking&amp;body=/project/sas/" target="_blank" rel="noopener" class="share-btn-email">
+        <a href="mailto:?subject=SAS&amp;body=/project/sas/" target="_blank" rel="noopener" class="share-btn-email">
           <i class="fas fa-envelope"></i>
         </a>
       </li>
@@ -894,7 +894,7 @@ Your browser does not support the audio element.
       
       
       <li>
-        <a href="https://www.linkedin.com/shareArticle?url=/project/sas/&amp;title=Image%20Speaking" target="_blank" rel="noopener" class="share-btn-linkedin">
+        <a href="https://www.linkedin.com/shareArticle?url=/project/sas/&amp;title=SAS" target="_blank" rel="noopener" class="share-btn-linkedin">
           <i class="fab fa-linkedin-in"></i>
         </a>
       </li>
@@ -907,7 +907,7 @@ Your browser does not support the audio element.
       
       
       <li>
-        <a href="https://web.whatsapp.com/send?text=Image%20Speaking%20/project/sas/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+        <a href="https://web.whatsapp.com/send?text=SAS%20/project/sas/" target="_blank" rel="noopener" class="share-btn-whatsapp">
           <i class="fab fa-whatsapp"></i>
         </a>
       </li>
@@ -920,7 +920,7 @@ Your browser does not support the audio element.
       
       
       <li>
-        <a href="https://service.weibo.com/share/share.php?url=/project/sas/&amp;title=Image%20Speaking" target="_blank" rel="noopener" class="share-btn-weibo">
+        <a href="https://service.weibo.com/share/share.php?url=/project/sas/&amp;title=SAS" target="_blank" rel="noopener" class="share-btn-weibo">
           <i class="fab fa-weibo"></i>
         </a>
       </li>

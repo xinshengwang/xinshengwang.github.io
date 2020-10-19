@@ -5,7 +5,7 @@
     <link>/author/xinsheng-wang-siyuan-feng-jihua-zhu-mark-hasegawa-johnson-odette-scharenborg/</link>
       <atom:link href="/author/xinsheng-wang-siyuan-feng-jihua-zhu-mark-hasegawa-johnson-odette-scharenborg/index.xml" rel="self" type="application/rss+xml" />
     <description>Xinsheng Wang, Siyuan Feng, Jihua Zhu, Mark Hasegawa-Johnson, Odette Scharenborg</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Fri, 25 Sep 2020 10:05:41 +0200</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Mon, 19 Oct 2020 11:48:43 +0200</lastBuildDate>
     <image>
       <url>/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
       <title>Xinsheng Wang, Siyuan Feng, Jihua Zhu, Mark Hasegawa-Johnson, Odette Scharenborg</title>
@@ -13,7 +13,15 @@
     </image>
     
     <item>
-      <title>Image Speaking</title>
+      <title>Show and Speak: Directly Synthesize Spoken Description of Images</title>
+      <link>/publication/wang-2020-show/publication/</link>
+      <pubDate>Mon, 19 Oct 2020 11:48:43 +0200</pubDate>
+      <guid>/publication/wang-2020-show/publication/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>SAS</title>
       <link>/project/sas/</link>
       <pubDate>Fri, 25 Sep 2020 10:05:41 +0200</pubDate>
       <guid>/project/sas/</guid>
@@ -38,10 +46,10 @@
 &lt;figure &gt;
 
 
-  &lt;a data-fancybox=&#34;&#34; href=&#34;/project/sas/featured_hu1b73a7cce4970c02d1f5e04ee32426dd_189616_2000x2000_fit_lanczos_2.png&#34; &gt;
+  &lt;a data-fancybox=&#34;&#34; href=&#34;/project/sas/featured_hu93e6d95c705196df752f5874c9e68718_163757_2000x2000_fit_lanczos_2.png&#34; &gt;
 
 
-  &lt;img data-src=&#34;/project/sas/featured_hu1b73a7cce4970c02d1f5e04ee32426dd_189616_2000x2000_fit_lanczos_2.png&#34; class=&#34;lazyload&#34; alt=&#34;&#34; width=&#34;600&#34; height=&#34;395&#34;&gt;
+  &lt;img data-src=&#34;/project/sas/featured_hu93e6d95c705196df752f5874c9e68718_163757_2000x2000_fit_lanczos_2.png&#34; class=&#34;lazyload&#34; alt=&#34;&#34; width=&#34;600&#34; height=&#34;286&#34;&gt;
 &lt;/a&gt;
 
 
@@ -50,7 +58,7 @@
 
 &lt;h3 id=&#34;introduction&#34;&gt;Introduction&lt;/h3&gt;
 &lt;small&gt;
-A novel task that directly synthesizes spoken descriptions for images bypassing any text or phoneme information is proposed. This task, which is referred to as image speaking is to realize the process of image-to-speech generation. To implement this new task, a framework named as show and speak (SAS) is proposed. This SAS model treats the image speaking as a sequence-to-sequence process, which takes a sequence of image local features as input and predicts a sequence of spectrogram of speech. The final speech audio can be obtained from the predicted spectrogram via WaveNet. Extensive experiments on the public benchmark database Flickr8k demonstrate that the proposed SAS is able to synthesize high-quality spoken descriptions for images, indicating that synthesizing spoken descriptions for images while bypassing text and phoneme is feasible. The proposed SAS provides a proof-of-concept and a baseline for the image speaking task.
+This work proposes a new model, referred to as the show and speak (SAS) model that, for the first time, is able to directly synthesize spoken descriptions of images, bypassing the need for any text or phonemes. The basic structure of SAS is an encoder-decoder architecture that takes an image as input and predicts a sequence of spectrograms of speech that describes this image. The final speech audio is obtained from the predicted spectrogram via WaveNet. Extensive experiments on the public benchmark database Flickr8k demonstrate that the proposed SAS is able to synthesize natural spoken descriptions for images, indicating that synthesizing spoken descriptions for images while bypassing text and phonemes is feasible.
 &lt;h3 id=&#34;framework&#34;&gt;Framework&lt;/h3&gt;
 
 
@@ -73,10 +81,10 @@ A novel task that directly synthesizes spoken descriptions for images bypassing 
 &lt;figure id=&#34;figure-the-architecture-of-sas-this-is-a-sequence-to-sequence-framework-with-a-sequence-of-faster-r-cnn-image-feature-vectors-as-input-and-output-the-corresponding-spoken-description&#34;&gt;
 
 
-  &lt;a data-fancybox=&#34;&#34; href=&#34;/project/sas/Framework_huc68ecca53e94e43ed6e2886bcf53fb97_274666_2000x2000_fit_lanczos_2.png&#34; data-caption=&#34;The architecture of SAS. This is a sequence-to-sequence framework with a sequence of faster R-CNN image feature vectors as input and output the corresponding spoken description.&#34;&gt;
+  &lt;a data-fancybox=&#34;&#34; href=&#34;/project/sas/Framework_hud7b51108d8865be310f72ebcafcb9515_209861_2000x2000_fit_lanczos_2.png&#34; data-caption=&#34;The architecture of SAS. This is a sequence-to-sequence framework with a sequence of faster R-CNN image feature vectors as input and output the corresponding spoken description.&#34;&gt;
 
 
-  &lt;img data-src=&#34;/project/sas/Framework_huc68ecca53e94e43ed6e2886bcf53fb97_274666_2000x2000_fit_lanczos_2.png&#34; class=&#34;lazyload&#34; alt=&#34;&#34; width=&#34;500&#34; height=&#34;1079&#34;&gt;
+  &lt;img data-src=&#34;/project/sas/Framework_hud7b51108d8865be310f72ebcafcb9515_209861_2000x2000_fit_lanczos_2.png&#34; class=&#34;lazyload&#34; alt=&#34;&#34; width=&#34;500&#34; height=&#34;1346&#34;&gt;
 &lt;/a&gt;
 
 
@@ -157,7 +165,7 @@ Your browser does not support the audio element.
 &lt;/audio&gt;&lt;/td&gt;
 &lt;/tr&gt;&lt;/table&gt;
 &lt;ul&gt;
-&lt;li&gt;Synthesized speech turns to bad from a time step in the middle:&lt;/li&gt;
+&lt;li&gt;Synthesized speech gets worse throughout the spoken caption:&lt;/li&gt;
 &lt;/ul&gt;
 &lt;table&gt;&lt;tr&gt;
 &lt;td&gt;
@@ -180,7 +188,7 @@ Your browser does not support the audio element.
 &lt;/audio&gt;&lt;/td&gt;
 &lt;/tr&gt;&lt;/table&gt;
 &lt;ul&gt;
-&lt;li&gt;Synthesized speech does not make sense at all:&lt;/li&gt;
+&lt;li&gt;Synthesized speech is unintelligible:&lt;/li&gt;
 &lt;/ul&gt;
 &lt;table&gt;&lt;tr&gt;
 &lt;td&gt;

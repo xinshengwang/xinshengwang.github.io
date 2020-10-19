@@ -5,12 +5,28 @@
     <link>/publication-type/1/</link>
       <atom:link href="/publication-type/1/index.xml" rel="self" type="application/rss+xml" />
     <description>1</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Tue, 01 Jan 2019 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Mon, 19 Oct 2020 11:48:43 +0200</lastBuildDate>
     <image>
       <url>/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
       <title>1</title>
       <link>/publication-type/1/</link>
     </image>
+    
+    <item>
+      <title>Show and Speak: Directly Synthesize Spoken Description of Images</title>
+      <link>/publication/wang-2020-show/publication/</link>
+      <pubDate>Mon, 19 Oct 2020 11:48:43 +0200</pubDate>
+      <guid>/publication/wang-2020-show/publication/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Look, Listen and Infer</title>
+      <link>/publication/jia-2020-look/publication/</link>
+      <pubDate>Mon, 19 Oct 2020 11:05:34 +0200</pubDate>
+      <guid>/publication/jia-2020-look/publication/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Combining Self-Aggregation Vector and Indicator Matrix for Improved Object Retrieval</title>

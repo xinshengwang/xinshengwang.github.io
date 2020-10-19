@@ -5,12 +5,233 @@
     <link>/</link>
       <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <description>Xinsheng Wang</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Mon, 29 Jun 2020 21:29:34 +0200</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Mon, 19 Oct 2020 11:48:43 +0200</lastBuildDate>
     <image>
       <url>/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
       <title>Xinsheng Wang</title>
       <link>/</link>
     </image>
+    
+    <item>
+      <title>Show and Speak: Directly Synthesize Spoken Description of Images</title>
+      <link>/publication/wang-2020-show/publication/</link>
+      <pubDate>Mon, 19 Oct 2020 11:48:43 +0200</pubDate>
+      <guid>/publication/wang-2020-show/publication/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Look, Listen and Infer</title>
+      <link>/publication/jia-2020-look/publication/</link>
+      <pubDate>Mon, 19 Oct 2020 11:05:34 +0200</pubDate>
+      <guid>/publication/jia-2020-look/publication/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>SAS</title>
+      <link>/project/sas/</link>
+      <pubDate>Fri, 25 Sep 2020 10:05:41 +0200</pubDate>
+      <guid>/project/sas/</guid>
+      <description>
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure &gt;
+
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;/project/sas/featured_hu93e6d95c705196df752f5874c9e68718_163757_2000x2000_fit_lanczos_2.png&#34; &gt;
+
+
+  &lt;img data-src=&#34;/project/sas/featured_hu93e6d95c705196df752f5874c9e68718_163757_2000x2000_fit_lanczos_2.png&#34; class=&#34;lazyload&#34; alt=&#34;&#34; width=&#34;600&#34; height=&#34;286&#34;&gt;
+&lt;/a&gt;
+
+
+
+&lt;/figure&gt;
+
+&lt;h3 id=&#34;introduction&#34;&gt;Introduction&lt;/h3&gt;
+&lt;small&gt;
+This work proposes a new model, referred to as the show and speak (SAS) model that, for the first time, is able to directly synthesize spoken descriptions of images, bypassing the need for any text or phonemes. The basic structure of SAS is an encoder-decoder architecture that takes an image as input and predicts a sequence of spectrograms of speech that describes this image. The final speech audio is obtained from the predicted spectrogram via WaveNet. Extensive experiments on the public benchmark database Flickr8k demonstrate that the proposed SAS is able to synthesize natural spoken descriptions for images, indicating that synthesizing spoken descriptions for images while bypassing text and phonemes is feasible.
+&lt;h3 id=&#34;framework&#34;&gt;Framework&lt;/h3&gt;
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure id=&#34;figure-the-architecture-of-sas-this-is-a-sequence-to-sequence-framework-with-a-sequence-of-faster-r-cnn-image-feature-vectors-as-input-and-output-the-corresponding-spoken-description&#34;&gt;
+
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;/project/sas/Framework_hud7b51108d8865be310f72ebcafcb9515_209861_2000x2000_fit_lanczos_2.png&#34; data-caption=&#34;The architecture of SAS. This is a sequence-to-sequence framework with a sequence of faster R-CNN image feature vectors as input and output the corresponding spoken description.&#34;&gt;
+
+
+  &lt;img data-src=&#34;/project/sas/Framework_hud7b51108d8865be310f72ebcafcb9515_209861_2000x2000_fit_lanczos_2.png&#34; class=&#34;lazyload&#34; alt=&#34;&#34; width=&#34;500&#34; height=&#34;1346&#34;&gt;
+&lt;/a&gt;
+
+
+  
+  
+  &lt;figcaption&gt;
+    The architecture of SAS. This is a sequence-to-sequence framework with a sequence of faster R-CNN image feature vectors as input and output the corresponding spoken description.
+  &lt;/figcaption&gt;
+
+
+&lt;/figure&gt;
+
+&lt;h4 id=&#34;results&#34;&gt;Results&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Good Results:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;&lt;tr&gt;
+&lt;td&gt;
+&lt;img src=&#34;results/good/01.jpg&#34; width=&#34;200&#34;&gt;
+&lt;audio controls style=&#34;width:200px;height:32px&#34;&gt;
+&lt;source src=&#34;results/good/01.wav&#34; type=&#34;audio/mpeg&#34;&gt;
+Your browser does not support the audio element.
+&lt;/audio&gt;&lt;/td&gt;
+&lt;td&gt;
+&lt;img src=&#34;results/good/02.jpg&#34; width=&#34;200&#34;&gt;
+&lt;audio controls style=&#34;width:200px;height:32px&#34;&gt;
+&lt;source src=&#34;results/good/02.wav&#34; type=&#34;audio/mpeg&#34;&gt;
+Your browser does not support the audio element.
+&lt;/audio&gt;&lt;/td&gt;
+&lt;td&gt;
+&lt;img src=&#34;results/good/03.jpg&#34; width=&#34;200&#34;&gt;
+&lt;audio controls style=&#34;width:200px;height:32px&#34;&gt;
+&lt;source src=&#34;results/good/03.wav&#34; type=&#34;audio/mpeg&#34; &gt;
+Your browser does not support the audio element.
+&lt;/audio&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;
+&lt;table&gt;&lt;tr&gt;
+&lt;td&gt;
+&lt;img src=&#34;results/good/04.jpg&#34; width=&#34;200&#34;&gt;
+&lt;audio controls style=&#34;width:200px;height:32px&#34;&gt;
+&lt;source src=&#34;results/good/04.wav&#34; type=&#34;audio/mpeg&#34;&gt;
+Your browser does not support the audio element.
+&lt;/audio&gt;&lt;/td&gt;
+&lt;td&gt;
+&lt;img src=&#34;results/good/05.jpg&#34; width=&#34;200&#34;&gt;
+&lt;audio controls style=&#34;width:200px;height:32px&#34;&gt;
+&lt;source src=&#34;results/good/05.wav&#34; type=&#34;audio/mpeg&#34;&gt;
+Your browser does not support the audio element.
+&lt;/audio&gt;&lt;/td&gt;
+&lt;td&gt;
+&lt;img src=&#34;results/good/06.jpg&#34; width=&#34;200&#34;&gt;
+&lt;audio controls style=&#34;width:200px;height:32px&#34;&gt;
+&lt;source src=&#34;results/good/06.wav&#34; type=&#34;audio/mpeg&#34; &gt;
+Your browser does not support the audio element.
+&lt;/audio&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;Synthesized speech that can not describe the image well:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;&lt;tr&gt;
+&lt;td&gt;
+&lt;img src=&#34;results/NoRelation/01.jpg&#34; width=&#34;200&#34;&gt;
+&lt;audio controls style=&#34;width:200px;height:32px&#34;&gt;
+&lt;source src=&#34;results/NoRelation/01.wav&#34; type=&#34;audio/mpeg&#34;&gt;
+Your browser does not support the audio element.
+&lt;/audio&gt;&lt;/td&gt;
+&lt;td&gt;
+&lt;img src=&#34;results/NoRelation/02.jpg&#34; width=&#34;200&#34;&gt;
+&lt;audio controls style=&#34;width:200px;height:32px&#34;&gt;
+&lt;source src=&#34;results/NoRelation/02.wav&#34; type=&#34;audio/mpeg&#34;&gt;
+Your browser does not support the audio element.
+&lt;/audio&gt;&lt;/td&gt;
+&lt;td&gt;
+&lt;img src=&#34;results/NoRelation/03.jpg&#34; width=&#34;200&#34;&gt;
+&lt;audio controls style=&#34;width:200px;height:32px&#34;&gt;
+&lt;source src=&#34;results/NoRelation/03.wav&#34; type=&#34;audio/mpeg&#34; &gt;
+Your browser does not support the audio element.
+&lt;/audio&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;Synthesized speech gets worse throughout the spoken caption:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;&lt;tr&gt;
+&lt;td&gt;
+&lt;img src=&#34;results/pre_good/01.jpg&#34; width=&#34;200&#34;&gt;
+&lt;audio controls style=&#34;width:200px;height:32px&#34;&gt;
+&lt;source src=&#34;results/pre_good/01.wav&#34; type=&#34;audio/mpeg&#34;&gt;
+Your browser does not support the audio element.
+&lt;/audio&gt;&lt;/td&gt;
+&lt;td&gt;
+&lt;img src=&#34;results/pre_good/02.jpg&#34; width=&#34;200&#34;&gt;
+&lt;audio controls style=&#34;width:200px;height:32px&#34;&gt;
+&lt;source src=&#34;results/pre_good/02.wav&#34; type=&#34;audio/mpeg&#34;&gt;
+Your browser does not support the audio element.
+&lt;/audio&gt;&lt;/td&gt;
+&lt;td&gt;
+&lt;img src=&#34;results/pre_good/03.jpg&#34; width=&#34;200&#34;&gt;
+&lt;audio controls style=&#34;width:200px;height:32px&#34;&gt;
+&lt;source src=&#34;results/pre_good/03.wav&#34; type=&#34;audio/mpeg&#34; &gt;
+Your browser does not support the audio element.
+&lt;/audio&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;Synthesized speech is unintelligible:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;&lt;tr&gt;
+&lt;td&gt;
+&lt;img src=&#34;results/bad/01.jpg&#34; width=&#34;200&#34;&gt;
+&lt;audio controls style=&#34;width:200px;height:32px&#34;&gt;
+&lt;source src=&#34;results/bad/01.wav&#34; type=&#34;audio/mpeg&#34;&gt;
+Your browser does not support the audio element.
+&lt;/audio&gt;&lt;/td&gt;
+&lt;td&gt;
+&lt;img src=&#34;results/bad/02.jpg&#34; width=&#34;200&#34;&gt;
+&lt;audio controls style=&#34;width:200px;height:32px&#34;&gt;
+&lt;source src=&#34;results/bad/02.wav&#34; type=&#34;audio/mpeg&#34;&gt;
+Your browser does not support the audio element.
+&lt;/audio&gt;&lt;/td&gt;
+&lt;td&gt;
+&lt;img src=&#34;results/bad/03.jpg&#34; width=&#34;200&#34;&gt;
+&lt;audio controls style=&#34;width:200px;height:32px&#34;&gt;
+&lt;source src=&#34;results/bad/03.wav&#34; type=&#34;audio/mpeg&#34; &gt;
+Your browser does not support the audio element.
+&lt;/audio&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;
+&lt;h3 id=&#34;database-and-source-code&#34;&gt;Database and Source Code&lt;/h3&gt;
+&lt;h4 id=&#34;database&#34;&gt;Database&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href=&#34;http://to-be-uploaded.com&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Flickr8k Spoken caption database&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;source-code&#34;&gt;Source Code&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://github.com/xinshengwang/Show-and-Speak.git&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Show-and-speak source code&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/small&gt;
+</description>
+    </item>
     
     <item>
       <title>Tacotron2</title>
