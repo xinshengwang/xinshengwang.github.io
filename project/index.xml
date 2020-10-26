@@ -206,7 +206,7 @@ Your browser does not support the audio element.
 &lt;h4 id=&#34;database&#34;&gt;Database&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;
-&lt;a href=&#34;http://to-be-uploaded.com&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Flickr8k Spoken caption database&lt;/a&gt;&lt;/li&gt;
+&lt;a href=&#34;https://zenodo.org/record/4126934/files/Flickr8k_SAS.tar.gz?download=1&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Flickr8k database for Image2Speech&lt;/a&gt;. All of the raw images, bottom-up features, speech wave files, speech spectrograms, and split files can be found here.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;source-code&#34;&gt;Source Code&lt;/h4&gt;
 &lt;ul&gt;
