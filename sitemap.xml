@@ -3,6 +3,26 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/talk/ece590sip/</loc>
+    <lastmod>2020-11-02T16:00:24+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/talk/</loc>
+    <lastmod>2020-11-02T16:00:24+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/</loc>
+    <lastmod>2020-11-02T16:00:24+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/talk/interspeech2020/</loc>
+    <lastmod>2020-10-28T19:15:56+01:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/publication-type/1/</loc>
     <lastmod>2020-10-19T11:48:43+02:00</lastmod>
   </url>
@@ -24,11 +44,6 @@
   
   <url>
     <loc>/publication/wang-2020-show/publication/</loc>
-    <lastmod>2020-10-19T11:48:43+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/</loc>
     <lastmod>2020-10-19T11:48:43+02:00</lastmod>
   </url>
   
@@ -235,10 +250,6 @@
   <url>
     <loc>/publication/wang-2016-effect/</loc>
     <lastmod>2016-01-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/talk/</loc>
   </url>
   
   <url>
