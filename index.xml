@@ -5,12 +5,20 @@
     <link>/</link>
       <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <description>Xinsheng Wang</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Mon, 02 Nov 2020 16:00:24 +0100</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Fri, 06 Nov 2020 20:18:22 +0100</lastBuildDate>
     <image>
       <url>/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
       <title>Xinsheng Wang</title>
       <link>/</link>
     </image>
+    
+    <item>
+      <title>Align or attend? Toward more efficient and accurate spoken word discovery using speech-to-image retrieval</title>
+      <link>/publication/wang-2020-align/</link>
+      <pubDate>Fri, 06 Nov 2020 20:18:22 +0100</pubDate>
+      <guid>/publication/wang-2020-align/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>An overview of speech-visual multimodal learning, ECE 590SIP, UIUC</title>
