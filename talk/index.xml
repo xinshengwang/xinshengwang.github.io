@@ -5,12 +5,20 @@
     <link>/talk/</link>
       <atom:link href="/talk/index.xml" rel="self" type="application/rss+xml" />
     <description>Recent &amp; Upcoming Talks</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Mon, 02 Nov 2020 16:00:24 +0100</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Tue, 15 Dec 2020 16:00:54 +0800</lastBuildDate>
     <image>
       <url>/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
       <title>Recent &amp; Upcoming Talks</title>
       <link>/talk/</link>
     </image>
+    
+    <item>
+      <title>Multimodal Fusion of Body Movement Signals for No-audio Speech Detection, MediaEval 2020</title>
+      <link>/talk/mediaeval2020/</link>
+      <pubDate>Tue, 15 Dec 2020 16:00:54 +0800</pubDate>
+      <guid>/talk/mediaeval2020/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>An overview of speech-visual multimodal learning, ECE 590SIP, UIUC</title>
