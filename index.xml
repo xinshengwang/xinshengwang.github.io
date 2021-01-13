@@ -5,12 +5,20 @@
     <link>/</link>
       <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <description>王新升</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Tue, 15 Dec 2020 16:00:54 +0800</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 13 Jan 2021 08:05:13 +0100</lastBuildDate>
     <image>
       <url>/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
       <title>王新升</title>
       <link>/</link>
     </image>
+    
+    <item>
+      <title>Generating Images from Spoken Descriptions</title>
+      <link>/publication/speech2image_taslp/</link>
+      <pubDate>Wed, 13 Jan 2021 08:05:13 +0100</pubDate>
+      <guid>/publication/speech2image_taslp/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Multimodal Fusion of Body Movement Signals for No-audio Speech Detection, MediaEval 2020</title>

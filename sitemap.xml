@@ -3,17 +3,47 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/publication-type/2/</loc>
+    <lastmod>2021-01-13T08:05:13+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/authors/</loc>
+    <lastmod>2021-01-13T08:05:13+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/publication/speech2image_taslp/</loc>
+    <lastmod>2021-01-13T08:05:13+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/publication_types/</loc>
+    <lastmod>2021-01-13T08:05:13+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/publication/</loc>
+    <lastmod>2021-01-13T08:05:13+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/author/xinsheng-wang-tingting-qiao-jihua-zhu-alan-hanjalic-odette-scharenborg/</loc>
+    <lastmod>2021-01-13T08:05:13+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/</loc>
+    <lastmod>2021-01-13T08:05:13+01:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/talk/mediaeval2020/</loc>
     <lastmod>2020-12-15T16:00:54+08:00</lastmod>
   </url>
   
   <url>
     <loc>/talk/</loc>
-    <lastmod>2020-12-15T16:00:54+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/</loc>
     <lastmod>2020-12-15T16:00:54+08:00</lastmod>
   </url>
   
@@ -28,22 +58,7 @@
   </url>
   
   <url>
-    <loc>/authors/</loc>
-    <lastmod>2020-11-06T20:18:22+01:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/author/liming-wang-xinsheng-wang-mark-hasegawa-johnson-odette-scharenborg-najim-dehak/</loc>
-    <lastmod>2020-11-06T20:18:22+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/publication_types/</loc>
-    <lastmod>2020-11-06T20:18:22+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/publication/</loc>
     <lastmod>2020-11-06T20:18:22+01:00</lastmod>
   </url>
   
@@ -168,17 +183,7 @@
   </url>
   
   <url>
-    <loc>/publication-type/2/</loc>
-    <lastmod>2020-05-14T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/publication/wang-2020-s2igan/</loc>
-    <lastmod>2020-05-14T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/author/xinsheng-wang-tingting-qiao-jihua-zhu-alan-hanjalic-odette-scharenborg/</loc>
     <lastmod>2020-05-14T00:00:00+00:00</lastmod>
   </url>
   
