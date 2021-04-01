@@ -5,12 +5,23 @@
     <link>/project/</link>
       <atom:link href="/project/index.xml" rel="self" type="application/rss+xml" />
     <description>Projects</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Fri, 25 Sep 2020 10:05:41 +0200</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Thu, 01 Apr 2021 09:41:47 +0200</lastBuildDate>
     <image>
       <url>/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
       <title>Projects</title>
       <link>/project/</link>
     </image>
+    
+    <item>
+      <title>Avatar</title>
+      <link>/project/talking_head/</link>
+      <pubDate>Thu, 01 Apr 2021 09:41:47 +0200</pubDate>
+      <guid>/project/talking_head/</guid>
+      <description>&lt;h3 id=&#34;introduction&#34;&gt;Introduction&lt;/h3&gt;
+&lt;small&gt;
+Generating synchronized speech and facial talking videos has great potential in many human-computer interaction scenarios. In this paper, we present a method that generates synchronized speech and talking-head videos with text and a single image as the input. In contrast to previous text-based talking head generation, in which the speech synthesis and video generation are normally performed in a serial way, the speech synthesis and video generation in the proposed method can be performed in parallel by two submodules. Specifically, these two submodules share the same text encoder but with different encoders, i.e., one for speech synthesis and another for the facial landmark prediction, making the video generation be flexible by bypassing the dependency on a text-to-speech (TTS) system. Furthermore, to generate vivid talking head pose movement, a unit quaternion generator is proposed to predict the spatial orientations and rotations of the talking head. Experiments conducted on the Obama weekly talking database demonstrate that our method can generate vivid talking videos and outperform the state-of-the-art method. 
+</description>
+    </item>
     
     <item>
       <title>SAS</title>

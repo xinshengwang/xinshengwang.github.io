@@ -27,10 +27,10 @@
   
     
   
-  <meta name="description" content="PhD candidate">
+  <meta name="description" content="With text and a single face image as input, this method is to generate synchronized speech and talking head video.">
 
   
-  <link rel="alternate" hreflang="en-us" href="/authors/">
+  <link rel="alternate" hreflang="en-us" href="/project/talking_head/">
 
   
 
@@ -215,14 +215,12 @@
   
 
   
-  <link rel="alternate" href="/authors/index.xml" type="application/rss+xml" title="王新升">
-  
 
   <link rel="manifest" href="/index.webmanifest">
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/authors/">
+  <link rel="canonical" href="/project/talking_head/">
 
   
   
@@ -241,18 +239,61 @@
   <meta property="twitter:creator" content="@XinshengWang1">
   
   <meta property="og:site_name" content="王新升">
-  <meta property="og:url" content="/authors/">
-  <meta property="og:title" content="Authors | 王新升">
-  <meta property="og:description" content="PhD candidate"><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/project/talking_head/">
+  <meta property="og:title" content="Avatar | 王新升">
+  <meta property="og:description" content="With text and a single face image as input, this method is to generate synchronized speech and talking head video."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
-    <meta property="og:updated_time" content="2021-04-01T09:41:47&#43;02:00">
+    
+      <meta property="article:published_time" content="2021-04-01T09:41:47&#43;02:00">
+    
+    <meta property="article:modified_time" content="2021-04-01T09:41:47&#43;02:00">
   
 
   
 
 
+    
 
+
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "/project/talking_head/"
+  },
+  "headline": "Avatar",
+  
+  "datePublished": "2021-04-01T09:41:47+02:00",
+  "dateModified": "2021-04-01T09:41:47+02:00",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Xinsheng Wang, Kun Song, Geng Yang, Jian Cong, Jihua Zhu, Odette Scharenborg"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "王新升",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "With text and a single face image as input, this method is to generate synchronized speech and talking head video."
+}
+</script>
+
+  
 
   
 
@@ -260,10 +301,13 @@
   
 
 
+  
 
 
 
-  <title>Authors | 王新升</title>
+
+
+  <title>Avatar | 王新升</title>
 
 </head>
 
@@ -524,88 +568,254 @@
 </nav>
 
 
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
+  <article class="article article-project">
 
   
 
+
+
+
+
+
+
+
+
+
+
+
   
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>Avatar</h1>
+
+  
+  <p class="page-subtitle">Text-driven Synchronized Speech and Talking Head Generation</p>
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+  
+  
+  <div>
+    
+
   
   
     
+    <span>Xinsheng Wang, Kun Song, Geng Yang, Jian Cong, Jihua Zhu, Odette Scharenborg</span>
+  </div>
   
-<div class="universal-wrapper pt-3">
-  <h1>Authors</h1>
+  
 
   
+  <span class="article-date">
+    
+    
+      
+    
+    Apr 1, 2021
+  </span>
+  
+
+  
+
+  
+
+  
+  
+  
+
+  
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   
 </div>
 
 
 
-<div class="universal-wrapper">
-  
+  <div class="article-container">
 
-  <ul>
+    <div class="article-style">
+      <h3 id="introduction">Introduction</h3>
+<small>
+Generating synchronized speech and facial talking videos has great potential in many human-computer interaction scenarios. In this paper, we present a method that generates synchronized speech and talking-head videos with text and a single image as the input. In contrast to previous text-based talking head generation, in which the speech synthesis and video generation are normally performed in a serial way, the speech synthesis and video generation in the proposed method can be performed in parallel by two submodules. Specifically, these two submodules share the same text encoder but with different encoders, i.e., one for speech synthesis and another for the facial landmark prediction, making the video generation be flexible by bypassing the dependency on a text-to-speech (TTS) system. Furthermore, to generate vivid talking head pose movement, a unit quaternion generator is proposed to predict the spatial orientations and rotations of the talking head. Experiments conducted on the Obama weekly talking database demonstrate that our method can generate vivid talking videos and outperform the state-of-the-art method. 
+
+    </div>
+
     
-    
-      
-      <li><a href="/author/xinsheng-wang-kun-song-geng-yang-jian-cong-jihua-zhu-odette-scharenborg/">Xinsheng Wang, Kun Song, Geng Yang, Jian Cong, Jihua Zhu, Odette Scharenborg</a></li>
-    
-      
-      <li><a href="/author/xinsheng-wang-tingting-qiao-jihua-zhu-alan-hanjalic-odette-scharenborg/">Xinsheng Wang, Tingting Qiao, Jihua Zhu, Alan Hanjalic, Odette Scharenborg</a></li>
-    
-      
-      <li><a href="/author/liming-wang-xinsheng-wang-mark-hasegawa-johnson-odette-scharenborg-najim-dehak/">Liming Wang, Xinsheng Wang, Mark Hasegawa-Johnson, Odette Scharenborg, Najim Dehak</a></li>
-    
-      
-      <li><a href="/author/xinsheng-wang-siyuan-feng-jihua-zhu-mark-hasegawa-johnson-odette-scharenborg/">Xinsheng Wang, Siyuan Feng, Jihua Zhu, Mark Hasegawa-Johnson, Odette Scharenborg</a></li>
-    
-      
-      <li><a href="/author/ruijian-jia-xinsheng-wang-joint-first-author-shanming-pang-jihua-zhu-jianru-xue/">Ruijian Jia, Xinsheng Wang (Joint first author), Shanming Pang, Jihua Zhu, Jianru Xue</a></li>
-    
-      
-      <li><a href="/author/%E7%8E%8B%E6%96%B0%E5%8D%87/">王新升</a></li>
+
+
+
+
+
+
+
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
     
       
-      <li><a href="/author/xinsheng-wang-shanmin-pang-jihua-zhu/">Xinsheng Wang, Shanmin Pang, Jihua Zhu</a></li>
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=/project/talking_head/&amp;text=Avatar" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
     
       
-      <li><a href="/author/xinsheng-wang-shanmin-pang-jihua-zhu-zhongyu-li-zhiqiang-tian-yaochen-li/">Xinsheng Wang, Shanmin Pang, Jihua Zhu, Zhongyu Li, Zhiqiang Tian, Yaochen Li</a></li>
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=/project/talking_head/&amp;t=Avatar" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
     
       
-      <li><a href="/author/yixin-zhang-xinsheng-wang-shanmin-pang-jiakun-zhao-xiuxiu-bai/">Yixin Zhang, Xinsheng Wang, Shanmin Pang, Jiakun Zhao, Xiuxiu Bai</a></li>
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=Avatar&amp;body=/project/talking_head/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
     
       
-      <li><a href="/author/xinsheng-wang-bin-chen/">Xinsheng Wang, Bin Chen</a></li>
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=/project/talking_head/&amp;title=Avatar" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://web.whatsapp.com/send?text=Avatar%20/project/talking_head/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=/project/talking_head/&amp;title=Avatar" target="_blank" rel="noopener" class="share-btn-weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
     
   </ul>
-
-  
-<nav>
-  <ul class="pagination justify-content-center">
-    
-    
-    <li class="page-item"><a class="page-link" href="/authors/page/2/">&raquo;</a></li>
-    
-  </ul>
-</nav>
-
-
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+   
+    
+    
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+    <div class="project-related-pages content-widget-hr">
+      
+      
+
+      
+      
+      
+
+      
+      
+      
+
+      
+      
+      
+    </div>
+  </div>
+</article>
 
       
 
