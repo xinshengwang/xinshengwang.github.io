@@ -1,6 +1,6 @@
 ---
 permalink: /
-title: "About me"
+title: ""
 excerpt: "About me"
 author_profile: true
 redirect_from: 
@@ -8,6 +8,9 @@ redirect_from:
   - /about.html
 ---
 
+
+About me
+======
 I earned my Ph.D. from [Xi'an Jiaotong University](http://en.xjtu.edu.cn/) under the guidance of [Prof. Jihua Zhu](https://gr.xjtu.edu.cn/web/zhujh). Throughout my doctoral journey, I had the privilege of being a visiting researcher at [Multimedia Computing Group](https://www.tudelft.nl/ewi/over-de-faculteit/afdelingen/intelligent-systems/multimedia-computing) of [Delft University of Technology](https://www.tudelft.nl/en/) under the guidance of [Prof. Odette Scharenborg](https://odettescharenborg.wordpress.com/) and at [ASLP](http://www.npu-aslp.org/) of [Northwestern Polytechnical University](https://www.nwpu.edu.cn/) under the guidance of [Prof. Lei Xie](https://teacher.nwpu.edu.cn/xielei.html). Currently, I am working as researcher in an video game company in Shanghai. My primary focus lies in speech generation, encompassing areas such as text-to-speech synthesis and speech conversion.
 
 Selected Publications
