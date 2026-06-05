@@ -1,0 +1,134 @@
+@keyframes waveFlow {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes lineGrow {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+.hero-wave-path {
+  animation: waveFlow 8s linear infinite;
+}
+
+.js .reveal {
+  opacity: 0;
+}
+
+.reveal.is-visible {
+  animation: fadeUp 0.6s ease forwards;
+}
+
+.reveal-left.is-visible {
+  animation: fadeUp 0.7s ease forwards;
+}
+
+.reveal-right.is-visible {
+  animation-name: fadeUp;
+}
+
+.project.reveal-left.is-visible .project-content {
+  animation: fadeUp 0.7s ease forwards;
+}
+
+.project.reveal-right.is-visible .project-content {
+  animation: fadeUp 0.7s ease 0.1s forwards;
+}
+
+.project.reveal-left.is-visible .project-video-wrap,
+.project.reveal-right.is-visible .project-video-wrap {
+  animation: fadeUp 0.7s ease 0.15s forwards;
+}
+
+.js .reveal .project-content,
+.js .reveal .project-video-wrap {
+  opacity: 0;
+}
+
+.project.is-visible .project-content,
+.project.is-visible .project-video-wrap {
+  opacity: 1;
+}
+
+.timeline.is-visible::before {
+  animation: lineGrow 0.8s ease forwards;
+}
+
+.timeline-item.is-visible .timeline-dot {
+  animation: scaleIn 0.5s ease forwards;
+}
+
+.timeline-item.is-visible .timeline-date,
+.timeline-item.is-visible .timeline-role,
+.timeline-item.is-visible .timeline-org {
+  animation: fadeUp 0.5s ease forwards;
+}
+
+.news-item.is-visible {
+  animation: fadeIn 0.4s ease forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal.is-visible,
+  .project.reveal-left.is-visible .project-content,
+  .project.reveal-right.is-visible .project-content,
+  .project.reveal-left.is-visible .project-video-wrap,
+  .project.reveal-right.is-visible .project-video-wrap,
+  .timeline-item.is-visible .timeline-date,
+  .timeline-item.is-visible .timeline-role,
+  .timeline-item.is-visible .timeline-org,
+  .news-item.is-visible {
+    animation: fadeIn 0.3s ease forwards !important;
+    transform: none !important;
+  }
+
+  .hero-wave-path {
+    animation: none;
+  }
+
+  .timeline.is-visible::before {
+    animation: none;
+    transform: scaleY(1);
+  }
+}

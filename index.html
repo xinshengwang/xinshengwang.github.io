@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Research Scientist at Soul AI Lab. Leading open-source projects in speech generation, understanding, and interaction."
+    />
+    <meta property="og:title" content="Xinsheng Wang — Audio Generation & Understanding" />
+    <meta
+      property="og:description"
+      content="Research Scientist at Soul AI Lab. Speech generation, understanding, and interaction."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="assets/images/profile.png" />
+    <title>Xinsheng Wang — Audio Generation &amp; Understanding</title>
+    <script>
+      (function () {
+        var d = document.documentElement;
+        d.classList.remove('no-js');
+        d.classList.add('js');
+        try {
+          var stored = localStorage.getItem('theme');
+          var theme =
+            stored || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+          d.setAttribute('data-theme', theme);
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" /
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/animations.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav">
+        <a class="nav-brand" href="#">
+          <span>Xinsheng Wang</span>
+          <span class="nav-brand-cn" lang="zh" data-i18n="hero.nameCn">王新升</span>
+        </a>
+        <nav class="nav-links" id="nav-menu" aria-label="Primary">
+          <a href="#about" data-i18n="nav.about">About</a>
+          <a href="#experience" data-i18n="nav.experience">Experience</a>
+          <a href="#news" data-i18n="nav.news">News</a>
+          <a href="#projects" data-i18n="nav.projects">Projects</a>
+          <a href="#contact" data-i18n="nav.contact">Contact</a>
+        </nav>
+        <div class="nav-controls">
+          <button
+            class="btn nav-mobile-toggle"
+            type="button"
+            id="nav-toggle"
+            aria-expanded="false"
+            aria-controls="nav-menu"
+            aria-label="Open menu"
+          >
+            <span class="nav-mobile-icon" aria-hidden="true"></span>
+          </button>
+          <button class="btn theme-toggle" type="button" id="theme-toggle" aria-label="Toggle theme">
+            <svg
+              class="theme-icon theme-icon--sun"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <circle cx="12" cy="12" r="4" />
+              <path
+                d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"
+              />
+            </svg>
+            <svg
+              class="theme-icon theme-icon--moon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <section class="hero" aria-label="Introduction">
+        <div class="hero-wave" aria-hidden="true">
+          <svg viewBox="0 0 1440 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="waveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="var(--wave)" />
+                <stop offset="100%" stop-color="transparent" />
+              </linearGradient>
+            </defs>
+            <g class="hero-wave-path">
+              <path
+                d="M0 400 Q360 320 720 400 T1440 400 V800 H0 Z"
+                fill="url(#waveGrad)"
+                opacity="0.6"
+              />
+              <path
+                d="M0 450 Q360 380 720 450 T1440 450 V800 H0 Z"
+                fill="url(#waveGrad)"
+                opacity="0.4"
+              />
+              <path
+                d="M0 500 Q360 440 720 500 T1440 500 V800 H0 Z"
+                fill="url(#waveGrad)"
+                opacity="0.25"
+              />
+            </g>
+            <g class="hero-wave-path" transform="translate(720,0)">
+              <path
+                d="M0 400 Q360 320 720 400 T1440 400 V800 H0 Z"
+                fill="url(#waveGrad)"
+                opacity="0.6"
+              />
+              <path
+                d="M0 450 Q360 380 720 450 T1440 450 V800 H0 Z"
+                fill="url(#waveGrad)"
+                opacity="0.4"
+              />
+            </g>
+          </svg>
+        </div>
+        <div class="container hero-content reveal">
+          <div class="hero-grid">
+            <div class="hero-copy">
+              <h1 class="hero-name">
+                <span class="hero-name-en" data-i18n="hero.name">Xinsheng Wang</span>
+                <span class="hero-name-rest">
+                  <span class="hero-name-sep" aria-hidden="true">·</span>
+                  <span class="hero-name-cn" lang="zh" data-i18n="hero.nameCn">王新升</span>
+                </span>
+              </h1>
+              <p class="hero-title" data-i18n="hero.title">Research Scientist &amp; Tech Lead</p>
+              <p class="hero-affiliation" data-i18n="hero.affiliation">
+                Multimodal Interaction Team · Soul AI Lab
+              </p>
+              <p class="hero-tagline" data-i18n="hero.tagline">
+                I build speech-centric AI across the full loop of interaction, understanding, and generation — from real-time full-duplex dialogue to expressive voice and singing synthesis.
+              </p>
+              <div class="hero-actions">
+                <a class="hero-btn hero-btn--primary" href="mailto:w.xinshawn@gmail.com">
+                  <span data-i18n="hero.emailCta">Email</span>
+                </a>
+                <a
+                  class="hero-btn"
+                  href="https://scholar.google.com/citations?user=ZUm3S7EAAAAJ&hl=zh-CN"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <span data-i18n="hero.scholarCta">Google Scholar</span>
+                </a>
+                <a
+                  class="hero-btn"
+                  href="https://github.com/xinshengwang"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <span data-i18n="hero.githubCta">GitHub</span>
+                </a>
+              </div>
+              <div class="hero-stats">
+                <a
+                  class="hero-stat"
+                  href="https://github.com/xinshengwang"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <span class="hero-stat-value">15k+</span>
+                  <span class="hero-stat-label" data-i18n="stats.githubLabel">GitHub stars</span>
+                </a>
+                <a
+                  class="hero-stat"
+                  href="https://scholar.google.com/citations?user=ZUm3S7EAAAAJ&hl=zh-CN"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <span class="hero-stat-value">1k+</span>
+                  <span class="hero-stat-label" data-i18n="stats.scholarLabel">Citations</span>
+                </a>
+                <a
+                  class="hero-stat"
+                  href="https://scholar.google.com/citations?user=ZUm3S7EAAAAJ&hl=zh-CN"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <span class="hero-stat-value">50+</span>
+                  <span class="hero-stat-label" data-i18n="stats.pubLabel">Publications</span>
+                </a>
+              </div>
+            </div>
+            <figure class="hero-portrait">
+              <img
+                src="assets/images/profile.png"
+                alt="Portrait of Xinsheng Wang"
+                width="480"
+                height="600"
+                loading="eager"
+                fetchpriority="high"
+                decoding="async"
+              />
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section id="about" class="about">
+        <div class="container">
+          <h2 class="section-title reveal" data-i18n="about.title">About</h2>
+          <div id="about-content" class="about-content reveal">
+            <!-- AUTO:about:start -->
+            <p>I received my Ph.D. from <a href="https://en.xjtu.edu.cn/" target="_blank" rel="noopener">Xi'an Jiaotong University</a> under the supervision of <a href="https://gr.xjtu.edu.cn/zhujh/" target="_blank" rel="noopener">Prof. Jihua Zhu</a>. During my doctoral studies, I was a visiting researcher at the <a href="https://www.tudelft.nl/ewi/over-de-faculteit/afdelingen/intelligent-systems/multimedia-computing" target="_blank" rel="noopener">Multimedia Computing Group, Delft University of Technology</a> (advised by <a href="https://odettescharenborg.wordpress.com/" target="_blank" rel="noopener">Prof. Odette Scharenborg</a>) and at <a href="http://www.npu-aslp.org/" target="_blank" rel="noopener">ASLP, Northwestern Polytechnical University</a> (advised by <a href="https://teacher.nwpu.edu.cn/xielei.html" target="_blank" rel="noopener">Prof. Lei Xie</a>).</p>
+            <p>My research focuses on audio generation and understanding. As first or corresponding author, I have led a series of open-source projects, including OpenCpop, Spark-TTS, SoulX-Podcast, SoulX-Singer, SoulX-Duplug, and SoulX-Transcriber. I currently lead the Multimodal Interaction Team at <a href="https://soul-ailab.github.io/" target="_blank" rel="noopener">Soul AI Lab</a>, with a primary focus on speech generation, understanding, and interaction.</p>
+            <!-- AUTO:about:end -->
+          </div>
+        </div>
+      </section>
+
+      <section id="experience" class="experience">
+        <div class="container">
+          <h2 class="section-title reveal" data-i18n="experience.title">Work Experience</h2>
+          <ul id="timeline" class="timeline">
+            <!-- AUTO:experience:start -->
+            <li class="timeline-item reveal is-current">
+              <span class="timeline-dot" aria-hidden="true"></span>
+              <div class="timeline-date">2025.06 – present</div>
+              <div class="timeline-role">Research Scientist and Tech Lead</div>
+              <div class="timeline-org"><a href="https://soul-ailab.github.io/" target="_blank" rel="noopener">Soul AI Lab</a></div>
+            </li>
+            <li class="timeline-item reveal">
+              <span class="timeline-dot" aria-hidden="true"></span>
+              <div class="timeline-date">2024.06 – 2025.06</div>
+              <div class="timeline-role">Postdoctoral Researcher</div>
+              <div class="timeline-org"><a href="https://www.hkust.edu.hk/" target="_blank" rel="noopener">The Hong Kong University of Science and Technology</a></div>
+            </li>
+            <li class="timeline-item reveal">
+              <span class="timeline-dot" aria-hidden="true"></span>
+              <div class="timeline-date">2022.03 – 2024.06</div>
+              <div class="timeline-role">Research Scientist</div>
+              <div class="timeline-org">miHoYo</div>
+            </li>
+            <!-- AUTO:experience:end -->
+          </ul>
+        </div>
+      </section>
+
+      <section id="news" class="news">
+        <div class="container">
+          <h2 class="section-title reveal" data-i18n="news.title">News</h2>
+          <ul id="news-list" class="news-list">
+            <!-- AUTO:news:start -->
+            <li class="news-item reveal">
+              <time class="news-date" datetime="2026-06-02">2026.06.02</time>
+              <div class="news-text">Released <a href="https://soul-ailab.github.io/soulx-transcriber/" target="_blank" rel="noopener">SoulX-Transcriber</a></div>
+            </li>
+            <li class="news-item reveal">
+              <time class="news-date" datetime="2026-04-07">2026.04.07</time>
+              <div class="news-text"><a href="https://github.com/Soul-AILab/SAC" target="_blank" rel="noopener">SAC</a> accepted to ACL 2026</div>
+            </li>
+            <li class="news-item reveal">
+              <time class="news-date" datetime="2026-03-17">2026.03.17</time>
+              <div class="news-text">Released <a href="https://soulx-duplug.sjtuxlance.com/" target="_blank" rel="noopener">SoulX-Duplug</a></div>
+            </li>
+            <li class="news-item reveal">
+              <time class="news-date" datetime="2026-02-08">2026.02.08</time>
+              <div class="news-text">Released <a href="https://soul-ailab.github.io/soulx-singer/" target="_blank" rel="noopener">SoulX-Singer</a></div>
+            </li>
+            <li class="news-item reveal">
+              <time class="news-date" datetime="2026-01-26">2026.01.26</time>
+              <div class="news-text"><a href="https://arxiv.org/pdf/2509.21144" target="_blank" rel="noopener">UniSS</a> accepted to ICLR 2026</div>
+            </li>
+            <li class="news-item reveal">
+              <time class="news-date" datetime="2025-10-27">2025.10.27</time>
+              <div class="news-text">Released <a href="https://soul-ailab.github.io/soulx-podcast" target="_blank" rel="noopener">SoulX-Podcast</a></div>
+            </li>
+            <li class="news-item reveal">
+              <time class="news-date" datetime="2025-03-04">2025.03.04</time>
+              <div class="news-text">Released <a href="https://github.com/sparkaudio/spark-tts" target="_blank" rel="noopener">Spark-TTS</a></div>
+            </li>
+            <!-- AUTO:news:end -->
+          </ul>
+        </div>
+      </section>
+
+      <section id="projects" class="projects">
+        <div class="container">
+          <h2 class="section-title reveal" data-i18n="projects.title">Projects</h2>
+          <div id="project-list" class="project-list">
+            <!-- AUTO:projects:start -->
+            <article class="project reveal reveal-left" id="project-transcriber">
+              <div class="project-content">
+                <h3 class="project-title">SoulX-Transcriber</h3>
+                <p class="project-subtitle">Multi-Speaker Speech Transcription</p>
+                <div class="project-badges">
+                  <span class="badge">Corresponding Author</span>
+                  <span class="badge">Project Leader</span>
+                </div>
+                <p class="project-about">An end-to-end multi-speaker transcription system for long-form conversational audio. Jointly solves speaker attribution and speech recognition — who spoke, when, and what — with robust performance under rapid speaker switching and complex dialogue.</p>
+                <div class="project-links">
+                  <a class="project-link" href="https://soul-ailab.github.io/soulx-transcriber/" target="_blank" rel="noopener">Demo</a>
+                  <a class="project-link" href="http://arxiv.org/abs/2606.02400" target="_blank" rel="noopener">Paper</a>
+                  <a class="project-link" href="https://github.com/Soul-AILab/SoulX-Transcriber" target="_blank" rel="noopener">Code</a>
+                  <a class="project-link" href="https://huggingface.co/Soul-AILab/SoulX-Transcriber" target="_blank" rel="noopener">HuggingFace</a>
+                </div>
+              </div>
+              <div class="project-video-wrap">
+                <div class="video-card">
+                  <video controls preload="none" poster="assets/images/poster-transcriber.svg" data-src="assets/videos/soulx-transcriber-demo.mp4" playsinline>
+                    <p>Your browser does not support HTML5 video.</p>
+                  </video>
+                </div>
+              </div>
+            </article>
+            <article class="project reveal reveal-right project--reverse" id="project-duplug">
+              <div class="project-content">
+                <h3 class="project-title">SoulX-Duplug</h3>
+                <p class="project-subtitle">Realtime Full-Duplex Speech Conversation</p>
+                <div class="project-badges">
+                  <span class="badge">Corresponding Author</span>
+                  <span class="badge">Project Leader</span>
+                </div>
+                <p class="project-about">A plug-and-play streaming semantic VAD model for real-time full-duplex speech conversation. Text-guided streaming state prediction enables low-latency, semantic-aware dialogue management in production systems.</p>
+                <div class="project-links">
+                  <a class="project-link" href="https://soulx-duplug.sjtuxlance.com/" target="_blank" rel="noopener">Demo</a>
+                  <a class="project-link" href="https://arxiv.org/pdf/2603.14877" target="_blank" rel="noopener">Paper</a>
+                  <a class="project-link" href="https://github.com/Soul-AILab/SoulX-Duplug" target="_blank" rel="noopener">Code</a>
+                  <a class="project-link" href="https://huggingface.co/Soul-AILab/SoulX-Duplug-0.6B" target="_blank" rel="noopener">HuggingFace</a>
+                </div>
+              </div>
+              <div class="project-video-wrap">
+                <div class="video-card">
+                  <video controls preload="none" poster="assets/images/poster-duplug.svg" data-src="assets/videos/soulx-duplug-demo.mp4" playsinline>
+                    <p>Your browser does not support HTML5 video.</p>
+                  </video>
+                </div>
+              </div>
+            </article>
+            <article class="project reveal reveal-left" id="project-singer">
+              <div class="project-content">
+                <h3 class="project-title">SoulX-Singer</h3>
+                <p class="project-subtitle">Zero-Shot Singing Voice Synthesis</p>
+                <div class="project-badges">
+                  <span class="badge">Corresponding Author</span>
+                  <span class="badge">Project Leader</span>
+                </div>
+                <p class="project-about">A high-fidelity zero-shot singing voice synthesis model for unseen singers. Supports melody-conditioned (F0 contour) and score-conditioned (MIDI notes) control for precise pitch, rhythm, and expression.</p>
+                <div class="project-links">
+                  <a class="project-link" href="https://soul-ailab.github.io/soulx-singer/" target="_blank" rel="noopener">Demo</a>
+                  <a class="project-link" href="https://github.com/Soul-AILab/SoulX-Singer/blob/main/assets/technical-report.pdf" target="_blank" rel="noopener">Paper</a>
+                  <a class="project-link" href="https://github.com/Soul-AILab/SoulX-Singer" target="_blank" rel="noopener">Code</a>
+                  <a class="project-link" href="https://huggingface.co/Soul-AILab/SoulX-Singer" target="_blank" rel="noopener">HuggingFace</a>
+                </div>
+              </div>
+              <div class="project-video-wrap">
+                <div class="video-card">
+                  <video controls preload="none" poster="assets/images/poster-singer.svg" data-src="assets/videos/soulx-singer-demo.mp4" playsinline>
+                    <p>Your browser does not support HTML5 video.</p>
+                  </video>
+                </div>
+              </div>
+            </article>
+            <article class="project reveal reveal-right project--reverse" id="project-podcast">
+              <div class="project-content">
+                <h3 class="project-title">SoulX-Podcast</h3>
+                <p class="project-subtitle">Long-form Podcast Generation</p>
+                <div class="project-badges">
+                  <span class="badge">Corresponding Author</span>
+                  <span class="badge">Project Leader</span>
+                </div>
+                <p class="project-about">Podcast-style multi-turn, multi-speaker dialogic speech generation with paralinguistic controls. Supports Mandarin, English, and Chinese dialects including Sichuanese, Henanese, and Cantonese.</p>
+                <div class="project-links">
+                  <a class="project-link" href="https://soul-ailab.github.io/soulx-podcast" target="_blank" rel="noopener">Demo</a>
+                  <a class="project-link" href="https://arxiv.org/pdf/2510.23541" target="_blank" rel="noopener">Paper</a>
+                  <a class="project-link" href="https://github.com/Soul-AILab/SoulX-Podcast" target="_blank" rel="noopener">Code</a>
+                  <a class="project-link" href="https://huggingface.co/collections/Soul-AILab/soulx-podcast" target="_blank" rel="noopener">HuggingFace</a>
+                </div>
+              </div>
+              <div class="project-video-wrap">
+                <div class="video-card">
+                  <video controls preload="none" poster="assets/images/poster-podcast.svg" data-src="assets/videos/soulx-podcast-demo.mp4" playsinline>
+                    <p>Your browser does not support HTML5 video.</p>
+                  </video>
+                </div>
+              </div>
+            </article>
+            <article class="project reveal reveal-left" id="project-spark-tts">
+              <div class="project-content">
+                <h3 class="project-title">Spark-TTS</h3>
+                <p class="project-subtitle">LLM-Based Text-to-Speech</p>
+                <div class="project-badges">
+                  <span class="badge">First Author</span>
+                  <span class="badge">Project Leader</span>
+                </div>
+                <p class="project-about">Built on BiCodec, a single-stream speech codec decomposing speech into semantic and global tokens. Combined with Qwen2.5 LLM and chain-of-thought generation for coarse- and fine-grained voice control.</p>
+                <div class="project-links">
+                  <a class="project-link" href="https://sparkaudio.github.io/spark-tts/" target="_blank" rel="noopener">Demo</a>
+                  <a class="project-link" href="https://arxiv.org/pdf/2503.01710" target="_blank" rel="noopener">Paper</a>
+                  <a class="project-link" href="https://github.com/SparkAudio/Spark-TTS" target="_blank" rel="noopener">Code</a>
+                  <a class="project-link" href="https://huggingface.co/SparkAudio/Spark-TTS-0.5B" target="_blank" rel="noopener">HuggingFace</a>
+                </div>
+              </div>
+              <div class="project-video-wrap">
+                <div class="video-card" data-youtube="kswY1uMN90g">
+                  <button class="youtube-placeholder" type="button" aria-label="Play demo">
+                    <img src="https://img.youtube.com/vi/kswY1uMN90g/maxresdefault.jpg" alt="" loading="lazy" onerror="this.src='https://img.youtube.com/vi/kswY1uMN90g/hqdefault.jpg'" />
+                    <span class="youtube-play" aria-hidden="true">
+                      <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                    </span>
+                    <span class="youtube-label">Play demo</span>
+                  </button>
+                </div>
+              </div>
+            </article>
+            <!-- AUTO:projects:end -->
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="site-footer" id="contact">
+      <div class="container site-footer-inner">
+        <nav class="footer-links reveal" aria-label="Contact links">
+          <a class="footer-link" href="mailto:w.xinshawn@gmail.com">
+            <svg
+              class="footer-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <rect x="3" y="5" width="18" height="14" rx="2" />
+              <path d="m3 7 9 6 9-6" />
+            </svg>
+            <span data-i18n="contact.email">Email</span>
+          </a>
+          <a class="footer-link" href="https://github.com/xinshengwang" target="_blank" rel="noopener">
+            <svg class="footer-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path
+                d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"
+              />
+            </svg>
+            <span data-i18n="contact.github">GitHub</span>
+          </a>
+          <a
+            class="footer-link"
+            href="https://scholar.google.com/citations?user=ZUm3S7EAAAAJ&hl=zh-CN"
+            target="_blank"
+            rel="noopener"
+          >
+            <svg
+              class="footer-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M22 9 12 5 2 9l10 4 10-4Z" />
+              <path d="M6 10.5V16c0 1.5 2.7 2.5 6 2.5s6-1 6-2.5v-5.5" />
+            </svg>
+            <span data-i18n="contact.scholar">Google Scholar</span>
+          </a>
+        </nav>
+        <p class="footer-copy" data-i18n="footer.text">© 2026 Xinsheng Wang</p>
+      </div>
+    </footer>
+
+    <script src="js/content.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/scroll-reveal.js"></script>
+    <script src="js/video-lazy.js"></script>
+  </body>
+</html>
