@@ -16,9 +16,27 @@
     const aboutEl = document.getElementById('about-content');
     if (aboutEl && !aboutEl.innerHTML.trim()) aboutEl.innerHTML = SITE.about.html;
 
+    renderEducation();
     renderTimeline();
     renderNews();
     renderProjects();
+  }
+
+  function renderEducation() {
+    const container = document.getElementById('education-list');
+    if (!container || container.children.length || !SITE.education) return;
+
+    container.innerHTML = SITE.education.items
+      .map(
+        (item) => `
+      <li class="edu-item">
+        <a class="edu-link" href="${item.advisorUrl}" target="_blank" rel="noopener" title="${item.advisor}">
+          <span class="edu-school">${item.short}</span>
+          <span class="edu-degree">${item.degree}</span>
+        </a>
+      </li>`
+      )
+      .join('');
   }
 
   function renderTimeline() {

@@ -101,16 +101,19 @@
 .hero-grid {
   display: grid;
   grid-template-columns: 1fr minmax(220px, 340px);
+  grid-template-areas: 'copy portrait';
   align-items: center;
-  gap: clamp(2rem, 5vw, 4rem);
+  column-gap: clamp(2rem, 5vw, 4rem);
 }
 
 .hero-copy {
+  grid-area: copy;
   min-width: 0;
   max-width: 40rem;
 }
 
 .hero-portrait {
+  grid-area: portrait;
   margin: 0;
   justify-self: end;
 }
@@ -317,6 +320,71 @@ section {
   margin-bottom: 0;
 }
 
+.about-education {
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+}
+
+.education-label {
+  display: block;
+  margin-bottom: 1rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.education-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 0;
+}
+
+.edu-item {
+  display: flex;
+  padding: 0 1.5rem;
+  border-left: 1px solid var(--border);
+}
+
+.edu-item:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+
+.edu-link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+.edu-school {
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  white-space: nowrap;
+  color: var(--text);
+  transition: color var(--transition);
+}
+
+.edu-degree {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--text-muted);
+}
+
+.edu-link:hover .edu-school {
+  color: var(--accent);
+}
+
 .site-footer {
   padding-block: 3rem;
   border-top: 1px solid var(--border);
@@ -421,10 +489,12 @@ section {
 
   .hero-grid {
     grid-template-columns: 1fr;
+    grid-template-areas:
+      'portrait'
+      'copy';
   }
 
   .hero-portrait {
-    order: -1;
     justify-self: center;
     max-width: 260px;
     width: 100%;

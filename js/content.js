@@ -22,6 +22,35 @@ const SITE = {
     scholarCta: 'Google Scholar',
     githubCta: 'GitHub',
   },
+  education: {
+    label: 'Education',
+    items: [
+      {
+        short: 'HKUST',
+        degree: 'Postdoc',
+        advisor: 'Prof. Wei Xue',
+        advisorUrl: 'http://wei-xue.com/',
+      },
+      {
+        short: 'XJTU',
+        degree: 'Ph.D.',
+        advisor: 'Prof. Jihua Zhu',
+        advisorUrl: 'https://gr.xjtu.edu.cn/zhujh/',
+      },
+      {
+        short: 'TU Delft',
+        degree: 'Visiting Ph.D.',
+        advisor: 'Prof. Odette Scharenborg',
+        advisorUrl: 'https://odettescharenborg.wordpress.com/',
+      },
+      {
+        short: 'NWPU',
+        degree: 'Visiting Ph.D.',
+        advisor: 'Prof. Lei Xie',
+        advisorUrl: 'https://teacher.nwpu.edu.cn/xielei.html',
+      },
+    ],
+  },
   stats: {
     githubLabel: 'GitHub stars',
     scholarLabel: 'Citations',
@@ -29,8 +58,8 @@ const SITE = {
   },
   about: {
     title: 'About',
-    html: `<p>I received my Ph.D. from <a href="https://en.xjtu.edu.cn/" target="_blank" rel="noopener">Xi'an Jiaotong University</a> under the supervision of <a href="https://gr.xjtu.edu.cn/zhujh/" target="_blank" rel="noopener">Prof. Jihua Zhu</a>. During my doctoral studies, I was a visiting researcher at the <a href="https://www.tudelft.nl/ewi/over-de-faculteit/afdelingen/intelligent-systems/multimedia-computing" target="_blank" rel="noopener">Multimedia Computing Group, Delft University of Technology</a> (advised by <a href="https://odettescharenborg.wordpress.com/" target="_blank" rel="noopener">Prof. Odette Scharenborg</a>) and at <a href="http://www.npu-aslp.org/" target="_blank" rel="noopener">ASLP, Northwestern Polytechnical University</a> (advised by <a href="https://teacher.nwpu.edu.cn/xielei.html" target="_blank" rel="noopener">Prof. Lei Xie</a>).</p>
-<p>My research focuses on audio generation and understanding. As first or corresponding author, I have led a series of open-source projects, including OpenCpop, Spark-TTS, SoulX-Podcast, SoulX-Singer, SoulX-Duplug, and SoulX-Transcriber. I currently lead the Multimodal Interaction Team at <a href="https://soul-ailab.github.io/" target="_blank" rel="noopener">Soul AI Lab</a>, with a primary focus on speech generation, understanding, and interaction.</p>`,
+    html: `<p>My research centers on audio generation and understanding, spanning the full loop of speech interaction — real-time full-duplex dialogue, expressive and controllable voice and singing synthesis, and multi-speaker speech understanding.</p>
+<p>I currently lead the Multimodal Interaction Team at <a href="https://soul-ailab.github.io/" target="_blank" rel="noopener">Soul AI Lab</a>, where, as first or corresponding author, I lead a series of open-source projects: <a href="https://sparkaudio.github.io/spark-tts/" target="_blank" rel="noopener">Spark-TTS</a> (LLM-based text-to-speech), <a href="https://soul-ailab.github.io/soulx-duplug/" target="_blank" rel="noopener">SoulX-Duplug</a> (full-duplex conversation), <a href="https://soul-ailab.github.io/soulx-podcast" target="_blank" rel="noopener">SoulX-Podcast</a> (long-form podcast generation), <a href="https://soul-ailab.github.io/soulx-singer/" target="_blank" rel="noopener">SoulX-Singer</a> (zero-shot singing synthesis), and <a href="https://soul-ailab.github.io/soulx-transcriber/" target="_blank" rel="noopener">SoulX-Transcriber</a> (multi-speaker transcription).</p>`,
   },
   experience: {
     title: 'Work Experience',
