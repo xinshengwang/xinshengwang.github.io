@@ -219,5 +219,7 @@ const SITE = {
   },
   video: {
     play: 'Play demo',
+    loading: 'Loading video…',
+    error: 'Failed to load video',
   },
 };
